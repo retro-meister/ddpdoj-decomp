@@ -20,8 +20,10 @@ typedef struct {
     u64 tex0;
     u64 tex1;
     u64 texa;
-    unsigned origin_x;
-    unsigned origin_y;
+    int origin_x;
+    int origin_y;
+    SDL_Point display_offset16;
+    SDL_Point target_offset16;
     unsigned vertical_scale;
     unsigned window_scale;
     unsigned target_base;
@@ -31,6 +33,12 @@ typedef struct {
 } GsDrawState;
 
 static GsDrawState gs;
+static bool sharp_upscale = true;
+
+void pc_gs_toggle_upscale(void)
+{
+    sharp_upscale = !sharp_upscale;
+}
 
 static void destroy_game_target(void)
 {
@@ -84,6 +92,16 @@ bool pc_gs_game_display(int width, int field_height, bool wide)
         return false;
     }
     return true;
+}
+
+void pc_gs_game_offset(int width, int dx, int dy)
+{
+    /* The retail NTSC display environment repeats each framebuffer pixel
+     * ceil(2560 / width) times in horizontal display-clock units. */
+    if (width > 0) {
+        int clocks = (2560 + width - 1) / width;
+        gs.display_offset16 = (SDL_Point){ dx * 16 / clocks, dy * 16 };
+    }
 }
 
 void pc_gs_game_target(unsigned base, int width, int height)
@@ -154,6 +172,13 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
         blend = SDL_BLENDMODE_BLEND;
     }
     SDL_ScaleMode scale = linear ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST;
+    if (framebuffer_texture && linear && sharp_upscale) {
+#if SDL_VERSION_ATLEAST(3, 4, 0)
+        scale = SDL_SCALEMODE_PIXELART;
+#else
+        scale = SDL_SCALEMODE_NEAREST;
+#endif
+    }
     if (!SDL_SetTextureBlendMode(texture, blend) || !SDL_SetTextureScaleMode(texture, scale)) {
         return false;
     }
@@ -268,8 +293,8 @@ static void write_register(void *context, u8 address, u64 value)
         break;
     case 0x18: /* XYOFFSET_1 */
         if (state->game) {
-            state->origin_x = value & 0xffff;
-            state->origin_y = (value >> 32) & 0xffff;
+            state->origin_x = (int)(value & 0xffff) - state->target_offset16.x;
+            state->origin_y = (int)((value >> 32) & 0xffff) - state->target_offset16.y;
         }
         break;
     case 0x4c: /* FRAME_1, base in 8 KiB units */
@@ -279,6 +304,7 @@ static void write_register(void *context, u8 address, u64 value)
             if (SDL_GetRenderTarget(state->renderer) != target) {
                 state->failed |= !SDL_SetRenderTarget(state->renderer, target);
             }
+            state->target_offset16 = target ? (SDL_Point){0, 0} : state->display_offset16;
             state->vertical_scale = target ? 1 : state->window_scale;
         }
         break;
@@ -289,7 +315,8 @@ static void write_register(void *context, u8 address, u64 value)
             int top = (value >> 32) & 0x7ff;
             int bottom = (value >> 48) & 0x7ff;
             SDL_Rect clip = {
-                left, top * (int)state->vertical_scale,
+                left + (int)SDL_roundf(state->target_offset16.x / 16.0f),
+                (top + state->target_offset16.y / 16) * (int)state->vertical_scale,
                 SDL_max(0, right - left + 1),
                 SDL_max(0, bottom - top + 1) * (int)state->vertical_scale,
             };

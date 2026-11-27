@@ -1363,6 +1363,9 @@ void display_set_offset(s32 x, s32 y) {
     g_gs_dbuff.disp[0].display.DY = dy;
     g_gs_dbuff.disp[1].display.DX = dx;
     g_gs_dbuff.disp[1].display.DY = dy;
+#ifdef DDPDOJ_PC
+    pc_gs_game_offset(g_screen_width, dx - base_x, dy - base_y);
+#endif
 }
 
 extern s8 g_display_offset_y;
@@ -1392,7 +1395,9 @@ void display_reset(void) {
         g_gs_dbuff.disp[0].dispfb.FBP = 0;
         g_gs_dbuff.disp[1].dispfb.FBP = ((((mode->width + 63) / 64 * 64) * ((mode->height + 31) / 32 * 32)) >> 11) / 2;
     }
+#endif
     display_set_offset(g_display_offset_x, g_display_offset_y);
+#ifndef DDPDOJ_PC
     FlushCache(0);
     sceGsSyncV(0);
     sceGsPutDrawEnv(&g_gs_dbuff.giftag0);

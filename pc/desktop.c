@@ -68,6 +68,9 @@ static bool process_input(void)
         if (event.type == SDL_EVENT_QUIT) {
             return false;
         }
+        if (event.type == SDL_EVENT_KEY_DOWN && !event.key.repeat && event.key.scancode == SDL_SCANCODE_F2) {
+            pc_gs_toggle_upscale();
+        }
         pc_pad_handle_event(&event);
     }
     pc_pad_capture();
@@ -181,6 +184,7 @@ int main(int argc, char **argv)
         iso = selection.path;
     }
     if (ok && !selection.canceled) {
+        pc_enable_vsync(renderer);
         ok = iso && pc_cdvd_mount(iso) && pc_sfx_load(iso) && pc_sfx_open_device() &&
              run_mode(renderer, iso, &next_mode);
     }

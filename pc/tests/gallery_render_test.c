@@ -74,7 +74,7 @@ static void send_packet(sceGifPacket *packet)
     require(pc_gs_ok(), "Submit graphics packet");
 }
 
-static void check_game_clip(SDL_Renderer *renderer)
+static void check_game_clip(SDL_Renderer *renderer, int shift)
 {
     pc_gs_bind_game(renderer);
     require(pc_gs_game_display(384, 448, false), "Set standard interlaced mode");
@@ -86,6 +86,8 @@ static void check_game_clip(SDL_Renderer *renderer)
     require(pc_gs_game_display(448, 224, false) && pc_gs_begin_frame(), "Start a game field");
     sceGifPacket packet;
     sceGifPkInit(&packet, g_gif_buf);
+    pc_gs_game_offset(448, shift * 7 * 6, shift * 7);
+    add_register(&packet, 0x4c, 0);
     add_register(&packet, 0x18, 0x0000780000007000ULL);
     add_register(&packet, 0x40, 20ULL | (29ULL << 16) | (10ULL << 32) | (19ULL << 48));
     add_register(&packet, SCE_GS_PRIM, SCE_GS_PRIM_SPRITE);
@@ -105,15 +107,15 @@ static void check_game_clip(SDL_Renderer *renderer)
     require(SDL_SetRenderClipRect(renderer, NULL), "Reset the test scissor before readback");
     SDL_Surface *surface = SDL_RenderReadPixels(renderer, NULL);
     require(surface != NULL, "Read the game field");
-    expect_pixel(surface, 27, 30, 0, 0, 0);
-    expect_pixel(surface, 36, 19, 0, 0, 0);
-    expect_pixel(surface, 30, 23, 64, 192, 32);
-    expect_pixel(surface, 40, 39, 64, 192, 32);
-    expect_pixel(surface, 44, 39, 0, 0, 0);
-    expect_pixel(surface, 40, 45, 0, 0, 0);
-    expect_pixel(surface, 60, 6, 208, 48, 72);
-    expect_pixel(surface, 87, 40, 208, 48, 72);
-    expect_pixel(surface, 93, 40, 0, 0, 0);
+    expect_pixel(surface, 27 + shift * 10, 30 + shift * 15, 0, 0, 0);
+    expect_pixel(surface, 36 + shift * 10, 19 + shift * 15, 0, 0, 0);
+    expect_pixel(surface, 30 + shift * 10, 23 + shift * 15, 64, 192, 32);
+    expect_pixel(surface, 40 + shift * 10, 39 + shift * 15, 64, 192, 32);
+    expect_pixel(surface, 44 + shift * 10, 39 + shift * 15, 0, 0, 0);
+    expect_pixel(surface, 40 + shift * 10, 45 + shift * 15, 0, 0, 0);
+    expect_pixel(surface, 60 + shift * 10, 6 + shift * 15, 208, 48, 72);
+    expect_pixel(surface, 87 + shift * 10, 40 + shift * 15, 208, 48, 72);
+    expect_pixel(surface, 93 + shift * 10, 40 + shift * 15, 0, 0, 0);
     SDL_DestroySurface(surface);
 }
 
@@ -398,7 +400,8 @@ int main(int argc, char **argv)
     if (argc > next) {
         check_retail_loading_letter(renderer, argv[next + 1]);
     }
-    check_game_clip(renderer);
+    check_game_clip(renderer, 0);
+    check_game_clip(renderer, 1);
     check_streamed_sprite(renderer);
 
     pc_gs_bind_gallery(NULL);

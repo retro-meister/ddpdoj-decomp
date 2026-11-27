@@ -9,6 +9,15 @@ static Uint64 epoch;
 static Uint64 next_field;
 static Uint64 poll_time;
 static Uint64 render_budget = 4000000;
+static SDL_Renderer *display_renderer;
+
+void pc_enable_vsync(SDL_Renderer *renderer)
+{
+    display_renderer = renderer;
+    if (!SDL_SetRenderVSync(renderer, 1)) {
+        SDL_Log("VSync unavailable: %s", SDL_GetError());
+    }
+}
 
 static Uint64 field_deadline(void)
 {
@@ -43,6 +52,11 @@ s32 sceGsSyncV(s32 mode)
     start_clock(now);
     SDL_assert(mode == 0);
     if (poll_time) {
+        /* Dispatch the queued draws while there is still time left in this field. */
+        if (display_renderer) {
+            SDL_FlushRenderer(display_renderer);
+            now = SDL_GetTicksNS();
+        }
         Uint64 cost = SDL_min(now - poll_time, three_fields_ns / 3);
         render_budget = SDL_max(cost, render_budget - render_budget / 32);
         poll_time = 0;
