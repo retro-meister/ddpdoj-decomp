@@ -184,7 +184,7 @@ void stage5_midboss4_wave_beam_fire(void) {
 
     reg_tmp.h[1] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[0];
     reg_tmp.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[1];
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
         reg_d6.b[0] = 0xFD;
         reg_d1.b[0] = 0x1B;

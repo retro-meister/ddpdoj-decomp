@@ -105,15 +105,15 @@ void stage4_boss_main(void) {
         return;
     }
     stage4_boss_damage();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x20);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x20);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x40);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x40);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x60);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x60);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x80);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x80);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0xA0);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0xA0);
     enemy_hitbox_debug_draw();
 }
 

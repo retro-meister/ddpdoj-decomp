@@ -283,6 +283,9 @@ void stage2_boss_mode_second_phase_start(void) {
     SECOND_PHASE(reg_a4)->delay = 0x10;
     SECOND_PHASE(reg_a4)->effect_timer.h = 4;
     SECOND_PHASE(reg_a4)->unread_08 = 0;
+#ifdef DDPDOJ_PC
+    SECOND_PHASE(reg_a4)->effect = 0;
+#endif
     ARCADE_REGISTER_CALL(stage2_boss_mode_second_phase, 0x10);
 }
 
@@ -307,13 +310,21 @@ void stage2_boss_mode_second_phase() {
         SECOND_PHASE(reg_a4)->effect_timer.t.count -= 1;
         if ((s32) reg_tmp.b[0] <= 0) {
             SECOND_PHASE(reg_a4)->effect_timer.t.count = (u8) SECOND_PHASE(reg_a4)->effect_timer.t.reload;
+#ifdef DDPDOJ_PC
+            reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage2_boss_blast_sounds, SECOND_PHASE(reg_a4)->effect);
+#else
             reg_a0 = (u8 *)stage2_boss_blast_sounds;
             reg_a0 += SECOND_PHASE(reg_a4)->effect;
             reg_a0 = *(u8 **)reg_a0;
+#endif
             reg_call_target = (Fn)(reg_a0);
             reg_call_target();
             SECOND_PHASE(reg_a4)->effect += 4;
+#ifdef DDPDOJ_PC
+            SECOND_PHASE(reg_a4)->effect &= 0x1F;
+#else
             SECOND_PHASE(reg_a4)->unread_08 &= 0x1F;
+#endif
         }
         SECOND_PHASE(reg_a4)->delay -= 1;
         if (SECOND_PHASE(reg_a4)->delay == 0) {
@@ -492,9 +503,13 @@ loop_6:
                 FINAL_EXPLOSION(reg_a4)->effect_timer.t.count -= 1;
                 if ((s32) reg_tmp.b[0] <= 0) {
                     FINAL_EXPLOSION(reg_a4)->effect_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->effect_timer.t.reload;
+#ifdef DDPDOJ_PC
+                    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage2_boss_blast_sounds, FINAL_EXPLOSION(reg_a4)->effect);
+#else
                     reg_a0 = (u8 *)stage2_boss_blast_sounds;
                     reg_a0 += FINAL_EXPLOSION(reg_a4)->effect;
                     reg_a0 = *(u8 **)reg_a0;
+#endif
                     reg_call_target = (Fn)(reg_a0);
                     reg_call_target();
                     FINAL_EXPLOSION(reg_a4)->effect += 4;
@@ -543,9 +558,13 @@ loop_6:
             FINAL_EXPLOSION(reg_a4)->effect_timer.t.count -= 1;
             if ((s32) reg_tmp.b[0] <= 0) {
                 FINAL_EXPLOSION(reg_a4)->effect_timer.t.count = (u8) FINAL_EXPLOSION(reg_a4)->effect_timer.t.reload;
+#ifdef DDPDOJ_PC
+                reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage2_boss_blast_sounds, FINAL_EXPLOSION(reg_a4)->effect);
+#else
                 reg_a0 = (u8 *)stage2_boss_blast_sounds;
                 reg_a0 += FINAL_EXPLOSION(reg_a4)->effect;
                 reg_a0 = *(u8 **)reg_a0;
+#endif
                 reg_call_target = (Fn)(reg_a0);
                 reg_call_target();
                 FINAL_EXPLOSION(reg_a4)->effect += 4;

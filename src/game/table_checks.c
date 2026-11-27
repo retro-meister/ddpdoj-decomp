@@ -3066,21 +3066,21 @@ void checked_pointers_store(void) {
     if (stage5_boss_horn_shot_offsets[0] != 0x0) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[0]\n");
     }
-    reg_tmp.w = (u32)D_002644E0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(D_002644E0);
     stage5_boss_horn_shot_offsets[0] = reg_tmp.h[1];
     stage5_boss_horn_shot_offsets[1] = reg_tmp.h[0];
     if (stage5_boss_horn_shot_offsets[2] != 0x2) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[2]\n");
     }
-    STORE_POINTER(stage5_boss_horn_shot_offsets + 2, stage5_boss_horn_shot_offsets_at_2);
+    STORE_ARCADE_ADDRESS(stage5_boss_horn_shot_offsets + 2, stage5_boss_horn_shot_offsets_at_2);
     if (stage5_boss_horn_shot_offsets[4] != 0x4) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[4]\n");
     }
-    STORE_POINTER(stage5_boss_horn_shot_offsets + 4, stage5_boss_horn_shot_offsets_at_4);
+    STORE_ARCADE_ADDRESS(stage5_boss_horn_shot_offsets + 4, stage5_boss_horn_shot_offsets_at_4);
     if (stage5_boss_horn_shot_offsets[6] != 0x6) {
         printf("error! st5b_2_tsuno_sht_ofs_tbl[6]\n");
     }
-    STORE_POINTER(stage5_boss_horn_shot_offsets + 6, stage5_boss_horn_shot_offsets_at_6);
+    STORE_ARCADE_ADDRESS(stage5_boss_horn_shot_offsets + 6, stage5_boss_horn_shot_offsets_at_6);
     if (stage5_boss_flash_palettes_a[4] != 0x4) {
         printf("error! st5b_mo1_flush_tbl[4]\n");
     }

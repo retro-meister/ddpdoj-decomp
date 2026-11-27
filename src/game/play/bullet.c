@@ -940,7 +940,7 @@ block_44:
                                 reg_d1.h[1] = *(u16 *)(reg_a6 + 0x2C);
                                 reg_d1.h[0] = *(u16 *)(reg_a6 + 0x2E);
                                 if (reg_d1.w != 0) {
-                                    reg_a0 = (u8 *) reg_d1.w;
+                                    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d1.w);
                                     if ((0 > (s64)*(s16 *)(reg_a0 + 0)) && (0 <= (s64)*(s8 *)(reg_a0 + 0))) {
                                         reg_d1.h[1] = *(u16 *)(reg_a0 + 2);
                                         reg_d1.h[0] = *(u16 *)(reg_a0 + 4);
@@ -1044,7 +1044,7 @@ L_clr_block_143:
                                 reg_d1.h[1] = *(u16 *)(reg_a6 + 0x2C);
                                 reg_d1.h[0] = *(u16 *)(reg_a6 + 0x2E);
                                 if (reg_d1.w != 0) {
-                                    reg_a0 = (u8 *) reg_d1.w;
+                                    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d1.w);
                                     if ((0 > (s64)*(s16 *)(reg_a0 + 0)) && (0 <= (s64)*(s8 *)(reg_a0 + 0))) {
                                         reg_d1.h[1] = *(u16 *)(reg_a0 + 2);
                                         reg_d1.h[0] = *(u16 *)(reg_a0 + 4);
@@ -1872,7 +1872,7 @@ block_315:
                                     reg_a0 += 2;
                                     reg_tmp.h[0] = *(u16 *)reg_a0;
                                     reg_a0 += 2;
-                                    reg_a1 = (u8 *) reg_tmp.w;
+                                    reg_a1 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                                     reg_d0.h[0] = *(u16 *)reg_a0;
                                     ENTITY(reg_a6)->draw.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
                                     ENTITY(reg_a6)->sprite.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)(reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)(reg_a0 + 0);

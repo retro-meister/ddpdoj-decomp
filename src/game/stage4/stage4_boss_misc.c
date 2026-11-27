@@ -177,7 +177,7 @@ void stage4_boss_cutter_start(void) {
     STAGE4_CUTTER(reg_a5)->now.y_offset = (u16) reg_d0.h[0];
     reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
     reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d2.h[0] += ENTITY(reg_a0)[1].y.h;
     reg_d2.h[0] -= (u16) STAGE4_CUTTER(reg_a5)->now.y_offset;
     reg_d3.h[0] += ENTITY(reg_a0)[1].x.h;
@@ -288,7 +288,7 @@ next_130:
     if (g_enemies_stopped != 0) goto block_c;
     reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
     reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     STAGE4_CUTTER(reg_a5)->center_y = ENTITY(reg_a0)[1].y.h;
     STAGE4_CUTTER(reg_a5)->center_x = ENTITY(reg_a0)[1].x.h;
     reg_d0.h[0] = STAGE4_CUTTER(reg_a5)->now.y_offset;
@@ -309,7 +309,7 @@ next_130:
 next_140:
     reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
     reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d2.h[0] += ENTITY(reg_a0)[1].y.h;
     reg_d3.h[0] += ENTITY(reg_a0)[1].x.h;
 next_150:
@@ -365,7 +365,7 @@ next_200:
     ENTITY(reg_a6)->flags.h = 0xA001;
     reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
     reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     STAGE4_EXTRA(reg_a0)->cutters_gone += 1;
 next_210:
     if (STAGE4_CUTTER(reg_a5)->released != 1) goto next_250;
@@ -401,7 +401,7 @@ next_250:
     ENTITY(reg_a6)[2].hit_x_minus.h = 0x60;
     reg_tmp.h[1] = STAGE4_CUTTER(reg_a5)->now.owner[0];
     reg_tmp.h[0] = STAGE4_CUTTER(reg_a5)->now.owner[1];
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)[1].hit_y_plus.h = ENTITY(reg_a0)[1].y.h;
     ENTITY(reg_a6)[1].hit_y_minus.h = ENTITY(reg_a0)[1].x.h;
 next_260:

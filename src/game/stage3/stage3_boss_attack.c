@@ -288,7 +288,7 @@ void stage3_boss_fire_main_gun_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     temp_a2 = reg_d0.h[0];
     temp_a1 = temp_a2 & ~3;
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_main_gun_start_table) + temp_a1);
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_main_gun_start_table, temp_a1);
     reg_a1 = (u8 *)(reg_a4 + 2);
     reg_d0.w = ((u32) stage3_boss_fire_main_gun_start_value >> 1) - 1;
     do {
@@ -427,7 +427,7 @@ void stage3_boss_fire_side_turrets_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     temp_a2 = reg_d0.h[0];
     temp_a1 = temp_a2 & ~3;
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_side_turrets_start_table) + temp_a1);
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_side_turrets_start_table, temp_a1);
     reg_a1 = (u8 *)(reg_a4 + 2);
     reg_d0.w = ((u32) stage3_boss_fire_side_turrets_start_value >> 1) - 1;
     do {
@@ -507,7 +507,7 @@ void stage3_boss_fire_lid_six_gun_start(void) {
     boss_level_get_from_78();
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_lid_six_gun_start_table) + (reg_d0.h[0] & ~3));
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_lid_six_gun_start_table, (reg_d0.h[0] & ~3));
     reg_a1 = (u8 *)(reg_a4 + 2);
     reg_d0.w = ((u32) stage3_boss_fire_lid_six_gun_start_value >> 1) - 1;
     do {
@@ -615,7 +615,7 @@ void stage3_boss_fire_body_six_gun_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_body_six_gun_start_table) + (temp_a1 & ~3));
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_body_six_gun_start_table, (temp_a1 & ~3));
     reg_a1 = (u8 *)(temp_s0);
     reg_d0.w = ((u32) stage3_boss_fire_body_six_gun_start_value >> 1) - 1;
     do {
@@ -863,7 +863,7 @@ void stage3_boss_fire_main_gun_b_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_main_gun_b_start_table) + (temp_a1 & ~3));
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_main_gun_b_start_table, (temp_a1 & ~3));
     reg_a1 = (u8 *)(temp_s0);
     reg_d0.w = ((u32) stage3_boss_fire_main_gun_b_start_value >> 1) - 1;
     do {
@@ -920,7 +920,7 @@ block_6:
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
             reg_d3.w = 0xE2000000;
-            reg_d4.w = (u32) reg_a6;
+            reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
             reg_d0.h[0] = MAIN_GUN_B(reg_a4)->shots;
             reg_d0.h[0] -= MAIN_GUN_B(reg_a4)->shots_left;
             reg_d0.h[0] += reg_d0.h[0];
@@ -1002,7 +1002,7 @@ void stage3_boss_fire_side_turrets_b_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_side_turrets_b_start_table) + (temp_a1 & ~3));
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_side_turrets_b_start_table, (temp_a1 & ~3));
     reg_a1 = (u8 *)(temp_s0);
     reg_d0.w = ((u32) stage3_boss_fire_side_turrets_b_start_value >> 1) - 1;
     do {
@@ -1042,7 +1042,7 @@ void stage3_boss_fire_side_turrets_b(void) {
         reg_d3.w += 0x11000080;
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         var_a0_3 = ENTITY(reg_a6)[1].x.h;
-        reg_d4.w = (u32) reg_a6;
+        reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
         reg_d1.h[0] += reg_d1.h[0];
         reg_d2.h[0] = var_a0_3;
         reg_d4.w += 0x20;
@@ -1079,7 +1079,7 @@ void stage3_boss_fire_side_turrets_b(void) {
         reg_d2.h[1] = (*(u16 *)((u8 *)(var_a0_4) + (0x42)));
         reg_d2.h[0] = (*(u16 *)((u8 *)(var_a0_4) + (0x44)));
         reg_d1.h[0] += reg_d1.h[0];
-        reg_d4.w = (u32) var_a0_4;
+        reg_d4.w = ARCADE_ADDRESS_ENCODE(var_a0_4);
         reg_d4.w += 0x40;
         reg_d1.h[0] += reg_d1.h[0];
         reg_d1.h[0] += SIDE_TURRETS_B(reg_a4)->spread;
@@ -1127,7 +1127,7 @@ void stage3_boss_fire_six_gun_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a1 = reg_d0.h[0];
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_six_gun_start_table) + (temp_a1 & ~3));
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_six_gun_start_table, (temp_a1 & ~3));
     reg_a1 = (u8 *)(temp_s0);
     reg_d0.w = ((u32) stage3_boss_fire_six_gun_start_value >> 1) - 1;
     do {
@@ -1283,7 +1283,7 @@ void stage3_boss_fire_six_gun_b_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     temp_a2 = reg_d0.h[0];
     temp_a1 = temp_a2 & ~3;
-    reg_a0 = *(u8 **)(((u8 *)stage3_boss_fire_six_gun_b_start_table) + temp_a1);
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_fire_six_gun_b_start_table, temp_a1);
     reg_a1 = (u8 *)(reg_a4 + 2);
     reg_d0.w = ((u32) stage3_boss_fire_six_gun_b_start_value >> 1) - 1;
     do {

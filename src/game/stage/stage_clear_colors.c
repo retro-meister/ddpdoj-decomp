@@ -1,7 +1,19 @@
 #include "common.h"
 
 extern void *stage_clear_color_table_get_table[8];
+#ifdef DDPDOJ_PC
+typedef struct {
+    u32 sprite;
+    u8 *palette;
+} StageClearColor;
+
+struct D0026b250Record {
+    StageClearColor colors[5];
+    u16 padding[4];
+};
+#else
 struct D0026b250Record { u16 w0[2]; void *p1; u16 w2[2]; void *p3; u16 w4[2]; void *p5; u16 w6[2]; void *p7; u16 w8[2]; void *p9; u16 w10[4]; };
+#endif
 extern struct D0026b250Record D_0026B250;
 
 s32 rng_next_unsigned();
@@ -68,7 +80,11 @@ extern u16 D_0028E788;
 void stage_clear_color_table_get(void)
 {
     reg_d0.w = 0;
+#ifdef DDPDOJ_PC
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage_clear_color_table_get_table, g_stage_clear_color_index & ~3);
+#else
     reg_a0 = (u8 *)(*(s8 **)((u8 *)((u8 *)stage_clear_color_table_get_table) + (g_stage_clear_color_index & ~3)));
+#endif
     reg_a0 += 7;
     reg_a0 -= D_0028E788;
     reg_d0.b[0] = (u8)*(s8 *)reg_a0;
@@ -91,7 +107,11 @@ void stage_clear_colors_update(void) {
         reg_d0.h[0] *= 2;
         reg_d0.h[0] += 1;
         temp_a0 = reg_d0.h[0] * 4;
+#ifdef DDPDOJ_PC
+        reg_a0 = D_0026B250.colors[temp_a0 / 8].palette;
+#else
         reg_a0 = *(u8 **)((u8 *)((u8 *)&D_0026B250) + temp_a0);
+#endif
         reg_d0.h[0] = 0x17;
         sprite_palette_load();
     }
@@ -106,7 +126,11 @@ void stage_clear_colors_update(void) {
             reg_d0.h[0] *= 2;
             reg_d0.h[0] += 1;
             temp_a0_3 = reg_d0.h[0] * 4;
+#ifdef DDPDOJ_PC
+            reg_a0 = D_0026B250.colors[temp_a0_3 / 8].palette;
+#else
             reg_a0 = *(u8 **)((u8 *)((u8 *)&D_0026B250) + temp_a0_3);
+#endif
             reg_d0.h[0] = 0x17;
             sprite_palette_load();
             if (D_0028E788 == 0) {
@@ -147,7 +171,11 @@ void stage_clear_colors_apply(void) {
     if (D_0028E784 != -1) {
         stage_clear_color_table_get();
         reg_d0.h[0] *= 2;
+#ifdef DDPDOJ_PC
+        temp_a3 = D_0026B250.colors[reg_d0.h[0] / 2].sprite;
+#else
         temp_a3 = *(u32 *)(((u8 *)&D_0026B250) + (reg_d0.h[0] * 4));
+#endif
         reg_d1.w = 0x38001C00;
         reg_d1.w += 0xC800E400;
         reg_d2.w = temp_a3;
@@ -188,6 +216,18 @@ void *stage_clear_color_table_get_table[8] = {
     0,
 };
 
+#ifdef DDPDOJ_PC
+struct D0026b250Record D_0026B250 = {
+    {
+        { 0x14B5, g_menu_wallpapers_1 },
+        { 0x14B6, g_menu_wallpapers_3 },
+        { 0x14B7, g_menu_wallpapers_5 },
+        { 0x14B8, g_menu_wallpapers_7 },
+        { 0x14B9, g_menu_wallpapers_9 },
+    },
+    { 0, 0, 0, 0 },
+};
+#else
 struct D0026b250Record D_0026B250 = {
     { 0x14B5, 0x0000 },
     g_menu_wallpapers_1,
@@ -201,6 +241,7 @@ struct D0026b250Record D_0026B250 = {
     g_menu_wallpapers_9,
     { 0x0000, 0x0000, 0x0000, 0x0000 },
 };
+#endif
 
 u8 stage_clear_colors_apply_table[32] = {
     0x00, 0x80, 0x00, 0x80, 0x00, 0x90, 0x00, 0x90, 0x00, 0xA0, 0x00, 0xA0, 0x00, 0xB0, 0x00, 0xB0,

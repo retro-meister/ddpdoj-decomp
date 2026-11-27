@@ -181,7 +181,7 @@ void stage3_midboss_main(void) {
     reg_d0.h[0] *= 4;
     reg_tmp.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)(reg_a0 + 0);
     reg_tmp.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_call_target = (Fn)(reg_a0);
     reg_call_target();
     reg_d7.w = saved;
@@ -804,7 +804,7 @@ void stage3_midboss_mode_attack_b(void) {
                 reg_a4 += ENTITY(reg_a6)[5].look.h;
                 reg_tmp.h[1] = *(u16 *)reg_a4;
                 reg_tmp.h[0] = *(u16 *)(reg_a4 + 2);
-                reg_a4 = (u8 *) reg_tmp.w;
+                reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
                 ENTITY(reg_a6)[5].look.h += 4;
                 ENTITY(reg_a6)[5].look.h &= 0x1F;
                 if (ENTITY(reg_a6)[1].look.b.size == 0) {

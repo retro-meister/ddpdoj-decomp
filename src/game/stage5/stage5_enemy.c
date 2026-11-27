@@ -768,7 +768,7 @@ next_1:
     if ((s32) g_scroll_line < 0x260) goto next_2;
     reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_6));
 next_2:
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     SMALL_SPIDER_HEAD(reg_a5)->owner_flag[0] = reg_tmp.h[1];
     SMALL_SPIDER_HEAD(reg_a5)->owner_flag[1] = reg_tmp.h[0];
     *(s16 *)reg_a0 = 1;
@@ -817,7 +817,7 @@ void stage5_small_spider_head(void) {
             sfx_explosion_ground_large();
             reg_tmp.h[1] = SMALL_SPIDER_HEAD(reg_a5)->owner_flag[0];
             reg_tmp.h[0] = SMALL_SPIDER_HEAD(reg_a5)->owner_flag[1];
-            reg_a0 = (u8 *)reg_tmp.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             *(u16 *)reg_a0 = 0U;
             enemy_remove();
             return;
@@ -835,7 +835,7 @@ block_4:
         if (SMALL_SPIDER_HEAD(reg_a5)->seen != 0) {
             reg_tmp.h[1] = SMALL_SPIDER_HEAD(reg_a5)->owner_flag[0];
             reg_tmp.h[0] = SMALL_SPIDER_HEAD(reg_a5)->owner_flag[1];
-            reg_a0 = (u8 *)reg_tmp.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             *(u16 *)reg_a0 = 0U;
             enemy_remove();
             return;
@@ -1120,7 +1120,7 @@ next_1:
     reg_a0 = (u8 *)(&(*(s16 *)&g_enemy_signal_7));
     LARGE_SPIDER_HEAD(reg_a5)->shot.both = 0x202;
 next_2:
-    reg_tmp.w = (u32) reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     LARGE_SPIDER_HEAD(reg_a5)->owner_flag[0] = reg_tmp.h[1];
     LARGE_SPIDER_HEAD(reg_a5)->owner_flag[1] = reg_tmp.h[0];
     *(s16 *)reg_a0 = 1;
@@ -1164,7 +1164,7 @@ void stage5_large_spider_head(void) {
             sfx_explosion_ground_large();
             reg_tmp.h[1] = LARGE_SPIDER_HEAD(reg_a5)->owner_flag[0];
             reg_tmp.h[0] = LARGE_SPIDER_HEAD(reg_a5)->owner_flag[1];
-            reg_a0 = (u8 *)reg_tmp.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             *(u16 *)reg_a0 = 0U;
             enemy_remove();
             return;
@@ -1182,7 +1182,7 @@ block_4:
         if (LARGE_SPIDER_HEAD(reg_a5)->seen != 0) {
             reg_tmp.h[1] = LARGE_SPIDER_HEAD(reg_a5)->owner_flag[0];
             reg_tmp.h[0] = LARGE_SPIDER_HEAD(reg_a5)->owner_flag[1];
-            reg_a0 = (u8 *)reg_tmp.w;
+            reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             *(u16 *)reg_a0 = 0U;
             enemy_remove();
             return;

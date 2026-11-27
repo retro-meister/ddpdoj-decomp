@@ -527,7 +527,11 @@ extern void sprite_draw_layer1(void);
 void tally_digit_draw(void)
 {
     reg_d2.h[0] = (s16)reg_d7.h[0] & 0xF;
+#ifdef DDPDOJ_PC
+    reg_d2.w = ((u32 *)reg_a1)[reg_d2.h[0]];
+#else
     reg_d2.w = ((u32 *)(*(s32 *)&reg_a1))[reg_d2.h[0]];
+#endif
     reg_d1.h[0] -= 0x200;
     sprite_draw_layer1();
 }

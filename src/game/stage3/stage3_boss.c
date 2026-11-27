@@ -103,15 +103,15 @@ void stage3_boss_main(void) {
         enemy_remove();
         return;
     }
-    reg_a0 = (u8 *)(((s32)reg_a6));
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6));
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x20);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x20);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x40);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x40);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0xC0);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0xC0);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0xE0);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0xE0);
     enemy_hitbox_debug_draw();
 }
 

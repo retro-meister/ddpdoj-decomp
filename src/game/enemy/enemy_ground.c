@@ -3539,7 +3539,7 @@ void ground_pointer_rows_fill(void) {
         reg_d1.b[0] = (u8) *(s8 *)reg_a3;
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-        reg_d4.w = (u32) reg_a6;
+        reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
         reg_d3.h[1] = *(u16 *)reg_a4;
         temp_a0 = *(u16 *)(reg_a4 + 2);
         reg_d3.h[0] = temp_a0;

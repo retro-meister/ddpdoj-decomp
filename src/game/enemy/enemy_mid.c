@@ -1692,7 +1692,7 @@ block_42:
                     reg_d0.w = 0x40007;
                     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-                    reg_d4.w = (u32) reg_a6;
+                    reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
                     bullet_fire_3way();
                     reg_tmp.b[0] = MID_FLYER_C(reg_a5)->second_shots_left;
                     MID_FLYER_C(reg_a5)->second_shots_left -= 1;
@@ -2907,7 +2907,7 @@ void shooter_drone(void) {
             if ((s32) reg_d0.b[0] < 0x1B) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
-                reg_d4.w = (u32) reg_a6;
+                reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
                 reg_d3.w = 0;
                 reg_d5.w = 0;
                 bullet_fire();
@@ -2920,7 +2920,7 @@ void shooter_drone(void) {
                 reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                 reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                 reg_d3.w = 0x800;
-                reg_d4.w = (u32) reg_a6;
+                reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
                 reg_d5.w = 0;
             }
         }
@@ -4082,7 +4082,7 @@ block_fire:
     reg_d0.h[0] += reg_d0.h[0];
     reg_d3.h[1] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a4 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a4;
     reg_d3.h[0] = (((u16)reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a4 + ((s16)((u16)reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a4;
-    reg_d4.w = (u32) reg_a6;
+    reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
     reg_d0.w = 0xC;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -4499,7 +4499,7 @@ next_10:
     reg_d3.h[0] = ((u16) reg_d0.h[0] + 2 != 0) ? *(u16 *)(reg_a4 + ((s16) ((u16) reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a4;
     reg_d1.h[0] += 2;
     reg_d1.h[0] &= 0x3C;
-    reg_d4.w = (u32) reg_a6;
+    reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
     reg_d0.w = 0xD;
     reg_d2.h[1] = ENTITY(reg_a6)->y.h;
     reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -5224,7 +5224,7 @@ next_3:
             reg_d3.h[0] = (((reg_d0.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a4 + ((s16)((reg_d0.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a4;
             reg_d3.h[0] += MID_TANK_HB(reg_a5)->turret_x;
             reg_d3.h[1] += 0x440;
-            reg_d4.w = (u32) reg_a6;
+            reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
             t4 = ENTITY(reg_a6)->x.h;
             reg_d2.h[0] = t4;

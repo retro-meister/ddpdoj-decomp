@@ -511,7 +511,11 @@ void stage4_boss_spinner_arms(s32 arg0, s32 arg1, void *arg2) {
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
+#ifdef DDPDOJ_PC
+    ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_spinner_arms_table, idx * 4)();
+#else
     ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_spinner_arms_table) + (idx * 4)))();
+#endif
 next_0:
     if (SPINNER_ARMS(reg_a4)->arm != 1) goto next_1;
     reg_d0.h[0] = ((arg0) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg0) & ~1)) : ENTITY(reg_a6)->flags.h;
@@ -542,7 +546,11 @@ next_0:
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
+#ifdef DDPDOJ_PC
+    ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_spinner_arms_table, idx * 4)();
+#else
     ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_spinner_arms_table) + (idx * 4)))();
+#endif
 next_1:
     if (SPINNER_ARMS(reg_a4)->arm != 2) goto next_2;
     reg_d0.h[0] = ((arg0) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg0) & ~1)) : ENTITY(reg_a6)->flags.h;
@@ -573,7 +581,11 @@ next_1:
     reg_d2.h[1] = ((arg1) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d2.h[0] = ((arg1 + 2) != 0) ? *(u16 *)((u8 *)reg_a6 + ((s16)(arg1 + 2) & ~1)) : ENTITY(reg_a6)->flags.h;
     reg_d4.w = 0;
+#ifdef DDPDOJ_PC
+    ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_spinner_arms_table, idx * 4)();
+#else
     ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_spinner_arms_table) + (idx * 4)))();
+#endif
 next_2:
     SPINNER_ARMS(reg_a4)->arm += 1;
     if (SPINNER_ARMS(reg_a4)->arm != 3) goto next_3;
@@ -1505,7 +1517,7 @@ void stage4_boss_fire_cutters(void) {
             reg_a3 += reg_d0.h[0];
             reg_tmp.h[1] = *(u16 *)reg_a3;
             reg_tmp.h[0] = *(u16 *)(reg_a3 + 2);
-            reg_a3 = (u8 *) reg_tmp.w;
+            reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             reg_d6.b[0] = (u8) (s8) *(s8 *)reg_a3;
             reg_a3 += 1;
             reg_d7.w = 0;
@@ -1525,7 +1537,7 @@ void stage4_boss_fire_cutters(void) {
                 STAGE4_CUTTER(reg_a0)->at_start.turn = (u8) reg_d6.b[0];
                 STAGE4_CUTTER(reg_a0)->at_start.radius = (s8) *(s8 *)reg_a3;
                 reg_a3 += 1;
-                reg_tmp.w = (u32) reg_a6;
+                reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a6);
                 STAGE4_CUTTER(reg_a0)->at_start.owner[0] = (u16) reg_tmp.h[1];
                 STAGE4_CUTTER(reg_a0)->at_start.owner[1] = (u16) reg_tmp.h[0];
                 STAGE4_CUTTER(reg_a0)->at_start.angle = (u8) CUTTERS(reg_a4)->angle;
@@ -1576,7 +1588,7 @@ void stage4_boss_fire_cutters_b(arg1)
         reg_a3 = (u8 *)D_0028DC68;
         reg_tmp.h[1] = *(u16 *)reg_a3;
         reg_tmp.h[0] = *(u16 *)(reg_a3 + 2);
-        reg_a3 = (u8 *) reg_tmp.w;
+        reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d6.b[0] = (u8) (s8) *(s8 *)reg_a3;
         reg_a3 += 1;
         reg_d7.w = 0;
@@ -1594,7 +1606,7 @@ void stage4_boss_fire_cutters_b(arg1)
             STAGE4_CUTTER(reg_a0)->at_start.radius = (s8) *(s8 *)reg_a3;
             var_a1 = (u8 *)(reg_a3 + 1);
             reg_a3 = var_a1;
-            reg_tmp.w = (u32) reg_a6;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a6);
             STAGE4_CUTTER(reg_a0)->at_start.owner[0] = (u16) reg_tmp.h[1];
             STAGE4_CUTTER(reg_a0)->at_start.owner[1] = (u16) reg_tmp.h[0];
             STAGE4_CUTTER(reg_a0)->at_start.angle = (u8) CUTTERS_B(reg_a4)->angle;
@@ -1908,7 +1920,11 @@ block_3:
             reg_d7.h[0] = reg_d1.h[0];
             reg_d4.w = 0;
             reg_tmp.h[0] = BOTH_SIDES(reg_a4)->pattern;
+#ifdef DDPDOJ_PC
+            ARCADE_POINTER_TABLE_AT(Fn, stage4_boss_fire_both_sides_table, reg_tmp.h[0] & ~3)();
+#else
             ((Fn)*(u32 *)((u8 *)((u8 *)stage4_boss_fire_both_sides_table) + (reg_tmp.h[0] & ~3)))();
+#endif
             BOTH_SIDES(reg_a4)->pattern += 4;
             BOTH_SIDES(reg_a4)->pattern &= 7;
             BOTH_SIDES(reg_a4)->burst.t.count -= 1;

@@ -294,7 +294,7 @@ next_90:
     reg_d5.h[0] = *(u16 *)(reg_a5 + 0x2C);
     reg_d0.w = 0x13;
     reg_a0 = (u8 *)g_direction64_offsets_2CC;
-    reg_d4.w = (u32) reg_a6;
+    reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x29);
     reg_d3.b[0] = reg_d1.b[0];
     reg_d1.b[0] += reg_d1.b[0];
@@ -364,7 +364,7 @@ next_sen60:
     if (reg_d6.h[0] != 0) goto next_sen80;
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6 = (u8 *) reg_tmp.w;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)->flags.b[1] |= 0x20;
 next_sen80:
     return;
@@ -1036,7 +1036,7 @@ block_d:
 block_e:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6 = (u8 *) reg_tmp.w;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_a0 = reg_a6;
     enemy_hitbox_debug_draw();
     reg_a0 = reg_a6 + 0x20;
@@ -1603,7 +1603,7 @@ next_12:
     reg_d0.h[0] = 0xA4;
     spawn_request_add();
     reg_a1 = reg_a6 + 0x20;
-    reg_tmp.w = (u32) reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *)(reg_a0 + 0x24) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a0 + 0x26) = (u16) reg_tmp.h[0];
     *(u16 *)(reg_a0 + 0x28) = 0x800;
@@ -1658,7 +1658,7 @@ next_17:
     entity_draw_layer1();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6 = (u8 *) reg_tmp.w;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     goto next_19;
 next_18:
     if ((s16) *(u16 *)(reg_a5 + 0x38) != -1) goto next_19;
@@ -2011,7 +2011,7 @@ void crane_turret_start(void) {
             *(u16 *)(reg_a5 + 0x2A) *= 0xFFFF;
             *(u16 *)(reg_a5 + 0x2C) *= 0xFFFF;
         }
-        reg_d0.w = (u32) reg_a6;
+        reg_d0.w = ARCADE_ADDRESS_ENCODE(reg_a6);
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x26);
         reg_tmp.w += reg_d0.w;
@@ -2422,7 +2422,7 @@ next_240:
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x36);
     if (reg_tmp.w != 0) goto next_250;
     reg_a1 = (u8 *)(rail_turret_table_2);
-    reg_tmp.w = (u32) reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x36) = (u16) reg_tmp.h[0];
 next_250:
@@ -2442,7 +2442,7 @@ next_260:
     if ((s32) reg_d0.h[0] > (s32) reg_d2.h[0]) goto next_270;
     reg_a1 = (u8 *)(rail_turret_table_3);
 next_270:
-    reg_tmp.w = (u32) reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *)(reg_a5 + 0x34) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a5 + 0x36) = (u16) reg_tmp.h[0];
     reg_d1.h[0] += 0xFF00;
@@ -2458,7 +2458,7 @@ next_280:
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x34);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x36);
     reg_d3.w = 0x0800FB80;
-    reg_a3 = (u8 *)(reg_tmp.w);
+    reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d3.h[0] += *(u16 *)(reg_a5 + 0x2C);
     reg_d1.h[0] += *(u16 *)reg_a3;
     reg_a3 += 2;
@@ -2788,7 +2788,7 @@ void stage4_tachyon_particle(u8 *arg0, u8 *arg1) {
     if (g_enemies_stopped == 0) {
         reg_tmp.h[1] = *(u16 *)(reg_a5 + 0x24);
         reg_tmp.h[0] = *(u16 *)(reg_a5 + 0x26);
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[0] = *(u16 *)(reg_a0 + 4);
         reg_d0.h[0] += *(u16 *)(reg_a5 + 0x28);
@@ -2807,7 +2807,7 @@ void stage4_tachyon_particle(u8 *arg0, u8 *arg1) {
         t2 = (u8 *)(reg_a5);
         reg_tmp.h[1] = (*(u16 *)((u8 *)(t2) + (0x24)));
         reg_tmp.h[0] = (*(u16 *)((u8 *)(t2) + (0x26)));
-        reg_a0 = (u8 *)reg_tmp.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
         reg_d0.h[0] = *(u16 *)(reg_a0 + 2);
         reg_d1.h[0] = *(u16 *)(reg_a0 + 4);
         reg_d0.h[0] += (*(u16 *)((u8 *)(t2) + (0x28)));
@@ -2865,7 +2865,7 @@ void heavy_cannon_parts_draw(void) {
     entity_draw_layer4();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6 = (u8 *)reg_tmp.w;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 }
 
 s32 sfx_explosion_ground_large();                            /* extern */
@@ -2885,7 +2885,7 @@ void heavy_cannon_part1_remove(void) {
     heavy_cannon_part_explode();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6 = (void *) reg_tmp.w;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)[1].attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x1B);
 }
 
@@ -2903,7 +2903,7 @@ void heavy_cannon_part2_remove(void) {
     heavy_cannon_part_explode();
     reg_tmp.h[1] = *(u16 *)(reg_a5 + 6);
     reg_tmp.h[0] = *(u16 *)(reg_a5 + 8);
-    reg_a6 = (void *) reg_tmp.w;
+    reg_a6 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     ENTITY(reg_a6)[2].attr.b.palette = (u8) *(u8 *)(reg_a5 + 0x1B);
 }
 

@@ -103,6 +103,7 @@ typedef s32 ArcadeSavedAddress;
 #ifdef DDPDOJ_PC
 #define ARCADE_ADDRESS_ENCODE(address) pc_arcade_address_encode((uintptr_t)(address))
 #define ARCADE_ADDRESS_DECODE(type, slot) ((type)pc_arcade_address_decode((u32)(slot)))
+#define ARCADE_POINTER_TABLE_AT(type, table, byte_offset) ((type)(table)[(byte_offset) / 4])
 #define STORE_ARCADE_ADDRESS(words, target) STORE_LONG(words, ARCADE_ADDRESS_ENCODE(target))
 #define STORE_ARCADE_ADDRESS_DIRECT(words, target) do { \
     u32 slot = ARCADE_ADDRESS_ENCODE(target); \
@@ -112,6 +113,7 @@ typedef s32 ArcadeSavedAddress;
 #else
 #define ARCADE_ADDRESS_ENCODE(address) ((u32)(address))
 #define ARCADE_ADDRESS_DECODE(type, slot) ((type)(slot))
+#define ARCADE_POINTER_TABLE_AT(type, table, byte_offset) (*(type *)((u8 *)(table) + (byte_offset)))
 #define STORE_ARCADE_ADDRESS(words, target) STORE_POINTER(words, target)
 #define STORE_ARCADE_ADDRESS_DIRECT(words, target) STORE_POINTER_DIRECT(words, target)
 #endif

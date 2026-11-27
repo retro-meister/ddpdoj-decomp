@@ -47,7 +47,7 @@ void stage3_boss_drone_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     temp_a0_2 = reg_d0.h[0] & ~3;
-    reg_a0 = *(u8 **)((u8 *)((u8 *)stage3_boss_drone_start_table) + temp_a0_2);
+    reg_a0 = ARCADE_POINTER_TABLE_AT(u8 *, stage3_boss_drone_start_table, temp_a0_2);
     BOSS_DRONE(reg_a5)->wait = (u8) *(u8 *)(reg_a0 + 1);
     BOSS_DRONE(reg_a5)->pause = (u8) *(u8 *)reg_a0;
     reg_a0 += 2;

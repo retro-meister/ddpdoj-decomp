@@ -4227,95 +4227,95 @@ void stage3_midboss_pointers_store(void) {
     if (stage3_midboss_mode_routines[0] != 0x0) {
         printf("error! st3mb_md_tbl[0]\n");
     }
-    STORE_POINTER(stage3_midboss_mode_routines, stage3_midboss_mode_00);
+    STORE_ARCADE_ADDRESS(stage3_midboss_mode_routines, stage3_midboss_mode_00);
     if (stage3_midboss_attack_mode_routines[1] != 0x2) {
         printf("error! st3mb_md_tbl[2]\n");
     }
-    STORE_POINTER(stage3_midboss_attack_mode_routines + 1, stage3_midboss_mode_attack_a);
+    STORE_ARCADE_ADDRESS(stage3_midboss_attack_mode_routines + 1, stage3_midboss_mode_attack_a);
     if (stage3_midboss_attack_mode_routines[3] != 0x4) {
         printf("error! st3mb_md_tbl[4]\n");
     }
-    STORE_POINTER(stage3_midboss_attack_mode_routines + 3, stage3_midboss_mode_attack_b);
+    STORE_ARCADE_ADDRESS(stage3_midboss_attack_mode_routines + 3, stage3_midboss_mode_attack_b);
     if (stage3_midboss_attack_mode_routines[5] != 0x6) {
         printf("error! st3mb_md_tbl[6]\n");
     }
-    STORE_POINTER(stage3_midboss_attack_mode_routines + 5, stage3_midboss_mode_attack_a);
+    STORE_ARCADE_ADDRESS(stage3_midboss_attack_mode_routines + 5, stage3_midboss_mode_attack_a);
     if (stage3_midboss_attack_mode_routines[7] != 0x8) {
         printf("error! st3mb_md_tbl[8]\n");
     }
-    STORE_POINTER(stage3_midboss_attack_mode_routines + 7, stage3_midboss_mode_attack_b);
+    STORE_ARCADE_ADDRESS(stage3_midboss_attack_mode_routines + 7, stage3_midboss_mode_attack_b);
     if (stage3_midboss_attack_mode_routines[9] != 0xa) {
         printf("error! st3mb_md_tbl[10]\n");
     }
-    STORE_POINTER(stage3_midboss_attack_mode_routines + 9, stage3_midboss_mode_05);
+    STORE_ARCADE_ADDRESS(stage3_midboss_attack_mode_routines + 9, stage3_midboss_mode_05);
     if (stage3_midboss_attack_mode_routines[11] != 0xc) {
         printf("error! st3mb_md_tbl[12]\n");
     }
-    STORE_POINTER(stage3_midboss_attack_mode_routines + 11, stage3_midboss_mode_leave);
+    STORE_ARCADE_ADDRESS(stage3_midboss_attack_mode_routines + 11, stage3_midboss_mode_leave);
     if (stage3_midboss2_state_routines_0[8] != 0x0) {
         printf("error! s3mm2_st_tbl0[0]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 8, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 8, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[10] != 0x2) {
         printf("error! s3mm2_st_tbl0[2]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 10, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 10, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[12] != 0x4) {
         printf("error! s3mm2_st_tbl0[4]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 12, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 12, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[14] != 0x6) {
         printf("error! s3mm2_st_tbl0[6]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 14, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 14, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[16] != 0x8) {
         printf("error! s3mm2_st_tbl0[8]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 16, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 16, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[18] != 0xa) {
         printf("error! s3mm2_st_tbl0[10]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 18, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 18, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[20] != 0xc) {
         printf("error! s3mm2_st_tbl0[12]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 20, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 20, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_0[22] != 0xe) {
         printf("error! s3mm2_st_tbl0[14]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_0 + 22, stage3_midboss2_state_0_04);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_0 + 22, stage3_midboss2_state_0_04);
     if (stage3_midboss2_state_routines_1[0] != 0x0) {
         printf("error! s3mm2_st_tbl1[0]\n");
     }
-    STORE_POINTER(stage3_midboss2_state_routines_1, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss2_state_routines_1, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[1] != 0x2) {
         printf("error! s3mm2_st_tbl1[2]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 1, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 1, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[3] != 0x4) {
         printf("error! s3mm2_st_tbl1[4]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 3, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 3, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[5] != 0x6) {
         printf("error! s3mm2_st_tbl1[6]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 5, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 5, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[7] != 0x8) {
         printf("error! s3mm2_st_tbl1[8]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 7, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 7, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[9] != 0xa) {
         printf("error! s3mm2_st_tbl1[10]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 9, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 9, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[11] != 0xc) {
         printf("error! s3mm2_st_tbl1[12]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 11, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 11, stage3_midboss_shot);
     if (stage3_midboss_shot_routines[13] != 0xe) {
         printf("error! s3mm2_st_tbl1[14]\n");
     }
-    STORE_POINTER(stage3_midboss_shot_routines + 13, stage3_midboss_shot);
+    STORE_ARCADE_ADDRESS(stage3_midboss_shot_routines + 13, stage3_midboss_shot);
 }
 
 extern u16 D_00261D30[];

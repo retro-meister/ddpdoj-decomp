@@ -130,30 +130,30 @@ void stage5_boss_main(void) {
         enemy_remove();
         return;
     }
-    reg_a0 = (u8 *)(((s32)reg_a6));
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6));
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x20);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x20);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x40);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x40);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x60);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x60);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x80);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x80);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0xA0);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0xA0);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0xC0);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0xC0);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x1A0);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x1A0);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x140);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x140);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x160);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x160);
     enemy_hitbox_debug_draw();
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x180);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x180);
     enemy_hitbox_debug_draw();
 #ifdef DEATH_LABEL
-    reg_a0 = (u8 *)(((s32)reg_a6) + 0x200);
+    reg_a0 = (u8 *)(((ArcadeSavedAddress)reg_a6) + 0x200);
     enemy_hitbox_debug_draw();
 #endif
 }

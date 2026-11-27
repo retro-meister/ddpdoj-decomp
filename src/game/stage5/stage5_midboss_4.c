@@ -949,7 +949,7 @@ void stage5_midboss4_attack_beams(arg1)
         if (g_bullets_blocked == 0) {
             reg_d0.w = ENEMY_STAGE5_MIDBOSS4_WAVE_BEAM;
             spawn_request_add();
-            reg_tmp.w = (u32) reg_a6;
+            reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a6);
             STAGE5_MIDBOSS4_WAVE_BEAM(reg_a0)->owner[0] = (u16) reg_tmp.h[1];
             STAGE5_MIDBOSS4_WAVE_BEAM(reg_a0)->owner[1] = (u16) reg_tmp.h[0];
             STAGE5_MIDBOSS4_WAVE_BEAM(reg_a0)->left = (u16) STAGE5_MIDBOSS4_BEAMS(reg_a4)->left;
@@ -1105,7 +1105,7 @@ void stage5_midboss4_wave_beam(void) {
     if (g_enemy_signal_1 == 0) goto remove;
     reg_tmp.h[1] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[0];
     reg_tmp.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[1] = ENTITY(reg_a0)->y.h;
     reg_d0.h[0] = ENTITY(reg_a0)->x.h;
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
@@ -1167,7 +1167,7 @@ wave_done:
     if (!(STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->parts & 8)) goto draw;
     reg_tmp.h[1] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[0];
     reg_tmp.h[0] = STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->owner[1];
-    reg_a0 = (u8 *)reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     if (STAGE5_MIDBOSS4_WAVE_BEAM(reg_a5)->left != 0) {
         reg_a0 = reg_a0 + 0x26;
     } else {

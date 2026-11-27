@@ -1558,7 +1558,7 @@ block_8:
             reg_a3 += reg_d4.h[0];
             reg_tmp.h[1] = *(u16 *)reg_a3;
             reg_tmp.h[0] = *(u16 *)(reg_a3 + 2);
-            reg_a3 = (u8 *) reg_tmp.w;
+            reg_a3 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
             reg_d4.h[0] = FORM2_HORN(reg_a4)->muzzle;
             reg_a3 += reg_d4.h[0];
             stage5_boss_form2_horn_fire();

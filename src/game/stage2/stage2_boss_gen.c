@@ -852,7 +852,7 @@ block_30:
                                 temp_a0_3 = ENTITY(reg_a6)->x.h;
                                 reg_d2.h[0] = temp_a0_3;
                                 reg_d3.w = reg_d7.w;
-                                reg_d4.w = (u32) reg_a6;
+                                reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
                                 reg_d0.w = 0x1000C;
                                 bullet_fire256_2way();
                             }
