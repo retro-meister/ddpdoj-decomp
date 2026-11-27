@@ -1,6 +1,6 @@
 # DoDonPachi DaiOuJou PS2 Decompilation & PC Port
 
-Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). Also builds a native PC port, currently supporting Windows and MacOS. No game assets or binaries are included; supply your own ISO to build.
+Byte-matching decompilation of **DoDonPachi DaiOuJou** (PS2), covering all three disc executables: the main game (`SLPS_252.33`), Death Label (`DEATH.ELF`), and the Gallery (`GALLERY.ELF`). Also builds a native PC port for Windows, macOS and Linux. Supply your own retail ISO to build the PS2 version or play the PC port.
 
 All functions have been 100% matched and all data has been moved into C. The build is also shiftable allowing for mods. However many parts of the code still need cleaning up.
 
@@ -73,6 +73,18 @@ cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
 cmake --build build/pc --parallel
 ./build/pc/ddpdoj
 ```
+
+**Linux Terminal Build**
+
+Install GCC, Make, CMake, Python 3 and [SDL’s build dependencies for your distribution](https://wiki.libsdl.org/SDL3/README-linux#build-dependencies).
+
+```sh
+cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
+cmake --build build/pc --parallel
+./build/pc/ddpdoj
+```
+
+Select your retail ISO on first launch. The port remembers its path.
 
 **Windows PowerShell Build**
 
