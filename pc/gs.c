@@ -33,12 +33,6 @@ typedef struct {
 } GsDrawState;
 
 static GsDrawState gs;
-static bool sharp_upscale = true;
-
-void pc_gs_toggle_upscale(void)
-{
-    sharp_upscale = !sharp_upscale;
-}
 
 static void destroy_game_target(void)
 {
@@ -172,7 +166,7 @@ static bool draw_textured(GsDrawState *state, unsigned primitive)
         blend = SDL_BLENDMODE_BLEND;
     }
     SDL_ScaleMode scale = linear ? SDL_SCALEMODE_LINEAR : SDL_SCALEMODE_NEAREST;
-    if (framebuffer_texture && linear && sharp_upscale) {
+    if (framebuffer_texture && linear) {
         scale = SDL_SCALEMODE_PIXELART;
     }
     if (!SDL_SetTextureBlendMode(texture, blend) || !SDL_SetTextureScaleMode(texture, scale)) {

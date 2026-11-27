@@ -69,9 +69,6 @@ static bool process_input(SDL_Renderer *renderer)
         if (event.type == SDL_EVENT_QUIT) {
             return false;
         }
-        if (event.type == SDL_EVENT_KEY_DOWN && !event.key.repeat && event.key.scancode == SDL_SCANCODE_F2) {
-            pc_gs_toggle_upscale();
-        }
         pc_pad_handle_event(&event);
     }
     pc_pad_capture();
