@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
@@ -215,6 +216,7 @@ s32 sprite_palette_load();
 s32 velocity_from_dir256();
 extern u8 stage4_boss_enter_flash_at_18[];
 extern u8 g_boss_present_b1;
+extern u16 g_boss_hyper_wait;
 extern u16 g_side_scroll_x[];
 
 void stage4_boss_move_enter(void) {
@@ -273,6 +275,7 @@ void stage4_boss_move_enter(void) {
                 g_boss_present_b1 |= 0x10;
                 reg_d0.w = 1;
                 g_boss_present_b1 |= 2;
+                if (GAME_RULE(0, 1)) g_boss_hyper_wait = 1;
                 boss_movement_start();
                 reg_d0.w = 3;
                 boss_phase_start();

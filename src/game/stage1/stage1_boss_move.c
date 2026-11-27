@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #ifdef DDPDOJ_PC
 void boss_movement_start(void);
@@ -194,6 +195,7 @@ s32 entity_velocity();
 s32 direction_turn_toward();
 s32 entity_distance_to();
 extern u8 g_boss_present_b1;
+extern u16 g_boss_hyper_wait;
 extern u16 g_side_scroll_x[];
 
 void stage1_boss_move_enter(void) {
@@ -248,6 +250,7 @@ void stage1_boss_move_enter(void) {
             if (STAGE1_EXTRA(reg_a6)->enter_anim == 0x180) {
                 g_boss_present_b1 |= 0x10;
                 g_boss_present_b1 |= 2;
+                if (GAME_RULE(0, 1)) g_boss_hyper_wait = 1;
                 reg_d0.w = 2;
                 boss_movement_start();
                 reg_d0.w = 1;

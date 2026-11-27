@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "fade.h"
 #include "entity.h"
@@ -74,7 +75,7 @@ void stage3_boss_start(void) {
     reg_d0.h[0] = 0xA;
     reg_a0 = (u8 *)palette_white;
     sprite_palette_load();
-    g_boss_hyper_wait = 1;
+    if (GAME_RULE(1, 0)) g_boss_hyper_wait = 1;
     g_boss_present_b1 |= 1;
     g_boss_hp_unit = 0x4A0;
     g_boss_present_b1 |= 4;

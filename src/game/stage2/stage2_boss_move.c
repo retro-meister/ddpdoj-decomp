@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #ifdef DDPDOJ_PC
 void boss_movement_start(void);
@@ -170,6 +171,7 @@ s32 entity_follow_scroll();
 extern u8 stage2_boss_enter_flash_at_32[];
 extern u8 g_boss_present;
 extern u8 g_boss_present_b1;
+extern u16 g_boss_hyper_wait;
 
 void stage2_boss_move_enter(void) {
     entity_follow_scroll();
@@ -212,6 +214,7 @@ void stage2_boss_move_enter(void) {
     boss_phase_start();
     stage2_boss_radome_show();
     boss_movement_stop();
+    if (GAME_RULE(0, 1)) g_boss_hyper_wait = 1;
     reg_a0 = (u8 *)stage2_boss_enter_flash;
     fade_in_and_release();
     stage2_boss_parts_follow();

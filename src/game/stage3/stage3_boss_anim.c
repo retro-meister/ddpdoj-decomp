@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "entity.h"
 #include "stage3_boss.h"
@@ -337,6 +338,7 @@ s32 fade_in_and_release();
 s32 stage3_boss_shield_off();
 s32 stage3_boss_parts_flags_set();
 extern u8 g_boss_present_b1;
+extern u16 g_boss_hyper_wait;
 
 void stage3_boss_entrance_anim() {
     u16 t1;
@@ -368,6 +370,7 @@ next_40:
             ENTRANCE(reg_a4)->running = 0;
             g_boss_present_b1 |= 2;
             g_boss_present_b1 |= 0x10;
+            if (GAME_RULE(0, 1)) g_boss_hyper_wait = 1;
             stage3_boss_shield_off();
             stage3_boss_parts_flags_set();
             reg_d0.w = 9;

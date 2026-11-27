@@ -111,7 +111,7 @@ void stage1_boss_start(void) {
     reg_d0.h[0] = 0x11;
     reg_a0 = (u8 *)stage1_boss_start_table_3;
     sprite_palette_load();
-    g_boss_hyper_wait = 1;
+    if (GAME_RULE(1, 0)) g_boss_hyper_wait = 1;
     g_boss_present_b1 |= 1;
     g_boss_present_b1 |= 4;
     g_boss_hp_unit = 0x1A0;
