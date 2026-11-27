@@ -145,7 +145,7 @@ void objects_task(void) {
                 return;
             }
 next_1:
-            switch (GAME_RULE(g_loop, !g_loop || (g_black_label_single_loop && g_true_last_boss == 1))) {
+            switch (GAME_RULE(g_loop, !g_loop || (g_black_label_single_loop && g_true_last_boss != 1))) {
             case 0:
                 break;
             default:

@@ -692,6 +692,15 @@ void player1_task() {
     reg_d6.h[0] = g_p1_missed;
     PLAYER(reg_a6)->ship_type.h = (u16) g_p1_ship_type;
     PLAYER(reg_a6)->power_style.h = (u16) g_p1_power_style;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        extern u16 g_p1_max_hits;
+        void p1_chain_state_clear(void);
+        u16 max_hits = g_p1_max_hits;
+        p1_chain_state_clear();
+        g_p1_max_hits = max_hits;
+    }
+#endif
     if (*(u8 *)(reg_a5 + 7) != 0) {
         player_spawn();
         return;
@@ -735,6 +744,15 @@ void player2_task() {
     reg_d6.h[0] = g_p2_missed;
     PLAYER(reg_a6)->ship_type.h = (u16) g_p2_ship_type;
     PLAYER(reg_a6)->power_style.h = (u16) g_p2_power_style;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        extern u16 g_p2_max_hits;
+        void p2_chain_state_clear(void);
+        u16 max_hits = g_p2_max_hits;
+        p2_chain_state_clear();
+        g_p2_max_hits = max_hits;
+    }
+#endif
     if (*(u8 *)(reg_a5 + 7) != 0) {
         player_spawn();
         return;
