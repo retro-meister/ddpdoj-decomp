@@ -330,7 +330,9 @@ if(BUILD_TESTING)
         endforeach()
         add_test(NAME retail_super_replay COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-super-replay" --super-replay)
-        set_tests_properties(retail_super_replay PROPERTIES
+        add_test(NAME retail_super_replay_stage5 COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
+            "${CMAKE_CURRENT_BINARY_DIR}/test-cards-super-replay-stage5" --super-replay 4)
+        set_tests_properties(retail_super_replay retail_super_replay_stage5 PROPERTIES
             ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 240)
     endif()
 endif()

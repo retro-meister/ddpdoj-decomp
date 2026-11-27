@@ -95,12 +95,19 @@ enum {
     SUPER_REPLAY_MENU_ITEM = 4,
     REPLAY_SLOTS_READY = 4,
     REPLAY_PLAYBACK = 2,
-    RETAIL_STAGE_3_REPLAY = 2,
-    RETAIL_STAGE_3_INPUTS = 13690,
-    RETAIL_STAGE_3_FINAL_SCORE = 0x16208329,
 };
 
-static SDL_GamepadButton replay_menu_button(bool *confirmed)
+typedef struct {
+    int slot;
+    s32 inputs;
+    u32 final_score;
+} RetailReplay;
+
+/* Each final score is also the starting score in the following disc replay. */
+static const RetailReplay stage_three = {2, 13690, 0x16208329};
+static const RetailReplay stage_five = {4, 19759, 0x60589826};
+
+static SDL_GamepadButton replay_menu_button(bool *confirmed, int slot)
 {
     if (*confirmed) return SDL_GAMEPAD_BUTTON_INVALID;
     if (g_attract_step != ATTRACT_MENU) return SDL_GAMEPAD_BUTTON_START;
@@ -111,7 +118,7 @@ static SDL_GamepadButton replay_menu_button(bool *confirmed)
         return g_menu_cursor == SUPER_REPLAY_MENU_ITEM ? SDL_GAMEPAD_BUTTON_EAST : SDL_GAMEPAD_BUTTON_DPAD_DOWN;
     }
     if (g_menu_page == PAGE_SUPER_REPLAY && g_replay_slots_state == REPLAY_SLOTS_READY) {
-        *confirmed = g_replay_slots_cursor == RETAIL_STAGE_3_REPLAY;
+        *confirmed = g_replay_slots_cursor == slot;
         return *confirmed ? SDL_GAMEPAD_BUTTON_EAST : SDL_GAMEPAD_BUTTON_DPAD_DOWN;
     }
     return SDL_GAMEPAD_BUTTON_INVALID;
@@ -121,7 +128,11 @@ static SDL_GamepadButton replay_menu_button(bool *confirmed)
 int main(int argc, char **argv)
 {
 #ifndef DEATH_LABEL
-    const bool replay = argc == 4 && strcmp(argv[3], "--super-replay") == 0;
+    const RetailReplay *replay = NULL;
+    if (argc >= 4 && strcmp(argv[3], "--super-replay") == 0) {
+        if (argc == 4 || (argc == 5 && strcmp(argv[4], "2") == 0)) replay = &stage_three;
+        if (argc == 5 && strcmp(argv[4], "4") == 0) replay = &stage_five;
+    }
     require(argc == 3 || replay, "Expected the retail ISO, a test-only memory card directory and optional replay mode");
     s32 replay_inputs = 0;
     bool replay_finished = false;
@@ -161,7 +172,7 @@ int main(int argc, char **argv)
 #else
     const unsigned bomb_at = 95;
 #endif
-    const unsigned max_frames = replay ? 20000 : MAX_FRAMES;
+    const unsigned max_frames = replay ? 30000 : MAX_FRAMES;
     for (unsigned frame = 0; frame < max_frames && played < GAMEPLAY_FRAMES; ++frame) {
         if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
             require(SDL_SetJoystickVirtualButton(joystick, pressed, false), "Release controller button");
@@ -169,7 +180,7 @@ int main(int argc, char **argv)
         } else if (loaded && frame % 9 == 0) {
 #ifndef DEATH_LABEL
             if (replay) {
-                pressed = replay_menu_button(&confirmed);
+                pressed = replay_menu_button(&confirmed, replay->slot);
             } else
 #endif
             {
@@ -219,9 +230,9 @@ int main(int argc, char **argv)
 
 #ifndef DEATH_LABEL
     if (replay) {
-        SDL_Log("Stage 3 replay consumed %d inputs and finished with score %x", replay_inputs, g_p1_score);
-        require(replay_finished && replay_inputs == RETAIL_STAGE_3_INPUTS, "Finish the retail Stage 3 replay");
-        require(g_p1_score == RETAIL_STAGE_3_FINAL_SCORE, "Match the starting score of the next retail stage");
+        SDL_Log("Super Replay %02d consumed %d inputs and finished with score %x", replay->slot, replay_inputs, g_p1_score);
+        require(replay_finished && replay_inputs == replay->inputs, "Finish the retail replay");
+        require(g_p1_score == replay->final_score, "Match the starting score of the next retail stage");
     } else
 #endif
     {

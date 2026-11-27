@@ -497,6 +497,17 @@ extern s16 g_player2[];
 extern s16 g_player1[];
 
 void ground_wait_stage_load(void) {
+#ifdef DDPDOJ_PC
+    extern u8 g_replay_start_pending;
+    extern u16 g_score_panel_intro;
+    /* The retail disc transfer outlasts the HUD intro on a fresh stage load.
+       If the ISO finishes first, the ground task can start scrolling two
+       replay inputs early. Publish the fresh stage in the same task phase. */
+    if (g_stage_load_state == 6 && g_replay_mode == 2 &&
+        g_replay_start_pending && g_score_panel_intro) {
+        return;
+    }
+#endif
     stage_load_step();
     D_0028DF1C += 1;
     if (g_stage_load_finished == 0) {
