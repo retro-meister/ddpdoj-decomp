@@ -1,6 +1,7 @@
 #include "cdvd.h"
 #include "combat_state.h"
 #include "pc_player_state.h"
+#include "pc_task_state.h"
 #include "state_slot.h"
 #include "pc_arcade_address.h"
 #include "black_label.h"
@@ -246,6 +247,7 @@ static bool has_relocated_enemy(void)
 typedef struct {
     PcPlayerState players;
     PcCombatPools pools;
+    PcTaskState tasks;
 } GameplaySnapshot;
 
 int main(int argc, char **argv)
@@ -263,7 +265,7 @@ int main(int argc, char **argv)
         GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
         pc_arcade_address_init();
         require(saved && size == sizeof(*saved) && pc_combat_restore(&saved->pools) &&
-                pc_player_state_restore(&saved->players),
+                pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks),
                 "Restore combat pools into a fresh process");
         require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
         PcPlayerState restored;
@@ -382,6 +384,7 @@ int main(int argc, char **argv)
             GameplaySnapshot saved = {0};
             pc_combat_capture(&saved.pools);
             pc_player_state_capture(&saved.players);
+            pc_tasks_capture(&saved.tasks);
             require(pc_state_slot_write(save_pools, pool_mode, 1, &saved, sizeof(saved)),
                     "Write pools from live gameplay");
             goto cleanup;

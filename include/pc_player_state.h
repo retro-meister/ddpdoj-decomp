@@ -8,6 +8,7 @@ typedef struct {
     _Alignas(16) uint8_t replay[0x5534];
     uint8_t player_tail[2][112 - 98];
     uint8_t option_tail[2][112 - 100];
+    uint8_t slot_tail[80 - 0x48];
     uint32_t boss_hp;
     uint16_t rng_cursor;
 } PcPlayerState;
