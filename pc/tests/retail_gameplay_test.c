@@ -13,7 +13,7 @@
 #endif
 #include "game_loop.h"
 #include "gs.h"
-#include "gs_texture.h"
+#include "game_snapshot.h"
 #include "presentation.h"
 #include "memory_card.h"
 #include "pc_input.h"
@@ -249,46 +249,23 @@ static bool has_relocated_enemy(void)
 }
 
 typedef struct {
-    PcPlayerState expected[12];
-    PcPlayerState players;
-    PcCombatPools pools;
-    PcTaskState tasks;
-    PcReplayFrame replay;
-    u8 regions[];
-} GameplaySnapshot;
+    PcPlayerState at_save;
+    PcPlayerState next[12];
+} ExpectedTrajectory;
 
-static void test_frame_continuation(SDL_Renderer *renderer, GameplaySnapshot *saved)
+static void run_trajectory(SDL_Renderer *renderer, ExpectedTrajectory *states, bool compare)
 {
-    enum { frames = 12 };
-    PcPlayerState *expected = saved->expected;
-    PcPlayerState player;
-    for (unsigned pass = 0; pass < 2; ++pass) {
-        if (pass) {
-            require(pc_combat_restore(&saved->pools) && pc_tasks_restore(&saved->tasks) &&
-                    pc_player_state_restore(&saved->players) && pc_replay_frame_restore(&saved->replay) &&
-                    pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
-                    "Return to the captured gameplay frame");
-        }
-        for (unsigned i = 0; i < frames; ++i) {
-            pc_pad_capture();
-            game_run_frame();
-            require(pc_gs_ok() && SDL_RenderPresent(renderer), "Advance restored gameplay");
-            pc_player_state_capture(&player);
-            if (!pass) expected[i] = player;
-            else if (memcmp(&player, &expected[i], sizeof(player))) {
-                const u8 *actual = (const u8 *)&player;
-                const u8 *wanted = (const u8 *)&expected[i];
-                for (size_t j = 0; j < sizeof(player); ++j) {
-                    if (actual[j] != wanted[j]) {
-                        SDL_Log("Frame %u offset %#zx expected %u got %u", i + 1, j, wanted[j], actual[j]);
-                        break;
-                    }
-                }
-                require(false, "Repeat the same player and weapon trajectory");
-            }
-        }
+    for (unsigned i = 0; i < SDL_arraysize(states->next); ++i) {
+        pc_pad_capture();
+        game_run_frame();
+        require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render after restoring gameplay");
+        PcPlayerState player;
+        pc_player_state_capture(&player);
+        if (compare) {
+            require(!memcmp(&player, &states->next[i], sizeof(player)),
+                    "Reproduce player and weapon state on each subsequent frame");
+        } else states->next[i] = player;
     }
-
 }
 
 int main(int argc, char **argv)
@@ -347,49 +324,25 @@ int main(int argc, char **argv)
     }
 #endif
     if (load_pools) {
-        size_t size;
-        GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
         unsigned boot_frames = 0;
         while (!game_boot_frame()) {
             require(++boot_frames < MAX_FRAMES && pc_gs_ok() && SDL_RenderPresent(renderer),
                     "Boot the fresh process before resuming gameplay");
         }
-        size_t fixed = sizeof(*saved) + pc_frame_regions_size();
-        require(saved && size > fixed, "Read gameplay and texture sections");
-        SDL_IOStream *textures = SDL_IOFromConstMem((u8 *)saved + fixed, size - fixed);
-        require(textures && pc_gs_textures_load(textures) && SDL_CloseIO(textures),
-                "Restore the saved GS textures");
-        require(pc_combat_restore(&saved->pools) &&
-                pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks) &&
-                pc_replay_frame_restore(&saved->replay) &&
-                pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
-                "Restore combat pools into a fresh process");
+        require(pc_game_load(load_pools, pool_mode, 1), "Load gameplay in a fresh process");
         require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
+        char *oracle = NULL;
+        require(SDL_asprintf(&oracle, "%s.expected", load_pools) >= 0, "Resolve oracle file");
+        size_t size;
+        ExpectedTrajectory *expected = SDL_LoadFile(oracle, &size);
+        require(expected && size == sizeof(*expected), "Read expected gameplay trajectory");
         PcPlayerState restored;
         pc_player_state_capture(&restored);
-        require(!memcmp(&restored, &saved->players, sizeof(restored)),
-                "Recover player, weapon and replay fields exactly after restart");
-        require(g_replay_position == saved->replay.replay_position &&
-                !memcmp(&pc_replay, &saved->replay.recording, sizeof(pc_replay)),
-                "Restore replay inputs and cursor");
-        for (unsigned i = 0; i < 12; ++i) {
-            pc_pad_capture();
-            game_run_frame();
-            require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render after cold restore");
-            pc_player_state_capture(&restored);
-            if (memcmp(&restored, &saved->expected[i], sizeof(restored))) {
-                const u8 *wanted = (const u8 *)&saved->expected[i];
-                const u8 *actual = (const u8 *)&restored;
-                for (size_t j = 0; j < sizeof(restored); ++j) {
-                    if (actual[j] != wanted[j]) {
-                        SDL_Log("Cold frame %u offset %#zx expected %u got %u", i + 1, j, wanted[j], actual[j]);
-                        break;
-                    }
-                }
-                require(false, "Repeat the player and weapon trajectory after restart");
-            }
-        }
-        SDL_free(saved);
+        require(!memcmp(&restored, &expected->at_save, sizeof(restored)), "Restore the saved frame");
+        run_trajectory(renderer, expected, true);
+        SDL_free(expected);
+        require(SDL_RemovePath(oracle), "Remove test oracle");
+        SDL_free(oracle);
         require(SDL_RemovePath(load_pools), "Remove test slot");
         goto cleanup;
     }
@@ -454,30 +407,22 @@ int main(int argc, char **argv)
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
         if (save_pools && played >= 300 && has_relocated_enemy()) {
-            size_t size = sizeof(GameplaySnapshot) + pc_frame_regions_size();
-            GameplaySnapshot *saved = SDL_calloc(1, size);
-            require(saved != NULL, "Allocate gameplay snapshot");
-            pc_combat_capture(&saved->pools);
-            pc_player_state_capture(&saved->players);
-            pc_tasks_capture(&saved->tasks);
-            pc_replay_frame_capture(&saved->replay);
-            require(pc_frame_regions_capture(saved->regions, pc_frame_regions_size()),
-                    "Capture stage flow and screen layers");
+            ExpectedTrajectory *expected = SDL_calloc(1, sizeof(*expected));
+            require(expected != NULL, "Allocate expected gameplay trajectory");
+            pc_player_state_capture(&expected->at_save);
+            require(pc_game_save(save_pools, pool_mode, 1), "Save live gameplay");
             if (pressed != SDL_GAMEPAD_BUTTON_INVALID)
                 SDL_SetJoystickVirtualButton(joystick, pressed, false);
             SDL_SetJoystickVirtualButton(joystick, SDL_GAMEPAD_BUTTON_WEST, false);
             SDL_UpdateGamepads();
-            SDL_IOStream *textures = SDL_IOFromDynamicMem();
-            require(textures && pc_gs_textures_save(textures), "Capture the GS textures");
-            size_t texture_size = (size_t)SDL_GetIOSize(textures);
-            saved = SDL_realloc(saved, size + texture_size);
-            require(saved && SDL_SeekIO(textures, 0, SDL_IO_SEEK_SET) == 0 &&
-                    SDL_ReadIO(textures, (u8 *)saved + size, texture_size) == texture_size &&
-                    SDL_CloseIO(textures), "Append texture state to the slot");
-            test_frame_continuation(renderer, saved);
-            require(pc_state_slot_write(save_pools, pool_mode, 1, saved, size + texture_size),
-                    "Write pools from live gameplay");
-            SDL_free(saved);
+            run_trajectory(renderer, expected, false);
+            require(pc_game_load(save_pools, pool_mode, 1), "Restore in the running process");
+            run_trajectory(renderer, expected, true);
+            char *oracle = NULL;
+            require(SDL_asprintf(&oracle, "%s.expected", save_pools) >= 0 &&
+                    SDL_SaveFile(oracle, expected, sizeof(*expected)), "Save reference trajectory");
+            SDL_free(oracle);
+            SDL_free(expected);
             goto cleanup;
         }
 

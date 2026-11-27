@@ -189,13 +189,14 @@ target_link_libraries(ddpdoj_main_system PRIVATE ddpdoj_memory_card)
 target_link_libraries(ddpdoj_death_system PRIVATE ddpdoj_memory_card)
 target_link_libraries(ddpdoj_gallery PRIVATE ddpdoj_cdvd ddpdoj_gs ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
+set(snapshot_sources game_snapshot.c combat_state.c frame_regions.c state_slot.c)
 foreach(mode IN ITEMS main death)
     # The original core groups call into one another. Let CMake rescan the
     # archive group when the platform linker resolves static inputs in order.
     target_link_libraries(ddpdoj_${mode}_system PRIVATE ddpdoj_${mode}_frontend ddpdoj_mode)
     target_link_libraries(ddpdoj_${mode}_frontend PRIVATE ddpdoj_${mode}_gameplay)
     target_link_libraries(ddpdoj_${mode}_gameplay PRIVATE ddpdoj_${mode}_system)
-    add_library(${mode}-mode MODULE mode_runtime.c)
+    add_library(${mode}-mode MODULE mode_runtime.c ${snapshot_sources})
     target_link_libraries(${mode}-mode PRIVATE
         ddpdoj_${mode}_system
         ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
@@ -364,7 +365,7 @@ if(BUILD_TESTING)
 
         foreach(mode IN ITEMS main death)
             set(target ddpdoj_${mode}_retail_gameplay_test)
-            add_executable(${target} tests/retail_gameplay_test.c combat_state.c frame_regions.c state_slot.c)
+            add_executable(${target} tests/retail_gameplay_test.c ${snapshot_sources})
             target_link_libraries(${target} PRIVATE ddpdoj_${mode}_system
                 ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
             set(pool_slot "${CMAKE_CURRENT_BINARY_DIR}/test-${mode}-combat.bin")
