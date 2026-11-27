@@ -104,6 +104,10 @@ cmake --build build/pc --parallel
 ./build/pc/ddpdoj
 ```
 
+### Hotkeys
+
+- Hold `Tab` to fast-forward.
+
 ## Bonus features
 
 - **Black Label** mode added with separate rankings and replay slots.
