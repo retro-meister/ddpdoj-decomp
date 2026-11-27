@@ -25,7 +25,7 @@ extern u8 test_input_mark_coin2[8];
 extern u8 test_input_mark_start1[8];
 extern u8 test_input_mark_start2[8];
 extern u8 test_input_mark[4];
-extern u8 g_arcade_coin_port;
+extern u16 g_arcade_coin_port;
 
 void test_input_begin(void) {
     layers_clear_all();
@@ -71,28 +71,28 @@ void test_input_update(void) {
     u8 column_p2;
 
     test_input_print_labels();
-    reg_a0 = &g_arcade_coin_port;
+    reg_a0 = (u8 *)&g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
     if (!(reg_d0.w & 0x20)) {
         reg_d0.h[0] = 2;
         reg_a0 = test_input_mark_service;
         test_print_lines();
     }
-    reg_a0 = &g_arcade_coin_port;
+    reg_a0 = (u8 *)&g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
     if (!(reg_d0.w & 0x10)) {
         reg_d0.h[0] = 2;
         reg_a0 = test_input_mark_test;
         test_print_lines();
     }
-    reg_a0 = &g_arcade_coin_port;
+    reg_a0 = (u8 *)&g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
     if (!(reg_d0.w & 1)) {
         reg_d0.h[0] = 2;
         reg_a0 = test_input_mark_coin1;
         test_print_lines();
     }
-    reg_a0 = &g_arcade_coin_port;
+    reg_a0 = (u8 *)&g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
     if (!(reg_d0.w & 2)) {
         reg_d0.h[0] = 2;

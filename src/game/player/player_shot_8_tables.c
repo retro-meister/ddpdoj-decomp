@@ -384,683 +384,428 @@ u16 player_shot_8_flight_023[4] = {
     0xF800, 0xFD00, 0x0A18, 0x0000,
 };
 
-u16 player_shot_8_flight_028[2] = {
+u16 player_shot_8_flight_028[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6BC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_029[2] = {
+u16 player_shot_8_flight_029[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6C4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_030[2] = {
+u16 player_shot_8_flight_030[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6CC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_031[2] = {
+u16 player_shot_8_flight_031[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6D4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_032[2] = {
+u16 player_shot_8_flight_032[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6DC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_033[2] = {
+u16 player_shot_8_flight_033[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6E4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_034[2] = {
+u16 player_shot_8_flight_034[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6EC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_035[2] = {
+u16 player_shot_8_flight_035[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6F4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_036[2] = {
+u16 player_shot_8_flight_036[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D6FC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_037[2] = {
+u16 player_shot_8_flight_037[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D704[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_038[2] = {
+u16 player_shot_8_flight_038[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D70C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_039[2] = {
+u16 player_shot_8_flight_039[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D714[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_040[2] = {
+u16 player_shot_8_flight_040[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D71C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_041[2] = {
+u16 player_shot_8_flight_041[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D724[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_042[2] = {
+u16 player_shot_8_flight_042[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D72C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_043[2] = {
+u16 player_shot_8_flight_043[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D734[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_044[2] = {
+u16 player_shot_8_flight_044[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D73C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_048[2] = {
+u16 player_shot_8_flight_048[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D744[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_049[2] = {
+u16 player_shot_8_flight_049[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D74C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_050[2] = {
+u16 player_shot_8_flight_050[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D754[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_051[2] = {
+u16 player_shot_8_flight_051[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D75C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_052[2] = {
+u16 player_shot_8_flight_052[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D764[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_053[2] = {
+u16 player_shot_8_flight_053[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D76C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_054[2] = {
+u16 player_shot_8_flight_054[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D774[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_055[2] = {
+u16 player_shot_8_flight_055[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D77C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_056[2] = {
+u16 player_shot_8_flight_056[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D784[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_057[2] = {
+u16 player_shot_8_flight_057[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D78C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_058[2] = {
+u16 player_shot_8_flight_058[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D794[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_059[2] = {
+u16 player_shot_8_flight_059[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D79C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_060[2] = {
+u16 player_shot_8_flight_060[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D7A4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_061[2] = {
+u16 player_shot_8_flight_061[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D7AC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_062[2] = {
+u16 player_shot_8_flight_062[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D7B4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_063[2] = {
+u16 player_shot_8_flight_063[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D7BC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_064[2] = {
+u16 player_shot_8_flight_064[4] = {
     0x0400, 0x0000,
-};
-
-u16 D_0028D7C4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_068[2] = {
+u16 player_shot_8_flight_068[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7CC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_069[2] = {
+u16 player_shot_8_flight_069[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7D4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_070[2] = {
+u16 player_shot_8_flight_070[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7DC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_071[2] = {
+u16 player_shot_8_flight_071[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7E4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_072[2] = {
+u16 player_shot_8_flight_072[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7EC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_073[2] = {
+u16 player_shot_8_flight_073[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7F4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_074[2] = {
+u16 player_shot_8_flight_074[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D7FC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_075[2] = {
+u16 player_shot_8_flight_075[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D804[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_076[2] = {
+u16 player_shot_8_flight_076[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D80C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_077[2] = {
+u16 player_shot_8_flight_077[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D814[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_078[2] = {
+u16 player_shot_8_flight_078[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D81C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_079[2] = {
+u16 player_shot_8_flight_079[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D824[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_080[2] = {
+u16 player_shot_8_flight_080[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D82C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_081[2] = {
+u16 player_shot_8_flight_081[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D834[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_082[2] = {
+u16 player_shot_8_flight_082[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D83C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_083[2] = {
+u16 player_shot_8_flight_083[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D844[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_084[2] = {
+u16 player_shot_8_flight_084[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D84C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_088[2] = {
+u16 player_shot_8_flight_088[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D854[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_089[2] = {
+u16 player_shot_8_flight_089[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D85C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_090[2] = {
+u16 player_shot_8_flight_090[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D864[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_091[2] = {
+u16 player_shot_8_flight_091[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D86C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_092[2] = {
+u16 player_shot_8_flight_092[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D874[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_093[2] = {
+u16 player_shot_8_flight_093[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D87C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_094[2] = {
+u16 player_shot_8_flight_094[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D884[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_095[2] = {
+u16 player_shot_8_flight_095[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D88C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_096[2] = {
+u16 player_shot_8_flight_096[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D894[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_097[2] = {
+u16 player_shot_8_flight_097[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D89C[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_098[2] = {
+u16 player_shot_8_flight_098[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8A4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_099[2] = {
+u16 player_shot_8_flight_099[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8AC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_100[2] = {
+u16 player_shot_8_flight_100[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8B4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_101[2] = {
+u16 player_shot_8_flight_101[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8BC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_102[2] = {
+u16 player_shot_8_flight_102[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8C4[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_103[2] = {
+u16 player_shot_8_flight_103[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8CC[2] = {
     0x0002, 0x0003,
 };
 
-u16 player_shot_8_flight_104[2] = {
+u16 player_shot_8_flight_104[4] = {
     0x0480, 0x0000,
-};
-
-u16 D_0028D8D4[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_0[2] = {
+u16 option_shot_list_3_03_00_00_at_0[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D8DC[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_2[2] = {
+u16 option_shot_list_3_03_00_00_at_2[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D8E4[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_4[2] = {
+u16 option_shot_list_3_03_00_00_at_4[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D8EC[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_6[2] = {
+u16 option_shot_list_3_03_00_00_at_6[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D8F4[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_8[2] = {
+u16 option_shot_list_3_03_00_00_at_8[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D8FC[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_10[2] = {
+u16 option_shot_list_3_03_00_00_at_10[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D904[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_12[2] = {
+u16 option_shot_list_3_03_00_00_at_12[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D90C[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_14[2] = {
+u16 option_shot_list_3_03_00_00_at_14[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D914[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_16[2] = {
+u16 option_shot_list_3_03_00_00_at_16[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D91C[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_18[2] = {
+u16 option_shot_list_3_03_00_00_at_18[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D924[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_20[2] = {
+u16 option_shot_list_3_03_00_00_at_20[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D92C[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_22[2] = {
+u16 option_shot_list_3_03_00_00_at_22[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D934[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_24[2] = {
+u16 option_shot_list_3_03_00_00_at_24[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D93C[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_26[2] = {
+u16 option_shot_list_3_03_00_00_at_26[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D944[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_28[2] = {
+u16 option_shot_list_3_03_00_00_at_28[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D94C[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_30[2] = {
+u16 option_shot_list_3_03_00_00_at_30[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D954[2] = {
     0x0002, 0x0003,
 };
 
-u16 option_shot_list_3_03_00_00_at_32[2] = {
+u16 option_shot_list_3_03_00_00_at_32[4] = {
     0x0500, 0x0000,
-};
-
-u16 D_0028D95C[2] = {
     0x0002, 0x0003,
 };
 

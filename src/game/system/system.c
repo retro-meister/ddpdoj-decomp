@@ -295,7 +295,7 @@ void sys_draw_replay_label(void) {
     }
 }
 
-extern u8 g_arcade_coin_port;
+extern u16 g_arcade_coin_port;
 extern s8 g_arcade_input_port[];
 extern u8 g_p1_btn_map_a;
 extern u8 g_p1_btn_map_b;

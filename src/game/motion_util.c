@@ -157,7 +157,7 @@ s32 score_add_p2();
 extern ArcadeSavedAddress reg_save_a4;
 extern ArcadeSavedAddress reg_save_a3;
 extern ArcadeSavedAddress reg_save_a0;
-extern u8 g_bullets[67216];
+extern u8 g_bullets[];
 
 void bullets_cancel_sweep(void) {
     u16 *var_a0;

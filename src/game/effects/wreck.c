@@ -16,7 +16,7 @@ extern u16 D_0028DC6C[];
 
 extern u8 D_00269920[];
 
-extern u16 slowdown_budget_limits_loop2[];
+extern u16 D_002693C0[16];
 #ifndef DDPDOJ_PC
 extern u16 D_00269708[];
 #endif
@@ -92,7 +92,7 @@ extern u16 g_p2_weapon_level_data_as_u16_a[];
 extern u16 g_p1_weapon_level_data_as_u16_a[];
 extern u16 g_p2_lives;
 extern u16 g_p1_lives;
-extern u8 g_bullets[67216];
+extern u8 g_bullets[];
 extern u16 g_bullet_cancel[];
 extern u16 g_wrecks[];
 extern u8 g_sparks[2048];
@@ -131,8 +131,8 @@ extern void input_get_p2_pressed(void);
 
 
 void startup_pointers_store_a(void) {
-    STORE_POINTER(slowdown_budget_limits_loop2 + 16, slowdown_budget_limits_loop2_at_16);
-    STORE_POINTER(slowdown_budget_limits_loop2 + 23, palette_white);
+    STORE_POINTER(D_002693C0 + 4, slowdown_budget_limits_loop2_at_16);
+    STORE_POINTER(D_002693C0 + 11, palette_white);
 #ifndef DDPDOJ_PC
     STORE_POINTER(D_00269708 + 8, D_00269750);
     STORE_POINTER(D_00269708 + 16, D_00269780);

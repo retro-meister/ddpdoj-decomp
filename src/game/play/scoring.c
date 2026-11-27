@@ -779,7 +779,7 @@ extern u16 g_score_check_billions;
 extern s32 g_score_check_scratch;
 extern s32 g_p2_score_pending;
 extern s32 g_p1_score_pending;
-extern u8 g_p2_extend_table;
+extern s32 g_p2_extend_table;
 extern s32 g_p1_extend_table;
 extern u16 g_p2_extend_setting;
 extern u16 g_p1_extend_setting;
@@ -804,7 +804,7 @@ void scores_reset(void) {
     }
     g_p2_score_pending = 0;
     g_p1_score_pending = 0;
-    (*(s32 *)&g_p2_extend_table) = 0;
+    g_p2_extend_table = 0;
     g_p1_extend_table = 0;
     g_p2_extend_setting = 0;
     g_p1_extend_score = g_p2_extend_score = (g_p1_extend_setting = 0);

@@ -28,10 +28,7 @@ u16 g_explosion_test_state[4] = {
     0x0000, 0x1070, 0x0000, 0x0000,
 };
 
-u16 g_explosion_test_labels[2] = {
+u16 g_explosion_test_labels[4] = {
     0x0000, 0x0001,
-};
-
-u16 D_0028C194[2] = {
     0x0002, 0x0003,
 };

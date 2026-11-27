@@ -44,7 +44,7 @@ s32 input_get_p2_held();
 s32 input_get_p2_pressed();
 s32 sprite_draw_layer5_keep();
 extern u16 g_explosion_test_positions[];
-extern u16 g_explosion_test_labels[2]; /* one address per page, high word first */
+extern u16 g_explosion_test_labels[4]; /* one address per page, high word first */
 
 void explosion_test_main(void) {
     u32 label_x;

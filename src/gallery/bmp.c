@@ -238,7 +238,7 @@ void bmp_draw_ascii_char(sceGifPacket *packet, s32 x, s32 y, u8 glyphIndex)
     s64 screenLeft;
     s64 screenRight;
 
-    firstGlyph = (g_ascii_glyph_table - ' ')[glyphIndex];
+    firstGlyph = g_ascii_glyph_table[glyphIndex - ' '];
     glyphs[0] = firstGlyph;
     glyphs[1] = firstGlyph + 16;
 

@@ -469,11 +469,8 @@ u16 player_shield_palettes[2] = {
     0x0006, 0x0006,
 };
 
-u16 player_shield_sprite_tables[2] = {
+u16 player_shield_sprite_tables[4] = {
     0x0000, 0x0001,
-};
-
-u16 D_0028C634[2] = {
     0x0002, 0x0003,
 };
 

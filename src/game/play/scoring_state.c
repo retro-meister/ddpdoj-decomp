@@ -21,7 +21,7 @@ s32 g_p2_extend_score;
 u16 g_p1_extend_setting __attribute__((aligned(4)));
 u16 g_p2_extend_setting;
 s32 g_p1_extend_table;
-u8 g_p2_extend_table;
+s32 g_p2_extend_table;
 s32 g_p1_score_pending;
 s32 g_p2_score_pending;
 s32 g_score_check_scratch;

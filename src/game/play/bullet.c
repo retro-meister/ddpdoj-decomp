@@ -97,7 +97,7 @@ void bullet_spawn256();
 void spawn_request_add();
 void direction256_to_entity();
 void bullet_target_player_get();
-extern u16 bullet_type_records[456];
+extern u16 bullet_type_records[];
 extern u8 D_0024F0F0[];
 extern u8 D_00262570[];
 extern u32 g_bullet_spawn_saved_d7;

@@ -182,7 +182,7 @@ s16 g_bg_scroll_x __attribute__((aligned(4)));
 s16 g_bg_scroll_y __attribute__((aligned(4)));
 u16 g_arcade_zoom_port __attribute__((aligned(4)));
 s16 test_switch_read_state __attribute__((aligned(4)));
-u8 g_arcade_coin_port __attribute__((aligned(4)));
+u16 g_arcade_coin_port __attribute__((aligned(4)));
 u16 coin_inputs_update_state __attribute__((aligned(4)));
 u16 g_display_control __attribute__((aligned(4)));
 u8 g_slowdown_frame_state __attribute__((aligned(4)));

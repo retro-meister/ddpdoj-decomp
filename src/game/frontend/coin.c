@@ -472,7 +472,7 @@ void coin_slots_clear(void) {
     } while ((s16)(--reg_d0.h[0]) >= 0);
 }
 
-extern u8 g_arcade_coin_port;
+extern u16 g_arcade_coin_port;
 extern u8 g_stage_load_state;
 
 void coin_update(void) {
@@ -499,7 +499,7 @@ void coin_update(void) {
     sa4 = reg_a4;
     sa5 = reg_a5;
     sa6 = reg_a6;
-    reg_a0 = &g_arcade_coin_port;
+    reg_a0 = (u8 *)&g_arcade_coin_port;
     reg_d0.h[0] = *(u16 *)reg_a0;
     reg_a0 = (u8 *)D_0028E1C8;
     reg_d7.w = 1;

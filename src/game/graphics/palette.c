@@ -1,6 +1,7 @@
 #include "common.h"
 
 extern u8 D_0028E0AC;
+extern u8 palette_banks_flush_state;
 extern u16 D_0028E0B0;
 extern u16 D_0028E0B4;
 extern s16 fade_areas_5;
@@ -58,7 +59,12 @@ void palettes_init(void) {
         (*(s16 *)((u8 *)(temp_a2) + (0xE))) = 0;
     } while (var_a3_2 < 0xF0);
     fade_areas_1 = 0;
+#ifdef DDPDOJ_PC
+    D_0028E0AC = 1;
+    palette_banks_flush_state = 1;
+#else
     (*(s16 *)&D_0028E0AC) = 0x101;
+#endif
     fade_areas_3 = 0;
     D_0028E0B0 = 1;
     fade_areas_5 = 0;
@@ -125,7 +131,6 @@ s32 text_palette_upload();
 s32 sprite_palette_upload();
 s32 bg_palette_upload();
 extern u8 D_0028E0AC;
-extern u8 palette_banks_flush_state;
 extern u16 D_0028E0B0;
 extern u16 D_0028E0B4;
 extern u16 g_scroll_line;
