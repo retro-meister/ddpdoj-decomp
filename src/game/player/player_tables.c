@@ -906,16 +906,28 @@ u16 D_0028C940[4] = {
     0x0000, 0x0A45, 0xFFFF, 0xFFFF,
 };
 
+#ifdef DDPDOJ_PC
+u16 player_update_table_5[8] = {
+#else
 u16 player_update_table_5[2] = {
+#endif
     0x0000, 0x0000,
+#ifdef DDPDOJ_PC
+    0x0000, 0x0000,
+    0x0000, 0x06F0, 0x0000, 0x06F1,
+};
+#else
 };
 
 u16 player_update_table_6[2] = {
     0x0000, 0x0000,
 };
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
+
+PC_DATA_ALIAS(player_update_table_6, player_update_table_5, 4);
 
 PC_DATA_ALIAS(player_exhaust_sprites_00, player_shield_sprites_01, 0x30);
 PC_DATA_ALIAS(player_exhaust_sprites_01, player_shield_sprites_01, 0x80);

@@ -25,12 +25,24 @@ u16 black_label_hyper_speeds[2][35] = {
 };
 #endif
 
+#ifdef DDPDOJ_PC
+u16 hyper_bullet_speed_table_storage[] = {
+    0x0000,
+#else
 u16 hyper_bullet_speed_table[] = {
+#endif
     0x0001, 0x0001, 0x0002, 0x0002, 0x0003, 0x0003, 0x0004, 0x0004,
     0x0005, 0x0005, 0x0006, 0x0007, 0x0008, 0x0009, 0x000A, 0x000A,
     0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A, 0x000A,
     0x000A,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_data_alias.h"
+
+extern u16 hyper_bullet_speed_table[];
+PC_DATA_ALIAS(hyper_bullet_speed_table, hyper_bullet_speed_table_storage, 2);
+#endif
 
 u16 bomb_capacity_glyphs[] = {
     0x000A, 0x02DE, 0x000A, 0x0302, 0x000A, 0x0326, 0x000A, 0x034A,

@@ -1996,6 +1996,18 @@ void maximum_text_animate(void) {
     reg_d0.h[0] &= g_game_frame;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
+#ifdef DDPDOJ_PC
+    /* Frames 44 through 63 read the text rows following the animation on PS2. */
+    if (reg_d0.h[0] >= 44 * 4) {
+        unsigned frame = reg_d0.h[0] / 4;
+        const u16 *row;
+        if (frame < 48) row = max_level_text[frame - 44];
+        else if (frame < 60) row = multiplier_units_text[frame - 48];
+        else row = multiplier_tens_text[frame - 60];
+        g_maximum_text_anim_sprite = row[0] | ((u32)row[1] << 16);
+        return;
+    }
+#endif
     g_maximum_text_anim_sprite = *(s32 *)(reg_a0 + reg_d0.h[0]);
 }
 

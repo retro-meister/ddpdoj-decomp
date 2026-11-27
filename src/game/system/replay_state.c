@@ -1392,7 +1392,7 @@ extern u16 g_p1_stage_stars_large;
 extern u16 g_bee_value_step;
 extern u16 g_stage_bees_collected;
 extern u16 g_bullet_count;
-extern u16 g_p2_maximum_value[16];
+extern u16 g_p2_maximum_value[];
 extern u16 g_p2_maximum_count[];
 extern u16 g_p1_maximum_value[];
 extern u16 g_p1_maximum_count[];

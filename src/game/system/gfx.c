@@ -1779,9 +1779,13 @@ Quad g_quad_queue[2001];
 Quad g_quad_queue[4000];
 #endif
 GlyphQueueEntry g_glyph_queue[1024];
+#ifdef DDPDOJ_PC
+s16 g_bg_clut_buf[5120];
+#else
 s16 g_clut_buf[1024];
 s16 g_sprite_clut_buf[2048];
 s16 g_bg_clut_buf[2048];
+#endif
 #ifdef DEATH_LABEL
 s32 g_bg_tile_offsets[4624];
 #else
@@ -1789,10 +1793,14 @@ s32 g_bg_tile_offsets[4608];
 #endif
 RenderTarget g_render_target;
 
-#if defined(DDPDOJ_PC) && defined(DEATH_LABEL)
+#ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
 
+PC_DATA_ALIAS(g_sprite_clut_buf, g_bg_clut_buf, 0x1000);
+PC_DATA_ALIAS(g_clut_buf, g_bg_clut_buf, 0x2000);
+#ifdef DEATH_LABEL
 PC_DATA_ALIAS(g_quad_queue_as_GlyphQuad_a, g_quad_queue, 0);
+#endif
 #endif
 
 #ifdef DDPDOJ_PC
@@ -1809,9 +1817,9 @@ const PcFrameRegion pc_graphics_regions[] = {
     PC_FRAME_REGION(g_label_timer),
     PC_FRAME_REGION(g_label_fade),
     PC_FRAME_REGION(g_bg_tile_offsets),
-    PC_FRAME_REGION(g_clut_buf),
-    PC_FRAME_REGION(g_sprite_clut_buf),
-    PC_FRAME_REGION(g_bg_clut_buf),
+    { g_bg_clut_buf + 4096, 2048, false },
+    { g_bg_clut_buf + 2048, 4096, false },
+    { g_bg_clut_buf, 4096, false },
     PC_FRAME_REGION(g_render_target),
     { NULL, 0 },
 };

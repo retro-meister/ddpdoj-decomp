@@ -149,7 +149,7 @@ void glyph_cache_init(void) {
 
 GlyphCacheEntry g_glyph_cache_storage[0x403] __attribute__((aligned(16)));
 s16 g_glyph_cache_map[0x22C4] __attribute__((aligned(16)));
-GlyphCacheEntry g_glyph_cache_sub_storage[0xE3] __attribute__((aligned(16)));
+GlyphCacheEntry g_glyph_cache_sub_storage[GLYPH_CACHE_SUB_STORAGE_COUNT] __attribute__((aligned(16)));
 s16 g_glyph_cache_sub_map[0x1000] __attribute__((aligned(16)));
 
 #ifdef DDPDOJ_PC

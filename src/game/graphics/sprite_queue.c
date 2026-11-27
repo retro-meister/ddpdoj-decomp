@@ -1924,6 +1924,7 @@ s16 g_sprite_sparks_dropped __attribute__((aligned(4)));
 s16 g_sprite_debris_dropped __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
+#ifndef DDPDOJ_PC
 #ifdef DEATH_LABEL
 u8 g_sprite_layer1_buf[28032];
 #else
@@ -1987,6 +1988,67 @@ u8 g_sprite_hyper_ready_buf[32];
 u8 g_sprite_hyper_display_buf[128];
 u8 g_sprite_laser_trail_buf[128];
 u8 g_sprite_last_boss_buf[48];
+#else
+#ifdef DEATH_LABEL
+u8 g_sprite_last_boss_buf[0x23470];
+#else
+u8 g_sprite_last_boss_buf[0xea90];
+#endif
+
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_sprite_laser_trail_buf, g_sprite_last_boss_buf, 0x0030);
+PC_DATA_ALIAS(g_sprite_hyper_display_buf, g_sprite_last_boss_buf, 0x00b0);
+PC_DATA_ALIAS(g_sprite_hyper_ready_buf, g_sprite_last_boss_buf, 0x0130);
+PC_DATA_ALIAS(g_sprite_maximum_buf, g_sprite_last_boss_buf, 0x0150);
+PC_DATA_ALIAS(g_sprite_stage_clear2_buf, g_sprite_last_boss_buf, 0x0170);
+PC_DATA_ALIAS(g_sprite_stage_clear1_buf, g_sprite_last_boss_buf, 0x01f0);
+PC_DATA_ALIAS(g_sprite_ship_select_buf, g_sprite_last_boss_buf, 0x0270);
+PC_DATA_ALIAS(g_sprite_bombs_buf, g_sprite_last_boss_buf, 0x02f0);
+PC_DATA_ALIAS(g_sprite_sight_buf, g_sprite_last_boss_buf, 0x0730);
+PC_DATA_ALIAS(g_sprite_score_buf, g_sprite_last_boss_buf, 0x07b0);
+PC_DATA_ALIAS(g_sprite_warning_buf, g_sprite_last_boss_buf, 0x0930);
+PC_DATA_ALIAS(g_sprite_bullets2_buf, g_sprite_last_boss_buf, 0x09f0);
+#ifdef DEATH_LABEL
+PC_DATA_ALIAS(g_sprite_bullets_buf, g_sprite_last_boss_buf, 0x3b30);
+PC_DATA_ALIAS(g_sprite_sparks_buf, g_sprite_last_boss_buf, 0x6c70);
+PC_DATA_ALIAS(g_sprite_players_buf, g_sprite_last_boss_buf, 0x6f40);
+PC_DATA_ALIAS(g_sprite_options_buf, g_sprite_last_boss_buf, 0x7000);
+PC_DATA_ALIAS(g_sprite_player_lasers_buf, g_sprite_last_boss_buf, 0x7030);
+PC_DATA_ALIAS(g_sprite_player_shots_buf, g_sprite_last_boss_buf, 0x7330);
+PC_DATA_ALIAS(g_sprite_debris2_buf, g_sprite_last_boss_buf, 0x7690);
+PC_DATA_ALIAS(g_sprite_debris1_buf, g_sprite_last_boss_buf, 0x7780);
+PC_DATA_ALIAS(g_sprite_player_shadows_buf, g_sprite_last_boss_buf, 0x7870);
+PC_DATA_ALIAS(g_sprite_items_buf, g_sprite_last_boss_buf, 0x78c0);
+PC_DATA_ALIAS(g_sprite_items_first_buf, g_sprite_last_boss_buf, 0x79f0);
+PC_DATA_ALIAS(g_sprite_special_items_buf, g_sprite_last_boss_buf, 0x7b20);
+PC_DATA_ALIAS(g_sprite_extra_buf, g_sprite_last_boss_buf, 0x7e70);
+PC_DATA_ALIAS(g_sprite_layer5_buf, g_sprite_last_boss_buf, 0xebf0);
+PC_DATA_ALIAS(g_sprite_layer4_buf, g_sprite_last_boss_buf, 0x122b0);
+PC_DATA_ALIAS(g_sprite_layer3_buf, g_sprite_last_boss_buf, 0x15970);
+PC_DATA_ALIAS(g_sprite_layer2_buf, g_sprite_last_boss_buf, 0x19030);
+PC_DATA_ALIAS(g_sprite_layer1_buf, g_sprite_last_boss_buf, 0x1c6f0);
+#else
+PC_DATA_ALIAS(g_sprite_bullets_buf, g_sprite_last_boss_buf, 0x13d0);
+PC_DATA_ALIAS(g_sprite_sparks_buf, g_sprite_last_boss_buf, 0x1db0);
+PC_DATA_ALIAS(g_sprite_players_buf, g_sprite_last_boss_buf, 0x2080);
+PC_DATA_ALIAS(g_sprite_options_buf, g_sprite_last_boss_buf, 0x2140);
+PC_DATA_ALIAS(g_sprite_player_lasers_buf, g_sprite_last_boss_buf, 0x2170);
+PC_DATA_ALIAS(g_sprite_player_shots_buf, g_sprite_last_boss_buf, 0x2470);
+PC_DATA_ALIAS(g_sprite_debris2_buf, g_sprite_last_boss_buf, 0x27d0);
+PC_DATA_ALIAS(g_sprite_debris1_buf, g_sprite_last_boss_buf, 0x28c0);
+PC_DATA_ALIAS(g_sprite_player_shadows_buf, g_sprite_last_boss_buf, 0x29b0);
+PC_DATA_ALIAS(g_sprite_items_buf, g_sprite_last_boss_buf, 0x2a00);
+PC_DATA_ALIAS(g_sprite_items_first_buf, g_sprite_last_boss_buf, 0x2b30);
+PC_DATA_ALIAS(g_sprite_special_items_buf, g_sprite_last_boss_buf, 0x2c60);
+PC_DATA_ALIAS(g_sprite_extra_buf, g_sprite_last_boss_buf, 0x2fb0);
+PC_DATA_ALIAS(g_sprite_layer5_buf, g_sprite_last_boss_buf, 0x5e60);
+PC_DATA_ALIAS(g_sprite_layer4_buf, g_sprite_last_boss_buf, 0x75c0);
+PC_DATA_ALIAS(g_sprite_layer3_buf, g_sprite_last_boss_buf, 0x8d20);
+PC_DATA_ALIAS(g_sprite_layer2_buf, g_sprite_last_boss_buf, 0xa480);
+PC_DATA_ALIAS(g_sprite_layer1_buf, g_sprite_last_boss_buf, 0xbbe0);
+#endif
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
@@ -2028,37 +2090,51 @@ const PcFrameRegion pc_sprite_queue_regions[] = {
     PC_FRAME_REGION(g_sprite_overflow_bytes),
     PC_FRAME_REGION(g_sprite_sparks_dropped),
     PC_FRAME_REGION(g_sprite_debris_dropped),
-    PC_FRAME_REGION(g_sprite_layer1_buf),
-    PC_FRAME_REGION(g_sprite_layer2_buf),
-    PC_FRAME_REGION(g_sprite_layer3_buf),
-    PC_FRAME_REGION(g_sprite_layer4_buf),
-    PC_FRAME_REGION(g_sprite_layer5_buf),
-    PC_FRAME_REGION(g_sprite_extra_buf),
-    PC_FRAME_REGION(g_sprite_special_items_buf),
-    PC_FRAME_REGION(g_sprite_items_first_buf),
-    PC_FRAME_REGION(g_sprite_items_buf),
-    PC_FRAME_REGION(g_sprite_player_shadows_buf),
-    PC_FRAME_REGION(g_sprite_debris1_buf),
-    PC_FRAME_REGION(g_sprite_debris2_buf),
-    PC_FRAME_REGION(g_sprite_player_shots_buf),
-    PC_FRAME_REGION(g_sprite_player_lasers_buf),
-    PC_FRAME_REGION(g_sprite_options_buf),
-    PC_FRAME_REGION(g_sprite_players_buf),
-    PC_FRAME_REGION(g_sprite_sparks_buf),
-    PC_FRAME_REGION(g_sprite_bullets_buf),
-    PC_FRAME_REGION(g_sprite_bullets2_buf),
-    PC_FRAME_REGION(g_sprite_warning_buf),
-    PC_FRAME_REGION(g_sprite_score_buf),
-    PC_FRAME_REGION(g_sprite_sight_buf),
-    PC_FRAME_REGION(g_sprite_bombs_buf),
-    PC_FRAME_REGION(g_sprite_ship_select_buf),
-    PC_FRAME_REGION(g_sprite_stage_clear1_buf),
-    PC_FRAME_REGION(g_sprite_stage_clear2_buf),
-    PC_FRAME_REGION(g_sprite_maximum_buf),
-    PC_FRAME_REGION(g_sprite_hyper_ready_buf),
-    PC_FRAME_REGION(g_sprite_hyper_display_buf),
-    PC_FRAME_REGION(g_sprite_laser_trail_buf),
-    PC_FRAME_REGION(g_sprite_last_boss_buf),
+#ifdef DEATH_LABEL
+    PC_FRAME_REGION_BYTES(g_sprite_layer1_buf, 28032),
+    PC_FRAME_REGION_BYTES(g_sprite_layer2_buf, 14016),
+    PC_FRAME_REGION_BYTES(g_sprite_layer3_buf, 14016),
+    PC_FRAME_REGION_BYTES(g_sprite_layer4_buf, 14016),
+    PC_FRAME_REGION_BYTES(g_sprite_layer5_buf, 14016),
+    PC_FRAME_REGION_BYTES(g_sprite_extra_buf, 28032),
+#else
+    PC_FRAME_REGION_BYTES(g_sprite_layer1_buf, 11952),
+    PC_FRAME_REGION_BYTES(g_sprite_layer2_buf, 5984),
+    PC_FRAME_REGION_BYTES(g_sprite_layer3_buf, 5984),
+    PC_FRAME_REGION_BYTES(g_sprite_layer4_buf, 5984),
+    PC_FRAME_REGION_BYTES(g_sprite_layer5_buf, 5984),
+    PC_FRAME_REGION_BYTES(g_sprite_extra_buf, 11952),
+#endif
+    PC_FRAME_REGION_BYTES(g_sprite_special_items_buf, 848),
+    PC_FRAME_REGION_BYTES(g_sprite_items_first_buf, 304),
+    PC_FRAME_REGION_BYTES(g_sprite_items_buf, 304),
+    PC_FRAME_REGION_BYTES(g_sprite_player_shadows_buf, 80),
+    PC_FRAME_REGION_BYTES(g_sprite_debris1_buf, 240),
+    PC_FRAME_REGION_BYTES(g_sprite_debris2_buf, 240),
+    PC_FRAME_REGION_BYTES(g_sprite_player_shots_buf, 864),
+    PC_FRAME_REGION_BYTES(g_sprite_player_lasers_buf, 768),
+    PC_FRAME_REGION_BYTES(g_sprite_options_buf, 48),
+    PC_FRAME_REGION_BYTES(g_sprite_players_buf, 192),
+    PC_FRAME_REGION_BYTES(g_sprite_sparks_buf, 720),
+#ifdef DEATH_LABEL
+    PC_FRAME_REGION_BYTES(g_sprite_bullets_buf, 12608),
+    PC_FRAME_REGION_BYTES(g_sprite_bullets2_buf, 12608),
+#else
+    PC_FRAME_REGION_BYTES(g_sprite_bullets_buf, 2528),
+    PC_FRAME_REGION_BYTES(g_sprite_bullets2_buf, 2528),
+#endif
+    PC_FRAME_REGION_BYTES(g_sprite_warning_buf, 192),
+    PC_FRAME_REGION_BYTES(g_sprite_score_buf, 384),
+    PC_FRAME_REGION_BYTES(g_sprite_sight_buf, 128),
+    PC_FRAME_REGION_BYTES(g_sprite_bombs_buf, 1088),
+    PC_FRAME_REGION_BYTES(g_sprite_ship_select_buf, 128),
+    PC_FRAME_REGION_BYTES(g_sprite_stage_clear1_buf, 128),
+    PC_FRAME_REGION_BYTES(g_sprite_stage_clear2_buf, 128),
+    PC_FRAME_REGION_BYTES(g_sprite_maximum_buf, 32),
+    PC_FRAME_REGION_BYTES(g_sprite_hyper_ready_buf, 32),
+    PC_FRAME_REGION_BYTES(g_sprite_hyper_display_buf, 128),
+    PC_FRAME_REGION_BYTES(g_sprite_laser_trail_buf, 128),
+    PC_FRAME_REGION_BYTES(g_sprite_last_boss_buf, 48),
     { NULL, 0 },
 };
 #endif

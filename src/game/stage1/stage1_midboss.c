@@ -1003,11 +1003,15 @@ loop_2:
     if (((s64) ((s64) (u16) cnt << 0x30) >> 0x30) >= 0) {
         goto loop_2;
     }
-    (*(u8 **)&reg_tmp1) = (u8 *)((u32 *)g_bg_layer);
     reg_tmp.w += 4;
     reg_tmp.w = (u32) reg_tmp.b[0];
+#ifdef DDPDOJ_PC
+    reg_a0 = (u8 *)g_bg_layer + reg_tmp.w;
+#else
+    (*(u8 **)&reg_tmp1) = (u8 *)((u32 *)g_bg_layer);
     (*(u8 **)&reg_tmp1) += reg_tmp.w;
     reg_a0 = (u8 *)((*(u8 **)&reg_tmp1));
+#endif
     cnt2 = reg_d6.h[0] - 1;
     reg_d6.h[0] = cnt2;
     if (((s64) ((s64) (u16) cnt2 << 0x30) >> 0x30) >= 0) {

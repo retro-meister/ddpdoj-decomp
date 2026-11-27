@@ -151,7 +151,11 @@ u16 g_p1_score_cells[96];
 u16 score_pending_apply_side_buffer[8];
 #endif
 #ifdef DEATH_LABEL
+#ifdef DDPDOJ_PC
+u16 g_p1_score_extra_cell[10];
+#else
 u16 g_p1_score_extra_cell[8];
+#endif
 #else
 u16 g_p1_score_extra_cell[16];
 #endif

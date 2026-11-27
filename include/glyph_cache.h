@@ -9,7 +9,12 @@
  * are its head (-2) and tail (-1).
  */
 extern GlyphCacheEntry g_glyph_cache_storage[0x403];
-extern GlyphCacheEntry g_glyph_cache_sub_storage[0xE3];
+#ifdef DDPDOJ_PC
+#define GLYPH_CACHE_SUB_STORAGE_COUNT 0xE4
+#else
+#define GLYPH_CACHE_SUB_STORAGE_COUNT 0xE3
+#endif
+extern GlyphCacheEntry g_glyph_cache_sub_storage[GLYPH_CACHE_SUB_STORAGE_COUNT];
 #define g_glyph_cache (&g_glyph_cache_storage[2])
 #define g_glyph_cache_sub (&g_glyph_cache_sub_storage[2])
 

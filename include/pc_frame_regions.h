@@ -12,6 +12,7 @@ typedef struct {
 } PcFrameRegion;
 
 #define PC_FRAME_REGION(object) { &(object), sizeof(object), false }
+#define PC_FRAME_REGION_BYTES(object, bytes) { (object), (bytes), false }
 #define PC_FRAME_POINTER(object) { &(object), sizeof(uint32_t), true }
 extern const PcFrameRegion pc_system_regions[], pc_game_flow_regions[];
 extern const PcFrameRegion pc_layer_regions[], pc_screen_regions[];

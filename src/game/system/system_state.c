@@ -205,10 +205,15 @@ u8 D_0028E1DC;
 u8 g_coin_counts[4];
 u8 D_0028E1D4 __attribute__((aligned(4)));
 u8 D_0028E1D0;
+#ifdef DDPDOJ_PC
+u8 D_0028E1C8[8];
+u8 D_0028E1C0[8];
+#else
 u16 coin_slots_take_buffer_2[2];
 u8 D_0028E1C8[4];
 u16 coin_slots_take_buffer[2];
 u8 D_0028E1C0[4];
+#endif
 s32 D_0028E1BC;
 
 #ifdef DDPDOJ_PC
@@ -228,6 +233,9 @@ PC_DATA_ALIAS(D_0028E1DA, g_coin_counts, 0x2);
 
 PC_DATA_ALIAS(D_0028E1E5, g_credit_display_last, 0x1);
 PC_DATA_ALIAS(g_credit_display_last_coins, g_credit_display_last, 0x2);
+
+PC_DATA_ALIAS(coin_slots_take_buffer_2, D_0028E1C8, 0x4);
+PC_DATA_ALIAS(coin_slots_take_buffer, D_0028E1C0, 0x4);
 
 PC_DATA_ALIAS(g_session_date_1, g_session_date, 0x1);
 PC_DATA_ALIAS(g_session_date_2, g_session_date, 0x2);
@@ -420,10 +428,10 @@ const PcFrameRegion pc_system_regions[] = {
     PC_FRAME_REGION(g_coin_counts),
     PC_FRAME_REGION(D_0028E1D4),
     PC_FRAME_REGION(D_0028E1D0),
-    PC_FRAME_REGION(coin_slots_take_buffer_2),
-    PC_FRAME_REGION(D_0028E1C8),
-    PC_FRAME_REGION(coin_slots_take_buffer),
-    PC_FRAME_REGION(D_0028E1C0),
+    { D_0028E1C8 + 4, 4, false },
+    { D_0028E1C8, 4, false },
+    { D_0028E1C0 + 4, 4, false },
+    { D_0028E1C0, 4, false },
     PC_FRAME_REGION(D_0028E1BC),
 #ifdef DEATH_LABEL
     PC_FRAME_REGION(g_death_boss_form),

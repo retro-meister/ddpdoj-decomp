@@ -339,7 +339,7 @@ extern s32 g_p2_option_level_data_as_s32_a[];
 extern u8 g_p1_weapon_level_data[];
 extern s32 g_p1_option_level_data_as_s32_a[];
 extern u16 g_laser_bomb_impact_frame;
-extern u16 g_p2_maximum_value[16];
+extern u16 g_p2_maximum_value[];
 extern s32 g_p2_maximum_value_digits[];
 extern u32 g_p2_maximum_half_digits[];
 extern s16 g_p2_maximum_count_as_s16_a[];
@@ -3325,11 +3325,16 @@ _Alignas(16) u16 g_bomb_entities[1080];
 u16 g_bomb_entities_1[1056];
 u16 g_bomb_entities[24];
 #endif
+#ifdef DDPDOJ_PC
+/* The afterimage shift reads through the exact adjacent PS2 storage block. */
+u16 g_p2_maximum_value[144];
+#else
 s32 g_p1_afterimage_positions[16];
 u8 g_p2_afterimage_positions[64];
 s32 g_p1_afterimage_sprites[16];
 u8 g_p2_afterimage_sprites[64];
 u16 g_p2_maximum_value[16];
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
@@ -3360,6 +3365,10 @@ PC_DATA_ALIAS(g_p1_maximum_half_digits, g_p2_maximum_value, 0x18);
 PC_DATA_ALIAS(g_p1_maximum_count, g_p2_maximum_value, 0x1c);
 PC_DATA_ALIAS(g_p1_maximum_count_as_s16_a, g_p2_maximum_value, 0x1c);
 PC_DATA_ALIAS(g_p1_maximum_count_digits, g_p2_maximum_value, 0x1e);
+PC_DATA_ALIAS(g_p2_afterimage_sprites, g_p2_maximum_value, 0x20);
+PC_DATA_ALIAS(g_p1_afterimage_sprites, g_p2_maximum_value, 0x60);
+PC_DATA_ALIAS(g_p2_afterimage_positions, g_p2_maximum_value, 0xa0);
+PC_DATA_ALIAS(g_p1_afterimage_positions, g_p2_maximum_value, 0xe0);
 
 PC_DATA_ALIAS(D_0029F1D0, g_p1_options, 0x50);
 PC_DATA_ALIAS(D_0029F160, g_p2_options, 0x50);

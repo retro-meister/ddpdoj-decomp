@@ -12,16 +12,21 @@ s16 stage_clear_state_clear_state __attribute__((aligned(4)));
 s16 g_game_task_handle __attribute__((aligned(4)));
 
 /* .bss (the compiler lays these out in reverse) */
+#ifdef DDPDOJ_PC
+u8 D_002BF410[224];
+
+#include "pc_data_alias.h"
+
+PC_DATA_ALIAS(D_002BF450, D_002BF410, 64);
+PC_DATA_ALIAS(D_002BF490, D_002BF410, 128);
+#else
 u8 D_002BF490[96];
 u8 D_002BF450[64];
 u8 D_002BF410[64];
-#ifndef DDPDOJ_PC
 u16 D_002BF400[8];
 #endif
 
 #ifdef DDPDOJ_PC
-#include "pc_data_alias.h"
-
 PC_DATA_ALIAS(D_0028E961, D_0028E960, 1);
 #endif
 
@@ -36,9 +41,9 @@ const PcFrameRegion pc_stage_clear_regions[] = {
     PC_FRAME_REGION(D_0028E950),
     PC_FRAME_REGION(stage_clear_state_clear_state),
     PC_FRAME_REGION(g_game_task_handle),
-    PC_FRAME_REGION(D_002BF490),
-    PC_FRAME_REGION(D_002BF450),
-    PC_FRAME_REGION(D_002BF410),
+    PC_FRAME_REGION_BYTES(D_002BF410 + 128, 96),
+    PC_FRAME_REGION_BYTES(D_002BF410 + 64, 64),
+    PC_FRAME_REGION_BYTES(D_002BF410, 64),
     { NULL, 0 },
 };
 #endif

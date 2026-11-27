@@ -252,12 +252,20 @@ void stage2_long_warehouse_first(void) {
 
 extern s8 stage2_long_warehouse_start_table[];
 extern s8 stage2_long_warehouse_start_table_2[];
+#ifdef DDPDOJ_PC
+extern s8 stage2_long_warehouse_start_value[];
+#else
 extern s8 stage2_long_warehouse_start_value;
+#endif
 
 void stage2_long_warehouse_start(void) {
     (*(s8 **)&reg_a0) = stage2_long_warehouse_start_table_2;
     enemy_init_entities();
+#ifdef DDPDOJ_PC
+    (*(s8 **)&reg_a0) = stage2_long_warehouse_start_value;
+#else
     (*(s8 **)&reg_a0) = &stage2_long_warehouse_start_value;
+#endif
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -395,12 +403,20 @@ void stage2_square_warehouse_first(void) {
 
 extern s8 stage2_square_warehouse_start_table[];
 extern s8 stage2_square_warehouse_start_table_2[];
+#ifdef DDPDOJ_PC
+extern s8 stage2_square_warehouse_start_value[];
+#else
 extern s8 stage2_square_warehouse_start_value;
+#endif
 
 void stage2_square_warehouse_start(void) {
     (*(s8 **)&reg_a0) = stage2_square_warehouse_start_table_2;
     enemy_init_entities();
+#ifdef DDPDOJ_PC
+    (*(s8 **)&reg_a0) = stage2_square_warehouse_start_value;
+#else
     (*(s8 **)&reg_a0) = &stage2_square_warehouse_start_value;
+#endif
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -521,12 +537,20 @@ void stage2_gymnasium_first(void) {
 
 extern s8 stage2_gymnasium_start_table[];
 extern s8 stage2_gymnasium_start_table_2[];
+#ifdef DDPDOJ_PC
+extern s8 stage2_gymnasium_start_value[];
+#else
 extern s8 stage2_gymnasium_start_value;
+#endif
 
 void stage2_gymnasium_start(void) {
     (*(s8 **)&reg_a0) = stage2_gymnasium_start_table_2;
     enemy_init_entities();
+#ifdef DDPDOJ_PC
+    (*(s8 **)&reg_a0) = stage2_gymnasium_start_value;
+#else
     (*(s8 **)&reg_a0) = &stage2_gymnasium_start_value;
+#endif
     reg_d0.w = 1;
     enemy_set_task_state();
     enemy_path_start();
@@ -1506,8 +1530,16 @@ u16 stage2_boss_hangar_table[128] = {
 
 u8 stage2_blooming_base_table[8] = { 0x80, 0x04, 0x00, 0x06, 0x40, 0x07, 0xC0, 0x08 };
 
+#ifdef DDPDOJ_PC
+s8 stage2_long_warehouse_start_value[4] __attribute__((aligned(4))) = { 0xC, 0, 0, 0 };
+#else
 s8 stage2_long_warehouse_start_value __attribute__((aligned(4))) = 0xC;
+#endif
 
+#ifdef DDPDOJ_PC
+s8 stage2_square_warehouse_start_value[4] __attribute__((aligned(4))) = { 0x12, 0, 0, 0 };
+s8 stage2_gymnasium_start_value[4] __attribute__((aligned(4))) = { 0x12, 0, 0, 0 };
+#else
 s8 stage2_square_warehouse_start_value __attribute__((aligned(4))) = 0x12;
-
 s8 stage2_gymnasium_start_value __attribute__((aligned(4))) = 0x12;
+#endif

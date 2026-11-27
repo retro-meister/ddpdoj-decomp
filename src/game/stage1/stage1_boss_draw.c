@@ -329,7 +329,16 @@ void stage1_boss_draw_entrance_part(void) {
     u32 temp_a0;
 
     reg_a2 = ((u8 *)stage1_boss_entrance_part_frames);
-    reg_a2 += STAGE1_EXTRA(reg_a6)->enter_anim;
+#ifdef DDPDOJ_PC
+    /* The last frame reads the next table in the retail image. */
+    if (STAGE1_EXTRA(reg_a6)->enter_anim == 0x180) {
+        extern u16 stage1_boss_breakable_bullet_start_table[];
+        reg_a2 = (u8 *)stage1_boss_breakable_bullet_start_table;
+    } else
+#endif
+    {
+        reg_a2 += STAGE1_EXTRA(reg_a6)->enter_anim;
+    }
     reg_d2.h[1] = *(u16 *)reg_a2;
     reg_d2.h[0] = *(u16 *)(reg_a2 + 2);
     reg_d1.h[1] = ENTITY(reg_a6)->y.h;

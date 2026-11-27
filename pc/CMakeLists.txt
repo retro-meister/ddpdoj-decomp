@@ -374,13 +374,13 @@ if(BUILD_TESTING)
             add_test(NAME ${mode}_combat_load COMMAND ${target} "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}" --load-pools "${pool_slot}")
             set_tests_properties(${mode}_combat_save PROPERTIES FIXTURES_SETUP ${mode}_combat
-                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
             set_tests_properties(${mode}_combat_load PROPERTIES FIXTURES_REQUIRED ${mode}_combat
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
             add_test(NAME retail_${mode}_gameplay COMMAND ${target} "${DDPDOJ_TEST_ISO}"
-                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}")
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}-gameplay")
             set_tests_properties(retail_${mode}_gameplay PROPERTIES
-                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
         endforeach()
         foreach(scene IN ITEMS later-stage boss)
             foreach(action IN ITEMS save load)
@@ -388,7 +388,7 @@ if(BUILD_TESTING)
                     "${DDPDOJ_TEST_ISO}" "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${scene}"
                     --${action}-pools "${CMAKE_CURRENT_BINARY_DIR}/test-${scene}-state.bin" --${scene})
                 set_tests_properties(${scene}_savestate_${action} PROPERTIES
-                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
             endforeach()
             set_tests_properties(${scene}_savestate_save PROPERTIES FIXTURES_SETUP ${scene}_state)
             set_tests_properties(${scene}_savestate_load PROPERTIES FIXTURES_REQUIRED ${scene}_state)
@@ -400,25 +400,25 @@ if(BUILD_TESTING)
             target_compile_definitions(ddpdoj_retail_card_test PRIVATE DDPDOJ_BONUS_FEATURES)
             target_compile_definitions(ddpdoj_main_retail_gameplay_test PRIVATE DDPDOJ_BONUS_FEATURES)
             add_test(NAME black_label_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
-                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load" --black-label)
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-save-load" --black-label)
             foreach(action IN ITEMS save load)
                 add_test(NAME black_label_combat_${action} COMMAND ddpdoj_main_retail_gameplay_test
                     "${DDPDOJ_TEST_ISO}" "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label"
                     --${action}-pools "${CMAKE_CURRENT_BINARY_DIR}/test-black-label-combat.bin" --black-label)
                 set_tests_properties(black_label_combat_${action} PROPERTIES
-                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
             endforeach()
             set_tests_properties(black_label_combat_save PROPERTIES FIXTURES_SETUP black_combat)
             set_tests_properties(black_label_combat_load PROPERTIES FIXTURES_REQUIRED black_combat)
             add_test(NAME black_label_gameplay COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
-                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label)
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-gameplay" --black-label)
             add_test(NAME black_label_default_rounds COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
-                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label-default)
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-default" --black-label-default)
             add_test(NAME black_label_attract COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-attract" --black-label-demos)
-            set_tests_properties(black_label_attract PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 360)
+            set_tests_properties(black_label_attract PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 360)
             set_tests_properties(black_label_card_save_load black_label_gameplay black_label_default_rounds PROPERTIES
-                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
         endif()
         add_test(NAME retail_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load")
@@ -433,7 +433,7 @@ if(BUILD_TESTING)
         add_test(NAME retail_two_player COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-two-player" --two-player)
         set_tests_properties(retail_two_player PROPERTIES
-            ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+            ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
         foreach(slot RANGE 0 9)
             set(name retail_super_replay_${slot})
             if(slot EQUAL 2)
@@ -444,7 +444,7 @@ if(BUILD_TESTING)
             add_test(NAME ${name} COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-replay-${slot}" --super-replay ${slot})
             set_tests_properties(${name} PROPERTIES LABELS super-replay
-                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 600)
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 600)
         endforeach()
     endif()
 endif()
