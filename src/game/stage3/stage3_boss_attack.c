@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "enemy_kinds.h"
@@ -118,7 +119,8 @@ typedef struct {
     /* 0x0D */ u8 round_pause;
     /* 0x0E */ Shot shot_a;
     /* 0x12 */ Shot shot_b;
-    /* 0x16 */ u8 unused_16[4];
+    /* 0x16 */ u16 unread_16;
+    /* 0x18 */ u16 unread_18;
     /* 0x1A */ u16 speed_step;
     /* 0x1C */ u16 ramp_step;
     /* 0x1E */ u8 aimed;
@@ -350,6 +352,15 @@ void stage3_boss_fire_main_gun(void) {
 }
 
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static void stage3_boss_fire_loop_spread(void) {
+    u32 speed_bonus = g_loop ? 2u << 16 : 0;
+    reg_d0.w += speed_bonus;
+    bullet_fire256_fixed();
+    reg_d0.w -= speed_bonus;
+}
+#endif
+
 void stage3_boss_side_turrets_shot(void) {
     u32 tmp;
 
@@ -360,7 +371,7 @@ void stage3_boss_side_turrets_shot(void) {
     reg_tmp.h[1] = STAGE3_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE3_BOSS(reg_a5)->hp[1];
     if (!(reg_tmp.w < 0x8C00U)) goto loop_1;
-    reg_d5.w = 0xFFFE0004;
+    reg_d5.w = GAME_RULE(0xFFFE0004, 0xFFFB0005);
     reg_d7.h[0] = 3;
     reg_d6.h[0] = 0x40;
 loop_1:
@@ -383,7 +394,7 @@ next_4:
     reg_tmp.h[1] = STAGE3_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE3_BOSS(reg_a5)->hp[1];
     if (!(reg_tmp.w < 0x8C00U)) goto loop_5;
-    reg_d5.w = 0xFFFE0004;
+    reg_d5.w = GAME_RULE(0xFFFE0004, 0xFFFB0005);
     reg_d7.h[0] = 5;
     reg_d6.h[0] = 0x2A;
 loop_5:
@@ -393,7 +404,7 @@ loop_5:
 next_6:
     reg_d0.w += 0x100000;
 next_7:
-    bullet_fire256_fast();
+    GAME_RULE(bullet_fire256_fast, stage3_boss_fire_loop_spread)();
     reg_d1.b[0] += reg_d6.b[0];
     tmp = reg_d7.h[0] - 1;
     reg_d7.h[0] = tmp;
@@ -430,6 +441,12 @@ void stage3_boss_fire_side_turrets_start(void) {
     reg_d0.b[0] *= -1;
     SIDE_TURRETS(reg_a4)->direction_b = (u8) reg_d0.b[0];
     SIDE_TURRETS(reg_a4)->turn_b = 0xFB;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        rng_next_unsigned();
+        SIDE_TURRETS(reg_a4)->direction_b += reg_d0.sb[0] < 0 ? -6 : 6;
+    }
+#endif
     if (g_loop != 0) {
         SIDE_TURRETS(reg_a4)->shot.t.reload = 3;
     }
@@ -447,7 +464,12 @@ void stage3_boss_fire_side_turrets(void) {
         if ((u32) reg_tmp.w < 0x8C00U) {
             SIDE_TURRETS(reg_a4)->turn_a = 5U;
             SIDE_TURRETS(reg_a4)->turn_b = 0xFBU;
-            SIDE_TURRETS(reg_a4)->shot.t.reload = 3U;
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active) {
+                SIDE_TURRETS(reg_a4)->direction_b = -SIDE_TURRETS(reg_a4)->direction_a;
+            }
+#endif
+            SIDE_TURRETS(reg_a4)->shot.t.reload = GAME_RULE(3, 2);
             if (g_loop != 0) {
                 SIDE_TURRETS(reg_a4)->shot.t.reload = 3U;
             }
@@ -689,7 +711,7 @@ next_1:
             reg_d0.h[1] = BODY_SIX_GUN(reg_a4)->aimed.speed;
             reg_d0.h[0] = BODY_SIX_GUN(reg_a4)->aimed.bullet;
             reg_d3.w = 0x0400FD00;
-            bullet_fire256_fast();
+            GAME_RULE(bullet_fire256_fast, stage3_boss_fire_loop_spread)();
             reg_d2.w = t8;
             reg_d3.w = t9;
             reg_d0.h[0] = ENTITY(reg_a6)->y.h;
@@ -703,7 +725,7 @@ next_1:
             reg_d0.h[1] = BODY_SIX_GUN(reg_a4)->aimed.speed;
             reg_d0.h[0] = BODY_SIX_GUN(reg_a4)->aimed.bullet;
             reg_d3.w = 0x04000300;
-            bullet_fire256_fast();
+            GAME_RULE(bullet_fire256_fast, stage3_boss_fire_loop_spread)();
             enemy_switch_target_player();
             reg_d1.b[0] = BODY_SIX_GUN(reg_a4)->fan_angle;
             reg_d6.h[0] = reg_d1.h[0];
@@ -1122,6 +1144,13 @@ void stage3_boss_fire_six_gun_start(void) {
         reg_a0 += 2;
         reg_a1 += 2;
     } while ((s16)(--reg_d0.h[0]) >= 0);
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        --SIX_GUN(reg_a4)->shot_a.speed;
+        --SIX_GUN(reg_a4)->shot_b.speed;
+        SIX_GUN(reg_a4)->unread_16 -= 2;
+    }
+#endif
     reg_d0.h[0] = STAGE3_ADJUST(reg_a6)->six_gun_speed_add;
     SIX_GUN(reg_a4)->shot_a.speed += reg_d0.h[0];
     SIX_GUN(reg_a4)->shot_b.speed += reg_d0.h[0];
