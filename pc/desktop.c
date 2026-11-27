@@ -144,8 +144,8 @@ static void SDLCALL disc_selected(void *userdata, const char *const *files, int 
 {
     DiscSelection *selection = userdata;
     (void)filter;
-    selection->canceled = files && !files[0];
-    if (files && files[0]) {
+    selection->canceled = files && (!files[0] || !*files[0]);
+    if (files && !selection->canceled) {
         selection->path = SDL_strdup(files[0]);
     }
     SDL_SetAtomicInt(&selection->done, 1);
