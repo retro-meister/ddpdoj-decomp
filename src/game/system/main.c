@@ -365,7 +365,9 @@ void executable_launch(s32 mode) {
 #ifdef DDPDOJ_BONUS_FEATURES
     } else if (mode == 3) {
         char *args[] = {"black-label"};
-        LoadExecPS2((const char *)D_0026F740, 1, args);
+        LoadExecPS2("cdrom0:\\SLPS_252.33;1", 1, args);
+    } else if (g_black_label_active) {
+        LoadExecPS2("cdrom0:\\SLPS_252.33;1", 0, 0);
 #endif
     } else {
         LoadExecPS2((const char *)D_0026F740, 0, 0);
