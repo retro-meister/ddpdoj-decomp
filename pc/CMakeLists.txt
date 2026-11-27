@@ -304,14 +304,19 @@ if(BUILD_TESTING)
         ddpdoj_gallery ddpdoj_gs ddpdoj_cdvd ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
     add_executable(ddpdoj_task_test
-        tests/task_test.c
+        tests/task_test.c state_slot.c
         ../src/game/system/task.c
         ../src/game/system/system_state.c
     )
     target_compile_features(ddpdoj_task_test PRIVATE c_std_11)
     target_compile_definitions(ddpdoj_task_test PRIVATE DDPDOJ_PC)
-    target_include_directories(ddpdoj_task_test PRIVATE ../include)
+    target_include_directories(ddpdoj_task_test PRIVATE . ../include)
+    target_link_libraries(ddpdoj_task_test PRIVATE SDL3::SDL3)
     add_test(NAME task_scheduler COMMAND ddpdoj_task_test)
+    add_test(NAME task_state_save COMMAND ddpdoj_task_test save test-task-slot.bin)
+    add_test(NAME task_state_load COMMAND ddpdoj_task_test load test-task-slot.bin)
+    set_tests_properties(task_state_save PROPERTIES FIXTURES_SETUP task_state)
+    set_tests_properties(task_state_load PROPERTIES FIXTURES_REQUIRED task_state)
 
     add_executable(ddpdoj_game_loop_test tests/game_loop_test.c)
     target_link_libraries(ddpdoj_game_loop_test PRIVATE ddpdoj_game_loop ddpdoj_mode ddpdoj_replay_storage)

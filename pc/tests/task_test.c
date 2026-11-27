@@ -1,5 +1,6 @@
 #include "common.h"
-#include "task.h"
+#include "pc_task_state.h"
+#include "state_slot.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,7 +42,18 @@ static void run_frame(void) {
     task_run_all();
 }
 
-int main(void) {
+int main(int argc, char **argv) {
+    if (argc == 3 && !SDL_strcmp(argv[1], "load")) {
+        size_t size;
+        PcTaskState *state = pc_state_slot_read(argv[2], GAME_MODE_MAIN, 1, &size);
+        require(state && size == sizeof(*state) && pc_tasks_restore(state), "Load saved scheduler");
+        SDL_free(state);
+        run_frame();
+        require(observed_count == 2 && observed_ids[0] == 4 && observed_ids[1] == 1,
+                "Resume the queued player and score tasks after restarting");
+        require(start_task(TASK_GAME) == 5, "Continue the saved ID sequence after restarting");
+        return !SDL_RemovePath(argv[2]);
+    }
     task_reset_all();
     const u32 score = start_task(TASK_SCORE);
     const u32 game = start_task(TASK_GAME);
@@ -64,6 +76,28 @@ int main(void) {
     run_frame();
     require(observed_count == 2 && observed_ids[0] == attract && observed_ids[1] == score,
             "A pending stop takes effect before callbacks run");
+
+    const u32 player = start_task(TASK_PLAYER1);
+    reg_d0.w = attract;
+    task_find();
+    reg_a0 = (u8 *)TASK(reg_a0)->id;
+    task_request_stop();
+    PcTaskState saved;
+    pc_tasks_capture(&saved);
+    if (argc == 3 && !SDL_strcmp(argv[1], "save")) {
+        return !pc_state_slot_write(argv[2], GAME_MODE_MAIN, 1, &saved, sizeof(saved));
+    }
+    run_frame();
+    require(observed_count == 2, "Replace the stopped attract task with the queued player");
+    u32 first = observed_ids[0], second = observed_ids[1];
+    task_reset_all();
+    require(pc_tasks_restore(&saved), "Restore pending task starts and stops");
+    saved.stop_bytes = 1;
+    require(!pc_tasks_restore(&saved), "Reject a partial stop request");
+    run_frame();
+    require(observed_count == 2 && observed_ids[0] == first && observed_ids[1] == second &&
+            (first == player || second == player), "Restore callback IDs and priority order");
+    require(start_task(TASK_GAME) == player + 1, "Resume the saved task ID counter");
 
     task_reset_all();
     for (unsigned int i = 0; i < TASK_COUNT; ++i) {

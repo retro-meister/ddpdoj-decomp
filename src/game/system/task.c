@@ -2,6 +2,7 @@
 #include "task.h"
 
 #ifdef DDPDOJ_PC
+#include "pc_task_state.h"
 #include <stdlib.h>
 #include <string.h>
 
@@ -38,6 +39,42 @@ static Task active_tasks[TASK_COUNT];
 static Task stop_requests[TASK_COUNT];
 static Task start_requests[TASK_COUNT];
 static Task dummy_task;
+void pc_tasks_capture(PcTaskState *state)
+{
+    memcpy(state->active, active_tasks, sizeof(active_tasks));
+    memcpy(state->starts, start_requests, sizeof(start_requests));
+    memcpy(state->stops, stop_requests, sizeof(stop_requests));
+    state->dummy = dummy_task;
+    state->last_id = g_task_last_id;
+    state->start_bytes = g_task_start_requests_used;
+    state->stop_bytes = g_task_stop_requests_used;
+}
+
+static bool valid_task(const Task *task)
+{
+    unsigned index = task->state & 0xff;
+    return !task->state || (task->state == (0x8000 | index) &&
+                            index < TASK_TABLE_COUNT && task_callbacks[index]);
+}
+
+bool pc_tasks_restore(const PcTaskState *state)
+{
+    if (state->start_bytes > sizeof(start_requests) || state->start_bytes % sizeof(Task) ||
+        state->stop_bytes > sizeof(stop_requests) || state->stop_bytes % sizeof(Task)) return false;
+    for (unsigned i = 0; i < TASK_COUNT; ++i) {
+        if (!valid_task(&state->active[i]) ||
+            (i < state->start_bytes / sizeof(Task) && !valid_task(&state->starts[i]))) return false;
+    }
+    memcpy(active_tasks, state->active, sizeof(active_tasks));
+    memcpy(start_requests, state->starts, sizeof(start_requests));
+    memcpy(stop_requests, state->stops, sizeof(stop_requests));
+    dummy_task = state->dummy;
+    g_task_last_id = state->last_id;
+    g_task_start_requests_used = state->start_bytes;
+    g_task_stop_requests_used = state->stop_bytes;
+    return true;
+}
+
 #define g_tasks ((u8 *)&active_tasks)
 #define g_task_start_requests ((u8 *)&start_requests)
 #define g_task_stop_requests ((u8 *)&stop_requests)
