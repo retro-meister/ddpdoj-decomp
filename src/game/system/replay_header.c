@@ -32,30 +32,10 @@ void replay_stop_task(void) {
     task_stop_self();
 }
 
-#ifndef DDPDOJ_PC
-typedef struct {
-    unsigned __int128 quadwords[4];
-} StatePayload;
-
-typedef struct {
-    StatePayload payload;
-    s16 trailingHalfword;
-} StateBlock;
-#endif
 
 void replay_header_save(void)
 {
-#ifdef DDPDOJ_PC
-    _Static_assert(sizeof(ReplayHeader) == 0x42, "Replay header must keep its PS2 layout");
     g_replay_header_saved = g_replay_header;
-#else
-    u32 destinationAddress = (u32)&g_replay_header_saved;
-    u32 sourceAddress = (u32)&g_replay_header;
-
-    *(StatePayload *)destinationAddress = *(const StatePayload *)sourceAddress;
-    *(s16 *)(destinationAddress + sizeof(StatePayload)) =
-        *(const s16 *)(sourceAddress + sizeof(StatePayload));
-#endif
 }
 
 extern void ship_select_apply(void);

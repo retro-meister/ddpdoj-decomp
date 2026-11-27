@@ -2265,11 +2265,7 @@ s32 replay_save_prompt_update_card(void);
 s32 replay_save_prompt_update_disc(void);
 void replay_scores_snapshot(void);
 s32 replay_file_finalize(void);
-#ifdef DDPDOJ_PC
 void delta_decode(u8 *data);
-#else
-void delta_decode(s32 arg0);
-#endif
 void replay_save_prompt_draw(void);
 void replay_save_prompt_text_draw(void);
 s32 replay_snapshot_checksum(const u8 *data);
@@ -10358,11 +10354,7 @@ s32 replay_file_finalize(void) {
         g_replay_file_finalized = 0;
         memcpy(g_replay_file_loaded, save, 0x202E8);
         replay_file_pointers_encode(g_replay_file_loaded);
-#ifdef DDPDOJ_PC
         delta_decode(D_006A4C00);
-#else
-        delta_decode((s32)D_006A4C00);
-#endif
         replay_slots_reset();
         replay_slots_open(1, 2, 0);
         g_menu_alpha = 0;
@@ -10385,11 +10377,7 @@ s32 replay_file_finalize(void) {
     return 0;
 }
 
-#ifdef DDPDOJ_PC
 void delta_decode(u8 *arg0) {
-#else
-void delta_decode(s32 arg0) {
-#endif
     s32 var_v1;
     s8 *temp_a1;
     s8 *temp_t0_2;

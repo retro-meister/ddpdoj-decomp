@@ -1,7 +1,6 @@
 #include "common.h"
 
 extern void *stage_clear_color_table_get_table[8];
-#ifdef DDPDOJ_PC
 typedef struct {
     u32 sprite;
     u8 *palette;
@@ -11,9 +10,6 @@ struct D0026b250Record {
     StageClearColor colors[5];
     u16 padding[4];
 };
-#else
-struct D0026b250Record { u16 w0[2]; void *p1; u16 w2[2]; void *p3; u16 w4[2]; void *p5; u16 w6[2]; void *p7; u16 w8[2]; void *p9; u16 w10[4]; };
-#endif
 extern struct D0026b250Record D_0026B250;
 
 s32 rng_next_unsigned();
@@ -212,7 +208,6 @@ void *stage_clear_color_table_get_table[8] = {
     0,
 };
 
-#ifdef DDPDOJ_PC
 struct D0026b250Record D_0026B250 = {
     {
         { 0x14B5, g_menu_wallpapers_1 },
@@ -223,21 +218,6 @@ struct D0026b250Record D_0026B250 = {
     },
     { 0, 0, 0, 0 },
 };
-#else
-struct D0026b250Record D_0026B250 = {
-    { 0x14B5, 0x0000 },
-    g_menu_wallpapers_1,
-    { 0x14B6, 0x0000 },
-    g_menu_wallpapers_3,
-    { 0x14B7, 0x0000 },
-    g_menu_wallpapers_5,
-    { 0x14B8, 0x0000 },
-    g_menu_wallpapers_7,
-    { 0x14B9, 0x0000 },
-    g_menu_wallpapers_9,
-    { 0x0000, 0x0000, 0x0000, 0x0000 },
-};
-#endif
 
 u8 stage_clear_colors_apply_table[32] = {
     0x00, 0x80, 0x00, 0x80, 0x00, 0x90, 0x00, 0x90, 0x00, 0xA0, 0x00, 0xA0, 0x00, 0xB0, 0x00, 0xB0,

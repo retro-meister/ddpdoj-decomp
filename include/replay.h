@@ -29,6 +29,8 @@ typedef struct {
     /* 0x2E */ u16 unk2E[10];
 } ReplayHeader;
 
+typedef char ReplayHeaderSizeCheck[sizeof(ReplayHeader) == 0x42 ? 1 : -1];
+
 extern ReplayHeader g_replay_header;       /* of the replay being recorded or played */
 extern ReplayHeader g_replay_header_saved; /* copy taken when recording starts */
 
