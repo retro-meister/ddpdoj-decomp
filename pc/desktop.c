@@ -1,5 +1,11 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+#include <stdlib.h>
+#ifdef _WIN32
+#include <process.h>
+#else
+#include <unistd.h>
+#endif
 
 #include "cdvd.h"
 #include "game_loop.h"
@@ -7,6 +13,7 @@
 #include "pc_input.h"
 #include "presentation.h"
 #include "sfx.h"
+#include "sdk/libcdvd.h"
 #include "vblank.h"
 
 #ifdef DDPDOJ_GALLERY_HOST
@@ -156,6 +163,57 @@ static void choose_disc(SDL_Window *window, DiscSelection *selection)
     }
 }
 
+static char *disc_preference_path(void)
+{
+    char *directory = SDL_GetPrefPath("DaiOuJou", "DaiOuJou");
+    char *path = NULL;
+    if (directory) {
+        SDL_asprintf(&path, "%sdisc-path", directory);
+        SDL_free(directory);
+    }
+    return path;
+}
+
+static bool remember_disc(const char *preference, const char *iso)
+{
+#ifdef _WIN32
+    wchar_t *wide = (wchar_t *)SDL_iconv_string("UTF-16LE", "UTF-8", iso, SDL_strlen(iso) + 1);
+    wchar_t *full = wide ? _wfullpath(NULL, wide, 0) : NULL;
+    SDL_free(wide);
+    char *absolute = full ? SDL_iconv_string("UTF-8", "UTF-16LE", (const char *)full,
+                                             (SDL_wcslen(full) + 1) * sizeof *full) : NULL;
+    free(full);
+    int pid = _getpid();
+#else
+    char *absolute = realpath(iso, NULL);
+    int pid = getpid();
+#endif
+    char *temporary = NULL;
+    bool saved = absolute && SDL_asprintf(&temporary, "%s.%d.tmp", preference, pid) >= 0 &&
+                 SDL_SaveFile(temporary, absolute, SDL_strlen(absolute)) &&
+                 SDL_RenamePath(temporary, preference);
+    if (!saved && temporary) {
+        SDL_RemovePath(temporary);
+    }
+    SDL_free(temporary);
+#ifdef _WIN32
+    SDL_free(absolute);
+#else
+    free(absolute);
+#endif
+    return saved;
+}
+
+static bool mount_game_disc(const char *iso)
+{
+    sceCdlFILE file;
+    if (pc_cdvd_mount(iso) && sceCdSearchFile(&file, "SLPS_252.33")) {
+        return true;
+    }
+    pc_cdvd_unmount();
+    return SDL_SetError("Could not open the Dai-Ou-Jou disc at %s", iso);
+}
+
 int main(int argc, char **argv)
 {
     if (argc > 2) {
@@ -182,13 +240,25 @@ int main(int argc, char **argv)
         }
     }
     bool ok = renderer && SDL_ShowWindow(window);
+    char *preference = ok ? disc_preference_path() : NULL;
+    char *saved = preference ? SDL_LoadFile(preference, NULL) : NULL;
+    bool mounted = false;
     if (ok && !iso) {
-        choose_disc(window, &selection);
-        iso = selection.path;
+        if (saved && mount_game_disc(saved)) {
+            iso = saved;
+            mounted = true;
+        } else {
+            choose_disc(window, &selection);
+            iso = selection.path;
+        }
     }
     if (ok && !selection.canceled) {
-        ok = iso && pc_cdvd_mount(iso) && pc_sfx_load(iso) && pc_sfx_open_device() &&
-             run_mode(renderer, iso, &next_mode);
+        ok = iso && (mounted || mount_game_disc(iso)) && pc_sfx_load(iso);
+        if (ok && (!saved || SDL_strcmp(saved, iso) != 0) &&
+            (!preference || !remember_disc(preference, iso))) {
+            SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Could not save the disc location");
+        }
+        ok = ok && pc_sfx_open_device() && run_mode(renderer, iso, &next_mode);
     }
     if (!ok) {
         const char *error = SDL_GetError();
@@ -214,6 +284,8 @@ int main(int argc, char **argv)
         SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "Could not launch the selected mode. %s", SDL_GetError());
         ok = false;
     }
+    SDL_free(saved);
+    SDL_free(preference);
     SDL_free(selection.path);
     SDL_Quit();
     return ok ? 0 : 1;
