@@ -1,4 +1,5 @@
 #include "common.h"
+#include "score_cell.h"
 #include "black_label.h"
 #include "score_tables.h"
 #include "entity.h"
@@ -717,11 +718,6 @@ typedef struct {
     u8 b[0x5A];
 } Pair90;
 
-typedef struct {
-    u8 a[0xA];
-    u8 b[0xA];
-} Pair10;
-
 extern u16 g_p2_hyper_effect_delay;
 extern u16 g_p1_hyper_effect_delay;
 extern u16 g_p2_hyper_effect_flag;
@@ -789,7 +785,6 @@ extern u16 g_high_score_digits;
 extern u16 g_high_score_billions;
 extern s32 g_p2_position_trail[16];
 extern s32 g_p1_position_trail[16];
-extern Pair10 g_p1_score_extra_cell_as_Pair10;
 extern Pair90 g_p1_score_cells_as_Pair90;
 extern u8 scores_reset_buffer[];
 
@@ -820,10 +815,10 @@ void scores_reset(void) {
         g_p1_score_cells_as_Pair90.b[i] = 0;
     }
     for (i = 0; i < 0xA; i++) {
-        g_p1_score_extra_cell_as_Pair10.a[i] = 0;
+        g_extra_score_cells.pair.bytes.p1[i] = 0;
     }
     for (i = 0; i < 0xA; i++) {
-        g_p1_score_extra_cell_as_Pair10.b[i] = 0;
+        g_extra_score_cells.pair.bytes.p2[i] = 0;
     }
     g_p2_score_panel_flags = 0;
     g_score_check_scratch = g_score_check_billions = (g_p1_score_panel_flags = 0);
@@ -1014,12 +1009,6 @@ extern u16 D_006E5C06[];
 extern u8 death_D_00290DBC;
 extern s16 g_player2[];
 extern s16 g_player1[];
-extern u16 death_D_0068DAA6[];
-extern u16 death_D_0068DAA8[];
-extern u16 score_pending_apply_side_buffer[];
-extern u16 death_D_0068DAB2[];
-extern u16 g_p1_score_extra_cell[];
-extern u16 g_p2_score_extra_cell[];
 extern s32 g_replay_start_p1_score;
 extern u16 g_replay_start_p1_score_billions;
 extern s32 g_replay_start_p2_score;
@@ -1038,16 +1027,16 @@ void score_pending_apply_side(void) {
 #ifdef DEATH_LABEL
     if (death_D_00290DBC != 0) {
         if (g_player1[0] < 0) {
-            death_D_0068DAA8[0] = 0;
-            g_p1_score_extra_cell[0] = 1;
-            death_D_0068DAA6[0] = 0xC030;
+            g_extra_score_cells.pair.players[0].attributes = 0;
+            g_extra_score_cells.pair.players[0].dirty = 1;
+            g_extra_score_cells.pair.players[0].tile = 0xC030;
             g_p1_score = (u32)g_replay_start_p1_score;
             g_p1_score_billions = g_replay_start_p1_score_billions;
         }
         if (g_player2[0] < 0) {
-            death_D_0068DAB2[0] = 0;
-            g_p2_score_extra_cell[0] = 1;
-            score_pending_apply_side_buffer[0] = 0xC030;
+            g_extra_score_cells.pair.players[1].attributes = 0;
+            g_extra_score_cells.pair.players[1].dirty = 1;
+            g_extra_score_cells.pair.players[1].tile = 0xC030;
             g_p2_score = (u32)g_replay_start_p2_score;
             g_p2_score_billions = g_replay_start_p2_score_billions;
         }

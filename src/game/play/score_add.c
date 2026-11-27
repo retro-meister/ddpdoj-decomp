@@ -1,4 +1,5 @@
 #include "common.h"
+#include "score_cell.h"
 #include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
@@ -1245,8 +1246,6 @@ extern u8 D_002B4E28[];
 extern u8 D_002B5728[];
 extern u8 D_002B5F28[];
 extern u8 D_002B6828[];
-extern u16 g_p1_score_extra_cell[];
-extern u16 g_p2_score_extra_cell[];
 extern u16 g_p1_score_cells[];
 extern u16 g_p2_score_cells[];
 
@@ -1302,7 +1301,7 @@ loop_2:
     t = reg_d6.h[0] - 1;
     reg_d6.h[0] = t;
     if (((s64) ((s64) (t & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_1;
-    reg_a0 = (u8 *)g_p1_score_extra_cell;
+    reg_a0 = (u8 *)&g_extra_score_cells.pair.players[0];
     *(u16 *)reg_a0 = reg_d0.h[0];
     reg_tmp.w = SCORE_CELL_ADDRESS(D_002B5728, 0x9d8);
     reg_a0 += 2;
@@ -1313,7 +1312,7 @@ loop_2:
     *(u16 *)reg_a0 = 0xC030;
     reg_a0 += 2;
     *(u16 *)reg_a0 = reg_d3.h[0];
-    reg_a0 = (u8 *)g_p2_score_extra_cell;
+    reg_a0 = (u8 *)&g_extra_score_cells.pair.players[1];
     *(u16 *)reg_a0 = reg_d0.h[0];
     reg_tmp.w = SCORE_CELL_ADDRESS(D_002B6828, 0x1ad8);
     reg_a0 += 2;
@@ -1354,7 +1353,7 @@ void p1_score_cells_reset(void) {
         reg_a0 += 2;
         reg_d1.w += 0x100;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_a0 = (u8 *)(g_p1_score_extra_cell);
+    reg_a0 = (u8 *)(&g_extra_score_cells.pair.players[0]);
     *(u16 *)reg_a0 = 1;
     reg_tmp.w = SCORE_CELL_ADDRESS(D_002B5728, 0x9d8);
     reg_a0 += 2;
@@ -1402,7 +1401,7 @@ void p2_score_cells_reset(void) {
         reg_a0 += 2;
         reg_d1.w += 0x100;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_a0 = (u8 *)(g_p2_score_extra_cell);
+    reg_a0 = (u8 *)(&g_extra_score_cells.pair.players[1]);
     *(u16 *)reg_a0 = 1;
     reg_tmp.w = SCORE_CELL_ADDRESS(D_002B6828, 0x1ad8);
     reg_a0 += 2;
@@ -1443,7 +1442,7 @@ void p1_score_cells_reset_short(void) {
         reg_a0 += 2;
         reg_d1.w += 0x100;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_a0 = (u8 *)(g_p1_score_extra_cell);
+    reg_a0 = (u8 *)(&g_extra_score_cells.pair.players[0]);
     *(u16 *)reg_a0 = 1;
     reg_d0.w = 0;
     g_p1_score = reg_d0.w;
@@ -1474,7 +1473,7 @@ void p2_score_cells_reset_short(void) {
         reg_a0 += 2;
         reg_d1.w += 0x100;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_a0 = (u8 *)(g_p2_score_extra_cell);
+    reg_a0 = (u8 *)(&g_extra_score_cells.pair.players[1]);
     *(u16 *)reg_a0 = 1;
     reg_d0.w = 0;
     g_p2_score = reg_d0.w;
@@ -1558,7 +1557,7 @@ void p1_score_digits_grow(void) {
     if (temp_a0 != 9) {
         temp_s0 = reg_a0;
         g_p1_score_digits = temp_a0 + 1;
-        reg_a0 = ((u8 *)g_p1_score_extra_cell);
+        reg_a0 = ((u8 *)&g_extra_score_cells.pair.players[0]);
         score_cell_bump(temp_a0);
         reg_a0 = temp_s0;
     }
@@ -1573,7 +1572,7 @@ void p2_score_digits_grow(void) {
     if (temp_a0 != 9) {
         temp_s0 = reg_a0;
         g_p2_score_digits = temp_a0 + 1;
-        reg_a0 = ((u8 *)g_p2_score_extra_cell);
+        reg_a0 = ((u8 *)&g_extra_score_cells.pair.players[1]);
         score_cell_bump(temp_a0);
         reg_a0 = temp_s0;
     }
@@ -1616,8 +1615,8 @@ loop_1:
         if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) {
             goto loop_1;
         }
-        if (g_p1_score_extra_cell[0] != 0) {
-            reg_a0 = (u8 *)g_p1_score_extra_cell;
+        if (g_extra_score_cells.pair.players[0].dirty != 0) {
+            reg_a0 = (u8 *)&g_extra_score_cells.pair.players[0];
             *(u16 *)reg_a0 = 0;
             reg_a0 += 2;
             reg_tmp.h[1] = *(u16 *)reg_a0;
@@ -1630,8 +1629,8 @@ loop_1:
             *(u16 *)(reg_a1 + 0) = *(u16 *)reg_a0;
             reg_a0 += 2;
         }
-        if (g_p2_score_extra_cell[0] != 0) {
-            reg_a0 = (u8 *)g_p2_score_extra_cell;
+        if (g_extra_score_cells.pair.players[1].dirty != 0) {
+            reg_a0 = (u8 *)&g_extra_score_cells.pair.players[1];
             *(u16 *)reg_a0 = 0;
             reg_a0 += 2;
             reg_tmp.h[1] = *(u16 *)reg_a0;
@@ -1662,7 +1661,7 @@ void p1_score_cells_mark(void)
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
     reg_d0.w = saved_d0;
-    ((s16 *)g_p1_score_extra_cell)[0] = 1;
+    g_extra_score_cells.pair.players[0].dirty = 1;
     (*(s16 **)&reg_a0) = saved_a0;
 }
 
@@ -1681,7 +1680,7 @@ void p2_score_cells_mark(void)
     } while ((s16)(--reg_d0.h[0]) >= 0);
 
     reg_d0.w = saved_d0;
-    ((s16 *)g_p2_score_extra_cell)[0] = 1;
+    g_extra_score_cells.pair.players[1].dirty = 1;
     reg_a0 = saved_a0;
 }
 

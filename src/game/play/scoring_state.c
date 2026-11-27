@@ -1,6 +1,7 @@
 /* Global variables of the scoring unit. They lie in a block apart from the unit's own, and one object file can
    place only one block of a section in our link, so they are defined here. */
 #include "common.h"
+#include "score_cell.h"
 
 /* .sbss (the compiler lays these out in reverse) */
 u32 g_p1_score;
@@ -147,18 +148,7 @@ u8 g_death_label_ranking_texts[272];
 u8 g_stored_ranking_texts[160];
 u8 scores_reset_buffer[80];
 u16 g_p1_score_cells[96];
-#ifdef DEATH_LABEL
-u16 score_pending_apply_side_buffer[8];
-#endif
-#ifdef DEATH_LABEL
-#ifdef DDPDOJ_PC
-u16 g_p1_score_extra_cell[10];
-#else
-u16 g_p1_score_extra_cell[8];
-#endif
-#else
-u16 g_p1_score_extra_cell[16];
-#endif
+ExtraScoreCells g_extra_score_cells;
 s32 g_p1_position_trail[16];
 s32 g_p2_position_trail[16];
 
@@ -234,23 +224,13 @@ PC_DATA_ALIAS(g_p1_score_cells_as_Bank90, g_p1_score_cells, 0x0);
 PC_DATA_ALIAS(g_p1_score_cells_as_Pair90, g_p1_score_cells, 0x0);
 PC_DATA_ALIAS(g_p2_score_cells, g_p1_score_cells, 0x5a);
 
-PC_DATA_ALIAS(g_p1_score_extra_cell_as_Bank10, g_p1_score_extra_cell, 0x0);
-PC_DATA_ALIAS(g_p1_score_extra_cell_as_Pair10, g_p1_score_extra_cell, 0x0);
-PC_DATA_ALIAS(g_p2_score_extra_cell, g_p1_score_extra_cell, 0xa);
 
 PC_DATA_ALIAS(g_stored_ranking_texts_as_s8_a5_a30, g_stored_ranking_texts, 0x0);
 
-#ifdef DEATH_LABEL
-PC_DATA_ALIAS(death_D_0068DAA6, g_p1_score_extra_cell, 0x6);
-PC_DATA_ALIAS(death_D_0068DAA8, g_p1_score_extra_cell, 0x8);
-#endif
 
 PC_DATA_ALIAS(g_p1_score_pending_as_u8, g_p1_score_pending, 0x0);
 PC_DATA_ALIAS(g_p2_score_pending_as_u8, g_p2_score_pending, 0x0);
 
-#ifdef DEATH_LABEL
-PC_DATA_ALIAS(death_D_0068DAB2, score_pending_apply_side_buffer, 0x2);
-#endif
 
 PC_DATA_ALIAS(D_0028E579, g_p2_hyper_effect_delay, 1);
 PC_DATA_ALIAS(D_0028E57D, g_p1_hyper_effect_delay, 1);
@@ -263,9 +243,19 @@ PC_DATA_ALIAS(D_0028E705, g_hyper_text_anim_delay, 1);
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
 
+_Static_assert(sizeof(ScoreCell) == 10, "score cell size");
+_Static_assert(offsetof(ScoreCell, tile) == 6, "score cell tile offset");
+_Static_assert(offsetof(ScoreCell, attributes) == 8, "score cell attributes offset");
+_Static_assert(offsetof(ExtraScoreCells, unused_14) == 20, "extra score cell pair size");
+_Static_assert(sizeof(ExtraScoreCells) == 32, "extra score cell storage size");
+
 const PcFrameRegion pc_score_cells_regions[] = {
     PC_FRAME_REGION(g_p1_score_cells),
-    PC_FRAME_REGION(g_p1_score_extra_cell),
+#ifdef DEATH_LABEL
+    PC_FRAME_REGION(g_extra_score_cells.pair.players),
+#else
+    PC_FRAME_REGION(g_extra_score_cells),
+#endif
     PC_FRAME_REGION(p1_rank_entry_insert_buffer),
     PC_FRAME_REGION(p2_rank_entry_insert_buffer),
     PC_FRAME_REGION(g_ranking_scores),

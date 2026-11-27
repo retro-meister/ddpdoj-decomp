@@ -1,4 +1,5 @@
 #include "common.h"
+#include "score_cell.h"
 #include "pickups.h"
 #include "simulation.h"
 #include "fade.h"
@@ -113,8 +114,6 @@ extern u8 g_p1_options[80];
 extern s16 g_player2[];
 extern s16 g_player1[];
 extern u32 g_deferred_text[];
-extern u16 g_p1_score_extra_cell[];
-extern u16 g_p2_score_extra_cell[];
 extern u16 g_p1_score_cells[];
 extern u16 g_p2_score_cells[];
 extern u8 D_002BB470[64];
@@ -210,8 +209,8 @@ void startup_pointers_store_a(void) {
     STORE_POINTER(debug_list_views[23].entries, ((u16 *)g_deferred_text));
     STORE_POINTER(debug_list_views[24].entries, g_p1_score_cells);
     STORE_POINTER(debug_list_views[25].entries, g_p2_score_cells);
-    STORE_POINTER(debug_list_views[26].entries, g_p1_score_extra_cell);
-    STORE_POINTER(debug_list_views[27].entries, g_p2_score_extra_cell);
+    STORE_POINTER(debug_list_views[26].entries, &g_extra_score_cells.pair.players[0]);
+    STORE_POINTER(debug_list_views[27].entries, &g_extra_score_cells.pair.players[1]);
     STORE_POINTER(debug_list_views[28].entries, ((u16 *)g_bullets));
     STORE_POINTER(debug_list_views[29].entries, ((u16 *)D_002BB470));
     STORE_POINTER(debug_list_views[30].entries, g_debris);

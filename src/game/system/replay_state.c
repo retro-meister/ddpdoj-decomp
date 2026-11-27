@@ -1,4 +1,5 @@
 #include "common.h"
+#include "score_cell.h"
 #include "pickups.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
@@ -1106,11 +1107,6 @@ typedef struct {
 } Bank90;
 
 typedef struct {
-    u8 a[10];
-    u8 b[10];
-} Bank10;
-
-typedef struct {
     u8 f0000[0xC08];
     u8 padC08[0xE];
     u8 fC16[98];
@@ -1415,7 +1411,6 @@ extern u8 g_player1[];
 extern u8 g_text_layer[];
 extern s32 g_p2_position_trail[];
 extern s32 g_p1_position_trail[];
-extern Bank10 g_p1_score_extra_cell_as_Bank10;
 extern Bank90 g_p1_score_cells_as_Bank90;
 extern u8 g_player_slots[];
 extern u8 g_pickups[];
@@ -1653,10 +1648,10 @@ void replay_snapshot_save(Buf *buf) {
         buf->f330E[i] = g_p1_score_cells_as_Bank90.b[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->f3368[i] = g_p1_score_extra_cell_as_Bank10.a[i];
+        buf->f3368[i] = g_extra_score_cells.pair.bytes.p1[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->f3372[i] = g_p1_score_extra_cell_as_Bank10.b[i];
+        buf->f3372[i] = g_extra_score_cells.pair.bytes.p2[i];
     }
     *(s32 *)(p + 0x337C) = g_score_check_scratch;
     *(u16 *)(p + 0x3380) = g_score_check_billions;
@@ -2161,10 +2156,10 @@ void replay_snapshot_load(u8 *p) {
         g_p1_score_cells_as_Bank90.b[i] = p[0x330E + i];
     }
     for (i = 0; i < 10; i++) {
-        g_p1_score_extra_cell_as_Bank10.a[i] = p[0x3368 + i];
+        g_extra_score_cells.pair.bytes.p1[i] = p[0x3368 + i];
     }
     for (i = 0; i < 10; i++) {
-        g_p1_score_extra_cell_as_Bank10.b[i] = p[0x3372 + i];
+        g_extra_score_cells.pair.bytes.p2[i] = p[0x3372 + i];
     }
     g_score_check_scratch = *(s32 *)(p + 0x337C);
     g_score_check_billions = *(u16 *)(p + 0x3380);
@@ -2508,10 +2503,10 @@ void replay_start_state_load(u8 *p) {
         g_p1_score_cells_as_Bank90.b[i] = p[0x246 + i];
     }
     for (i = 0; i < 10; i++) {
-        g_p1_score_extra_cell_as_Bank10.a[i] = p[0x2A0 + i];
+        g_extra_score_cells.pair.bytes.p1[i] = p[0x2A0 + i];
     }
     for (i = 0; i < 10; i++) {
-        g_p1_score_extra_cell_as_Bank10.b[i] = p[0x2AA + i];
+        g_extra_score_cells.pair.bytes.p2[i] = p[0x2AA + i];
     }
     g_score_check_scratch = *(s32 *)(p + 0x2B4);
     g_score_check_billions = *(u16 *)(p + 0x2B8);
@@ -2759,10 +2754,10 @@ void replay_start_state_save(Buf2 *buf) {
         buf->b[i] = g_p1_score_cells_as_Bank90.b[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->c[i] = g_p1_score_extra_cell_as_Bank10.a[i];
+        buf->c[i] = g_extra_score_cells.pair.bytes.p1[i];
     }
     for (i = 0; i < 10; i++) {
-        buf->d[i] = g_p1_score_extra_cell_as_Bank10.b[i];
+        buf->d[i] = g_extra_score_cells.pair.bytes.p2[i];
     }
     *(s32 *)(p + 0x2B4) = g_score_check_scratch;
     *(u16 *)(p + 0x2B8) = g_score_check_billions;

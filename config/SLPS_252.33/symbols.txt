@@ -4687,7 +4687,6 @@ D_002B6DF4 = 0x2b6df4;
 D_002B6E0C = 0x2b6e0c;
 D_002BAD63 = 0x2bad63;
 D_002BAE82 = 0x2bae82;
-g_p2_score_extra_cell = 0x2baf3a;
 g_p2_score_cells = 0x2bafaa;
 g_stored_ranking_score_tops = 0x2bb198;
 g_stored_ranking_continues = 0x2bb1a8;
