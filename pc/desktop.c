@@ -21,6 +21,8 @@ static const char *const titles[] = {
     [GAME_MODE_GALLERY] = "DoDonPachi Dai-Ou-Jou - Gallery",
 };
 
+static char *preference_path(const char *name);
+
 static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *iso, GameMode mode)
 {
     static const char *const modules[] = {
@@ -55,7 +57,9 @@ static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *is
         }
         PcRunMode *run = (PcRunMode *)SDL_LoadFunction(module, "pc_run_mode");
         GameMode next_mode = GAME_MODE_NONE;
-        bool ok = run && run(renderer, iso, path, mode, &next_mode);
+        char *slot = preference_path("quick.state");
+        bool ok = run && run(renderer, iso, path, slot, mode, &next_mode);
+        SDL_free(slot);
         SDL_free(path);
         mode = next_mode;
         SDL_UnloadObject(module);
