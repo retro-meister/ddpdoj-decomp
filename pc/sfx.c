@@ -5,7 +5,7 @@
 
 enum {
     SOUND_COUNT = 56,
-    VOICE_COUNT = 16,
+    VOICE_COUNT = SDL_arraysize(((PcSfxState *)0)->voices),
     VAG_HEADER_SIZE = 48,
     VAG_BLOCK_SIZE = 16,
     VAG_BLOCK_SAMPLES = 28,
@@ -24,7 +24,7 @@ typedef struct {
     const Sound *sound;
     unsigned frame;
     unsigned fraction;
-    float gain;
+    unsigned volume;
     int channel;
     bool loop;
 } Voice;
@@ -183,6 +183,7 @@ static void mix(float *mono, size_t frames)
         if (!sound) {
             continue;
         }
+        float gain = (float)voice->volume / (255.0f * 32768.0f);
         unsigned end = voice->loop ? sound->loop_end : sound->frames;
         for (size_t j = 0; j < frames; j++) {
             unsigned next_frame = voice->frame + 1;
@@ -191,9 +192,9 @@ static void mix(float *mono, size_t frames)
                 unsigned next = next_frame < end ? next_frame :
                                 voice->loop ? sound->loop_start : voice->frame;
                 float fraction = (float)voice->fraction / PC_SFX_MIX_RATE;
-                mono[j] += (sample + (sound->pcm[next] - sample) * fraction) * voice->gain;
+                mono[j] += (sample + (sound->pcm[next] - sample) * fraction) * gain;
             } else {
-                mono[j] += sample * voice->gain;
+                mono[j] += sample * gain;
             }
             voice->fraction += sound->rate;
             voice->frame += voice->fraction / PC_SFX_MIX_RATE;
@@ -279,7 +280,7 @@ bool pc_sfx_play_on_channel(unsigned request, unsigned volume, int channel)
     const Sound *sound = &sounds[index];
     voices[selected] = (Voice){
         .sound = sound,
-        .gain = (float)SDL_min(volume, 255) / (255.0f * 32768.0f),
+        .volume = SDL_min(volume, 255),
         .channel = channel,
         .loop = (request & 0x80) && sound->loop_end != 0,
     };
@@ -310,6 +311,50 @@ void pc_sfx_stop_all(void)
         SDL_ClearAudioStream(playback);
         SDL_UnlockAudioStream(playback);
     }
+}
+
+bool pc_sfx_capture(PcSfxState *state)
+{
+    if (playback && !SDL_LockAudioStream(playback)) return false;
+    *state = (PcSfxState){ .next_voice = next_voice };
+    for (unsigned i = 0; i < VOICE_COUNT; ++i) {
+        const Voice *v = &voices[i];
+        if (v->sound) {
+            state->voices[i] = (PcVoiceState){
+                .clip = (unsigned)(v->sound - sounds) + 1,
+                .frame = v->frame, .fraction = v->fraction, .volume = v->volume,
+                .channel = v->channel, .loop = v->loop,
+            };
+        }
+    }
+    if (playback) SDL_UnlockAudioStream(playback);
+    return true;
+}
+
+bool pc_sfx_restore(const PcSfxState *state)
+{
+    if (state->next_voice >= VOICE_COUNT) return false;
+    Voice restored[VOICE_COUNT] = {0};
+    for (unsigned i = 0; i < VOICE_COUNT; ++i) {
+        const PcVoiceState *v = &state->voices[i];
+        if (!v->clip) continue;
+        if (v->clip > SOUND_COUNT || v->volume > 255 || v->loop > 1 ||
+            v->fraction >= PC_SFX_MIX_RATE) return false;
+        const Sound *sound = &sounds[v->clip - 1];
+        if (v->frame >= (v->loop ? sound->loop_end : sound->frames)) return false;
+        restored[i] = (Voice){
+            .sound = sound, .frame = v->frame, .fraction = v->fraction,
+            .volume = v->volume, .channel = v->channel, .loop = v->loop,
+        };
+    }
+    if (playback && !SDL_LockAudioStream(playback)) return false;
+    bool ok = !playback || SDL_ClearAudioStream(playback);
+    if (ok) {
+        SDL_memcpy(voices, restored, sizeof(voices));
+        next_voice = state->next_voice;
+    }
+    if (playback) SDL_UnlockAudioStream(playback);
+    return ok;
 }
 
 bool pc_sfx_render(float *mono, size_t frames)

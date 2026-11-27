@@ -21,6 +21,14 @@ int main(int argc, char **argv)
     require(pc_sound_command(0x580, 0x36, 0x94, 4) == 0, "Play a sample on a named channel");
     float samples[334];
     require(pc_sfx_render(samples, SDL_arraysize(samples)), "Mix the playing channel");
+    PcSfxState snapshot;
+    float expected[SDL_arraysize(samples)];
+    require(pc_sfx_capture(&snapshot) && pc_sfx_render(expected, SDL_arraysize(expected)),
+            "Capture active voices mid-sample");
+    pc_sfx_shutdown();
+    require(pc_sfx_load(argv[1]) && pc_sfx_restore(&snapshot) &&
+            pc_sfx_render(samples, SDL_arraysize(samples)), "Restore against freshly decoded banks");
+    require(SDL_memcmp(samples, expected, sizeof(samples)) == 0, "Resume at the same PCM sample");
     bool nonzero = false;
     for (size_t i = 0; i < SDL_arraysize(samples); ++i) nonzero |= samples[i] != 0;
     require(nonzero, "The playing channel has nonzero output");
@@ -46,6 +54,12 @@ int main(int argc, char **argv)
     SDL_Delay(100);
     require(pc_sound_command(0x60, 0, 0, 0) == 0 &&
             pc_sound_command(0x80b0, 0, 0, 0) == 0, "Pause the stream");
+    PcMusicState music, resumed;
+    require(pc_bgm_capture(&music) && music.tracks[0].loaded && !music.tracks[0].playing &&
+            music.tracks[0].position > 0, "Capture the paused music cursor");
+    pc_bgm_close();
+    require(pc_bgm_open(argv[1]) && pc_bgm_restore(&music) && pc_bgm_capture(&resumed) &&
+            resumed.tracks[0].position == music.tracks[0].position, "Restore the paused music cursor");
     require(pc_sound_command(0x50, 0, 0, 0) == 0 &&
             pc_sound_command(0x80b0, 0, 0, 0) == 0x1000, "Resume the stream");
     require(pc_sound_command(0x30, 0, 0, 0) == 0 &&
