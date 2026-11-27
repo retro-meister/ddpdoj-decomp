@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
@@ -172,10 +173,20 @@ void stage1_boss_fire_body_ports_rage_start(void) {
 
 s32 bullet_fire256_2way();
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static int stage1_boss_above_rage_health(void) {
+    const u16 *hp = STAGE1_BOSS(reg_a5)->body_hp;
+    return (((u32)hp[0] << 16) | hp[1]) >= 0x16C00 / 5;
+}
+#endif
+
 void stage1_boss_fire_body_ports_rage(void) {
     u16 temp_a1;
     u16 temp_a2;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && stage1_boss_above_rage_health()) return;
+#endif
     reg_tmp.b[0] = RAGE(reg_a4)->shot.t.count;
     RAGE(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -195,11 +206,11 @@ void stage1_boss_fire_body_ports_rage(void) {
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
         reg_d1.h[0] += 2;
-        bullet_fire256_2way();
+        if (GAME_RULE(1, 0)) bullet_fire256_2way();
         reg_d3.h[1] = stage1_boss_port_offsets[6];
         reg_d3.h[0] = stage1_boss_port_offsets[7];
         reg_d1.h[0] -= 4;
-        bullet_fire256_2way();
+        if (GAME_RULE(1, 0)) bullet_fire256_2way();
         reg_d1.h[0] += 2;
         reg_d1.b[0] += reg_d6.b[0];
         reg_d3.h[1] = stage1_boss_port_offsets[0];
@@ -210,7 +221,7 @@ void stage1_boss_fire_body_ports_rage(void) {
         reg_d3.h[0] = stage1_boss_port_offsets[3];
         reg_d1.b[0] -= reg_d6.b[0];
         bullet_fire256_2way();
-        RAGE(reg_a4)->speed += 4;
+        RAGE(reg_a4)->speed += GAME_RULE(4, 2);
         reg_d0.h[0] = RAGE(reg_a4)->spread_step;
         RAGE(reg_a4)->spread += reg_d0.h[0];
         RAGE(reg_a4)->shots_left -= 1;
@@ -234,6 +245,9 @@ void stage1_boss_fire_turrets_scatter_start(void) {
     reg_a0 = (u8 *)(stage1_boss_turret_speeds);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && reg_d0.h[0] == (u16)-4) reg_d0.h[0] = (u16)-5;
+#endif
     temp_a0 = TURRETS(reg_a4)->speed;
     TURRETS(reg_a4)->speed = (u16) (temp_a0 + reg_d0.h[0]);
     TURRETS(reg_a4)->start_angle[1] = 0x20U;
@@ -463,7 +477,7 @@ void stage1_boss_fire_gatling_a(void) {
             reg_d4.w = 0;
             reg_d2.w += reg_tmp.w;
             bullet_fire256_fixed();
-            GATLING(reg_a4)->speed += 2;
+            GATLING(reg_a4)->speed += GAME_RULE(2, 1);
             GATLING(reg_a4)->shots_left -= 1;
             if (GATLING(reg_a4)->shots_left == 0) {
                 GATLING(reg_a4)->running = 0;
@@ -637,11 +651,11 @@ void stage1_boss_fire_left_beam(void) {
 }
 
 void stage1_boss_main_gun_pace_set(void) {
-    MAIN_GUN(reg_a4)->interval = 6;
+    MAIN_GUN(reg_a4)->interval = GAME_RULE(6, 8);
     MAIN_GUN(reg_a4)->speed = 0xFFFA;
     if (g_loop != 0) {
-        MAIN_GUN(reg_a4)->interval = 3;
-        MAIN_GUN(reg_a4)->speed = 0xFFFB;
+        MAIN_GUN(reg_a4)->interval = GAME_RULE(3, 5);
+        MAIN_GUN(reg_a4)->speed = GAME_RULE(0xFFFB, 0xFFF9);
     }
 }
 
@@ -718,7 +732,7 @@ void stage1_boss_fire_right_main_gun() {
                 MAIN_GUN(reg_a4)->spare.t.count = (u8) MAIN_GUN(reg_a4)->spare.t.reload;
             }
             stage1_boss_main_gun_shoot();
-            MAIN_GUN(reg_a4)->direction += 0xB;
+            MAIN_GUN(reg_a4)->direction += GAME_RULE(0xB, 0xF);
         }
     }
 }
@@ -776,7 +790,7 @@ void stage1_boss_fire_left_main_gun() {
                 MAIN_GUN(reg_a4)->spare.t.count = (u8) MAIN_GUN(reg_a4)->spare.t.reload;
             }
             stage1_boss_main_gun_shoot();
-            MAIN_GUN(reg_a4)->direction -= 0xB;
+            MAIN_GUN(reg_a4)->direction -= GAME_RULE(0xB, 0xF);
         }
     }
 }
@@ -877,7 +891,7 @@ void stage1_boss_fire_main_guns_burst(void) {
     reg_d0.w += 0xF6C00140;
     STAGE1_SHELL(reg_a0)->at_start.y = reg_d0.h[1];
     STAGE1_SHELL(reg_a0)->at_start.x = reg_d0.h[0];
-    STAGE1_SHELL(reg_a0)->at_start.move = 0x2020;
+    STAGE1_SHELL(reg_a0)->at_start.move = GAME_RULE(0x2020, 0x1C20);
     STAGE1_SHELL(reg_a0)->at_start.burst_speed = BURST(reg_a4)->shell_burst_speed;
     STAGE1_SHELL(reg_a0)->at_start.spare = BURST(reg_a4)->shell_spare;
     if (g_loop == 0) {
@@ -907,7 +921,7 @@ skip_1:
     reg_d0.w += 0xF6BFFEC0;
     STAGE1_SHELL(reg_a0)->at_start.y = reg_d0.h[1];
     STAGE1_SHELL(reg_a0)->at_start.x = reg_d0.h[0];
-    STAGE1_SHELL(reg_a0)->at_start.move = 0x2020;
+    STAGE1_SHELL(reg_a0)->at_start.move = GAME_RULE(0x2020, 0x1C20);
     STAGE1_SHELL(reg_a0)->at_start.burst_speed = BURST(reg_a4)->shell_burst_speed;
     STAGE1_SHELL(reg_a0)->at_start.spare = BURST(reg_a4)->shell_spare;
     if (g_loop == 0) {
@@ -1052,6 +1066,9 @@ void stage1_boss_fire_front_guns_rage_start(void) {
 void stage1_boss_fire_front_guns_rage(void) {
     u16 temp_a2;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && stage1_boss_above_rage_health()) return;
+#endif
     reg_tmp.b[0] = FRONT_GUNS(reg_a4)->shot.t.count;
     FRONT_GUNS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -1094,6 +1111,9 @@ void stage1_boss_fire_front_guns_rage_spread_start(void) {
 void stage1_boss_fire_front_guns_rage_spread(void) {
     u16 temp_a2;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && stage1_boss_above_rage_health()) return;
+#endif
     reg_tmp.b[0] = FRONT_GUNS(reg_a4)->shot.t.count;
     FRONT_GUNS(reg_a4)->shot.t.count -= 1;
     if ((s32) reg_tmp.b[0] <= 0) {
@@ -1103,30 +1123,30 @@ void stage1_boss_fire_front_guns_rage_spread(void) {
         reg_d1.w = 0;
         reg_d2.h[0] = temp_a2;
         reg_d0.w = 0x13;
-        reg_d1.b[0] = 0x80;
+        reg_d1.b[0] = GAME_RULE(0x80, 0x84);
         reg_d3.h[1] = stage1_boss_front_gun_offsets[0];
         reg_d3.h[0] = stage1_boss_front_gun_offsets[1];
         reg_d4.w = 0;
         bullet_fire256_2way();
-        reg_d1.b[0] += 0xC;
+        reg_d1.b[0] += GAME_RULE(0xC, 0x12);
         bullet_fire256_2way();
-        reg_d1.b[0] += 0xC;
+        reg_d1.b[0] += GAME_RULE(0xC, 0x12);
         bullet_fire256_2way();
-        reg_d1.b[0] -= 0x24;
+        reg_d1.b[0] -= GAME_RULE(0x24, 0x36);
         bullet_fire256_2way();
-        reg_d1.b[0] -= 0xC;
+        reg_d1.b[0] -= GAME_RULE(0xC, 0x12);
         bullet_fire256_2way();
-        reg_d1.b[0] = 0x80;
+        reg_d1.b[0] = GAME_RULE(0x80, 0x7C);
         reg_d3.h[1] = stage1_boss_front_gun_offsets[2];
         reg_d3.h[0] = stage1_boss_front_gun_offsets[3];
         bullet_fire256_2way();
-        reg_d1.b[0] += 0xC;
+        reg_d1.b[0] += GAME_RULE(0xC, 0x12);
         bullet_fire256_2way();
-        reg_d1.b[0] += 0xC;
+        reg_d1.b[0] += GAME_RULE(0xC, 0x12);
         bullet_fire256_2way();
-        reg_d1.b[0] -= 0x24;
+        reg_d1.b[0] -= GAME_RULE(0x24, 0x36);
         bullet_fire256_2way();
-        reg_d1.b[0] -= 0xC;
+        reg_d1.b[0] -= GAME_RULE(0xC, 0x12);
         bullet_fire256_2way();
         FRONT_GUNS(reg_a4)->shots_left -= 1;
         if (FRONT_GUNS(reg_a4)->shots_left == 0) {
@@ -1231,8 +1251,8 @@ void stage1_boss_fire_gatling_c(void) {
             reg_d2.h[0] += GATLING_C(reg_a4)->jitter;
             reg_d3.w = 0;
             reg_d4.w = 0;
-            bullet_fire256_fixed();
-            GATLING_C(reg_a4)->speed += 2;
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
+            GATLING_C(reg_a4)->speed += GAME_RULE(2, 1);
             GATLING_C(reg_a4)->spare_0A += 2;
             GATLING_C(reg_a4)->spare_0C += 2;
             rng_next_word();
@@ -1262,7 +1282,7 @@ void stage1_boss_fire_gatling_c(void) {
             reg_d2.h[0] += GATLING_C(reg_a4)->jitter;
             reg_d3.w = 0;
             reg_d4.w = 0;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             rng_next_word();
             reg_d0.h[0] = (u16) ((s16) reg_d0.h[0] >> 3);
             GATLING_C(reg_a4)->jitter = (u16) reg_d0.h[0];
@@ -1290,7 +1310,7 @@ void stage1_boss_fire_gatling_c(void) {
             reg_d2.h[0] += GATLING_C(reg_a4)->jitter;
             reg_d3.w = 0;
             reg_d4.w = 0;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             GATLING_C(reg_a4)->shots_left -= 1;
         } while (GATLING_C(reg_a4)->shots_left != 0);
     }
@@ -1309,9 +1329,9 @@ void stage1_boss_fire_gatling_fan(void) {
     reg_d7.h[0] = 2;
     goto loop_1;
 next_1:
-    reg_d0.w = 3;
-    reg_d1.b[0] -= 0xC;
-    reg_d5.h[0] = 4;
+    reg_d0.w = GAME_RULE(3, 4);
+    reg_d1.b[0] -= GAME_RULE(0xC, 9);
+    reg_d5.h[0] = GAME_RULE(4, 3);
     reg_d7.h[0] = 6;
 loop_1:
     bullet_fire256_fixed();

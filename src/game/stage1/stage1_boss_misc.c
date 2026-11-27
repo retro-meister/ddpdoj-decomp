@@ -1,3 +1,4 @@
+#include "black_label.h"
 #include "common.h"
 #include "entity.h"
 #include "explosion.h"
@@ -389,7 +390,7 @@ next_3:
         bullet_fire_fixed();
         reg_d1.b[0] += 4;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_d0.w -= 0x50000;
+    reg_d0.w -= GAME_RULE(0x50000, 0x40000);
     reg_d0.h[0] = 4;
     reg_d1.b[0] += 2;
     reg_d7.w = 0xF;
@@ -404,7 +405,7 @@ next_3:
         bullet_fire_fixed();
         reg_d1.b[0] += 4;
     } while ((s16)(--reg_d7.h[0]) >= 0);
-    reg_d0.w -= 0x50000;
+    reg_d0.w -= GAME_RULE(0x50000, 0x30000);
     reg_d0.h[0] = 5;
     reg_d1.b[0] += 2;
     reg_d7.w = 0xF;
