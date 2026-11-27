@@ -101,3 +101,19 @@ cmake -S pc -B build/pc -DCMAKE_BUILD_TYPE=Release
 cmake --build build/pc --parallel
 ./build/pc/ddpdoj
 ```
+
+## Bonus features
+
+- **Black Label** adds the arcade mode to the main menu with separate rankings and replay slots.
+
+**Native PC port**
+
+Add `-DDDPDOJ_BONUS_FEATURES=ON` to the `cmake -S pc` command for your platform, then build and run as above.
+
+**Modded PS2 ISO**
+
+After the usual PS2 setup, build `build/mod/ddpdoj.iso` with:
+
+```sh
+uv run tools/build.py --mod --bonus-features --iso
+```
