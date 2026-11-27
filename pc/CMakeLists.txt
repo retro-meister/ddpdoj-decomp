@@ -374,7 +374,8 @@ if(BUILD_TESTING)
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}" --load-pools "${pool_slot}")
             set_tests_properties(${mode}_combat_save PROPERTIES FIXTURES_SETUP ${mode}_combat
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
-            set_tests_properties(${mode}_combat_load PROPERTIES FIXTURES_REQUIRED ${mode}_combat)
+            set_tests_properties(${mode}_combat_load PROPERTIES FIXTURES_REQUIRED ${mode}_combat
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
             add_test(NAME retail_${mode}_gameplay COMMAND ${target} "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}")
             set_tests_properties(retail_${mode}_gameplay PROPERTIES

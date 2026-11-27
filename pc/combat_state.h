@@ -2,6 +2,8 @@
 #define DDPDOJ_PC_COMBAT_STATE_H
 
 #include "enemy.h"
+#include "scenery.h"
+#include "scroll_events.h"
 #include <stdbool.h>
 
 #ifdef DEATH_LABEL
@@ -11,6 +13,9 @@
 #endif
 
 typedef struct {
+    ScrollEventsState scroll_events;
+    Scenery pieces[8];
+    u32 scenery_setups;
     EnemySlots enemies;
     Entity entities[150], spare_entities[50];
     EnemyState requests[40], spare_request;

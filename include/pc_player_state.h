@@ -9,7 +9,7 @@ typedef struct {
     uint8_t player_tail[2][112 - 98];
     uint8_t option_tail[2][112 - 100];
     uint8_t slot_tail[80 - 0x48];
-    uint32_t boss_hp;
+    uint32_t boss_hp, stage_base_ranks;
     uint16_t rng_cursor;
 } PcPlayerState;
 

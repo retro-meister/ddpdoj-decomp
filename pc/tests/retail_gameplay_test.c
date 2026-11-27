@@ -300,26 +300,6 @@ int main(int argc, char **argv)
 #else
     const GameMode pool_mode = GAME_MODE_MAIN;
 #endif
-    if (load_pools) {
-        size_t size;
-        GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
-        pc_arcade_address_init();
-        require(saved && size == sizeof(*saved) + pc_frame_regions_size() && pc_combat_restore(&saved->pools) &&
-                pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks) &&
-                pc_replay_frame_restore(&saved->replay) &&
-                pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
-                "Restore combat pools into a fresh process");
-        require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
-        PcPlayerState restored;
-        pc_player_state_capture(&restored);
-        require(!memcmp(&restored, &saved->players, sizeof(restored)),
-                "Recover player, weapon and replay fields exactly after restart");
-        require(g_replay_position == saved->replay.replay_position &&
-                !memcmp(&pc_replay, &saved->replay.recording, sizeof(pc_replay)),
-                "Restore replay inputs and cursor");
-        SDL_free(saved);
-        return !SDL_RemovePath(load_pools);
-    }
 #ifndef DEATH_LABEL
     const bool two_player = argc == 4 && strcmp(argv[3], "--two-player") == 0;
     const RetailReplay *replay = NULL;
@@ -365,6 +345,36 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 #endif
+    if (load_pools) {
+        size_t size;
+        GameplaySnapshot *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
+        unsigned boot_frames = 0;
+        while (!game_boot_frame()) {
+            require(++boot_frames < MAX_FRAMES && pc_gs_ok() && SDL_RenderPresent(renderer),
+                    "Boot the fresh process before resuming gameplay");
+        }
+        require(saved && size == sizeof(*saved) + pc_frame_regions_size() && pc_combat_restore(&saved->pools) &&
+                pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks) &&
+                pc_replay_frame_restore(&saved->replay) &&
+                pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
+                "Restore combat pools into a fresh process");
+        require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
+        PcPlayerState restored;
+        pc_player_state_capture(&restored);
+        require(!memcmp(&restored, &saved->players, sizeof(restored)),
+                "Recover player, weapon and replay fields exactly after restart");
+        require(g_replay_position == saved->replay.replay_position &&
+                !memcmp(&pc_replay, &saved->replay.recording, sizeof(pc_replay)),
+                "Restore replay inputs and cursor");
+        for (unsigned i = 0; i < 12; ++i) {
+            pc_pad_capture();
+            game_run_frame();
+            require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render after cold restore");
+        }
+        SDL_free(saved);
+        require(SDL_RemovePath(load_pools), "Remove test slot");
+        goto cleanup;
+    }
     bool loaded = false, confirmed = false, bomb_finished = false;
     SDL_GamepadButton pressed = SDL_GAMEPAD_BUTTON_INVALID;
     unsigned played = 0, inputs = 0, shot_frames = 0, laser_frames = 0, bomb_frames = 0;

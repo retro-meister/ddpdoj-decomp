@@ -1,4 +1,5 @@
 #include "combat_state.h"
+#include "pc_arcade_address.h"
 #include <string.h>
 
 extern u8 g_explosions[4480];
@@ -24,6 +25,9 @@ void pc_combat_capture(PcCombatPools *state)
     memcpy(state->debris, g_debris, sizeof(g_debris));
     memcpy(state->debris_counts, g_debris_count, sizeof(g_debris_count));
     state->debris_spawn = debris_spawn_state;
+    state->scroll_events = g_scroll_events;
+    memcpy(state->pieces, g_scenery.pieces, sizeof(g_scenery.pieces));
+    state->scenery_setups = pc_arcade_address_encode((uintptr_t)g_scenery.setups);
     state->enemies = g_enemy_slots;
     memcpy(state->entities, g_enemy_entities, sizeof(g_enemy_entities));
     memcpy(state->spare_entities, g_spare_entities, sizeof(g_spare_entities));
@@ -42,7 +46,8 @@ void pc_combat_capture(PcCombatPools *state)
 
 bool pc_combat_restore(const PcCombatPools *state)
 {
-    if (state->request_end > sizeof(g_spawn_requests) ||
+    if (state->scenery_setups > pc_arcade_image_size ||
+        state->request_end > sizeof(g_spawn_requests) ||
         state->request_end % sizeof(EnemyState)) return false;
     memcpy(g_explosions, state->explosions, sizeof(g_explosions));
     memcpy(explosion_spawn_buffer, state->pending_explosion, sizeof(explosion_spawn_buffer));
@@ -52,6 +57,9 @@ bool pc_combat_restore(const PcCombatPools *state)
     memcpy(g_debris, state->debris, sizeof(g_debris));
     memcpy(g_debris_count, state->debris_counts, sizeof(g_debris_count));
     debris_spawn_state = state->debris_spawn;
+    g_scroll_events = state->scroll_events;
+    memcpy(g_scenery.pieces, state->pieces, sizeof(g_scenery.pieces));
+    g_scenery.setups = (ScenerySetup *)pc_arcade_address_decode(state->scenery_setups);
     g_enemy_slots = state->enemies;
     memcpy(g_enemy_entities, state->entities, sizeof(g_enemy_entities));
     memcpy(g_spare_entities, state->spare_entities, sizeof(g_spare_entities));

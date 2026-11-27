@@ -2302,6 +2302,8 @@ void replay_snapshot_save(Buf *buf) {
     capture_replay_snapshot(buf, true);
 }
 
+extern u8 *g_stage_base_ranks;
+
 void pc_player_state_capture(PcPlayerState *state) {
     memset(state, 0, sizeof(*state));
     capture_replay_snapshot((Buf *)state->replay, false);
@@ -2311,11 +2313,12 @@ void pc_player_state_capture(PcPlayerState *state) {
     memcpy(state->option_tail[1], g_p2_options + 100, sizeof(state->option_tail[1]));
     memcpy(state->slot_tail, g_player_slots + 0x48, sizeof(state->slot_tail));
     state->boss_hp = ARCADE_ADDRESS_ENCODE(g_boss_hp);
+    state->stage_base_ranks = ARCADE_ADDRESS_ENCODE(g_stage_base_ranks);
     state->rng_cursor = rng_cursor;
 }
 
 bool pc_player_state_restore(PcPlayerState *state) {
-    if (state->boss_hp > pc_arcade_image_size) return false;
+    if (state->boss_hp > pc_arcade_image_size || state->stage_base_ranks > pc_arcade_image_size) return false;
     replay_snapshot_load(state->replay);
     memcpy(g_player1 + 98, state->player_tail[0], sizeof(state->player_tail[0]));
     memcpy(g_player2 + 98, state->player_tail[1], sizeof(state->player_tail[1]));
@@ -2325,6 +2328,7 @@ bool pc_player_state_restore(PcPlayerState *state) {
     /* A stage-start replay skips this field on stage one. A frame save needs it. */
     memcpy(&g_boss_hp_bar_move_count, state->replay + 0x3416, sizeof(g_boss_hp_bar_move_count));
     g_boss_hp = ARCADE_ADDRESS_DECODE(u8 *, state->boss_hp);
+    g_stage_base_ranks = ARCADE_ADDRESS_DECODE(u8 *, state->stage_base_ranks);
     rng_cursor = state->rng_cursor;
     return true;
 }
