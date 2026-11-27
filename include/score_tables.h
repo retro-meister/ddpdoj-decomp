@@ -11,10 +11,17 @@
 #endif
 
 extern u32 hyper_text_frames[];
-extern u32 maximum_text_frames[];
-extern u16 max_level_text[][2];
-extern u16 multiplier_units_text[][2];
-extern u16 multiplier_tens_text[][2];
+typedef union {
+    struct {
+        u32 frames[44];
+        u16 max_level[4][2];
+        u16 multiplier_units[12][2];
+        u16 multiplier_tens[12][2];
+    } rows;
+    u32 animation[72];
+} MaximumTextData;
+
+extern MaximumTextData g_maximum_text;
 extern u16 multiplier_ones_text[][2];
 extern u16 hit_count_digit_text[][2];
 extern u16 combo_gauge_levels_loop1[];

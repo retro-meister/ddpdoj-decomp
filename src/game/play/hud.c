@@ -1992,23 +1992,11 @@ extern s32 g_maximum_text_anim_sprite;
 
 void maximum_text_animate(void) {
     reg_d0.w = 0x3F;
-    reg_a0 = (u8 *)maximum_text_frames;
+    reg_a0 = (u8 *)g_maximum_text.animation;
     reg_d0.h[0] &= g_game_frame;
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-#ifdef DDPDOJ_PC
-    /* Frames 44 through 63 read the text rows following the animation on PS2. */
-    if (reg_d0.h[0] >= 44 * 4) {
-        unsigned frame = reg_d0.h[0] / 4;
-        const u16 *row;
-        if (frame < 48) row = max_level_text[frame - 44];
-        else if (frame < 60) row = multiplier_units_text[frame - 48];
-        else row = multiplier_tens_text[frame - 60];
-        g_maximum_text_anim_sprite = row[0] | ((u32)row[1] << 16);
-        return;
-    }
-#endif
-    g_maximum_text_anim_sprite = *(s32 *)(reg_a0 + reg_d0.h[0]);
+    g_maximum_text_anim_sprite = *(u32 *)(reg_a0 + reg_d0.h[0]);
 }
 
 
@@ -2026,7 +2014,7 @@ void hud_multiplier_text_put(void) {
     if (reg_d6.h[0] >= 0x10) goto next_1;
     reg_d6.h[0] += reg_d6.h[0];
     reg_d6.h[0] += reg_d6.h[0];
-    reg_a0 = (u8 *)multiplier_units_text;
+    reg_a0 = (u8 *)g_maximum_text.rows.multiplier_units;
     reg_d4.h[1] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d4.h[0] = (((reg_d6.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_d6.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d2.w = 2;
@@ -2035,7 +2023,7 @@ void hud_multiplier_text_put(void) {
     reg_d1.h[0] += 0x300;
 next_0:
     reg_d4.h[0] = reg_d5.h[0];
-    reg_a0 = (u8 *)max_level_text;
+    reg_a0 = (u8 *)g_maximum_text.rows.max_level;
     reg_tmp4.w = reg_d4.w;
     reg_d4.h[1] = (reg_tmp4.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_tmp4.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d4.h[0] = (((reg_tmp4.h[0] & 0xFFFF) + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((reg_tmp4.h[0] & 0xFFFF) + 2) & ~1)) : *(u16 *)reg_a0;
@@ -2054,7 +2042,7 @@ next_1:
     reg_d5.h[0] &= reg_d6.h[0];
     reg_d5.h[0] += reg_d5.h[0];
     reg_d5.h[0] += reg_d5.h[0];
-    reg_a0 = (u8 *)multiplier_tens_text;
+    reg_a0 = (u8 *)g_maximum_text.rows.multiplier_tens;
     reg_d4.h[1] = (reg_d5.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d5.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d4.h[0] = (((u16)reg_d5.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)reg_d5.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d2.w = 2;
