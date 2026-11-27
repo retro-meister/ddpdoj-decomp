@@ -390,6 +390,15 @@ if(BUILD_TESTING)
             target_compile_definitions(ddpdoj_main_retail_gameplay_test PRIVATE DDPDOJ_BONUS_FEATURES)
             add_test(NAME black_label_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load" --black-label)
+            foreach(action IN ITEMS save load)
+                add_test(NAME black_label_combat_${action} COMMAND ddpdoj_main_retail_gameplay_test
+                    "${DDPDOJ_TEST_ISO}" "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label"
+                    --${action}-pools "${CMAKE_CURRENT_BINARY_DIR}/test-black-label-combat.bin" --black-label)
+                set_tests_properties(black_label_combat_${action} PROPERTIES
+                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+            endforeach()
+            set_tests_properties(black_label_combat_save PROPERTIES FIXTURES_SETUP black_combat)
+            set_tests_properties(black_label_combat_load PROPERTIES FIXTURES_REQUIRED black_combat)
             add_test(NAME black_label_gameplay COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label)
             add_test(NAME black_label_default_rounds COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"

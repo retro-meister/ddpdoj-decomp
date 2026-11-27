@@ -15,6 +15,8 @@ extern const PcFrameRegion pc_layer_regions[], pc_screen_regions[];
 
 extern const PcFrameRegion pc_stage_sprites_regions[], pc_graphics_regions[], pc_stage_maps_regions[];
 
+extern const PcFrameRegion pc_attract_regions[], pc_ship_select_regions[], pc_menu_regions[];
+
 size_t pc_frame_regions_size(void);
 bool pc_frame_regions_capture(void *buffer, size_t size);
 bool pc_frame_regions_restore(const void *buffer, size_t size);

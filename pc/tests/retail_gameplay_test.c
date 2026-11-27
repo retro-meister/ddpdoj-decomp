@@ -270,13 +270,15 @@ static void run_trajectory(SDL_Renderer *renderer, ExpectedTrajectory *states, b
 
 int main(int argc, char **argv)
 {
+    bool black_slot = argc == 6 && !strcmp(argv[5], "--black-label");
+    if (black_slot) --argc;
     const char *save_pools = argc == 5 && !strcmp(argv[3], "--save-pools") ? argv[4] : NULL;
     const char *load_pools = argc == 5 && !strcmp(argv[3], "--load-pools") ? argv[4] : NULL;
     if (save_pools || load_pools) argc = 3;
 #ifdef DEATH_LABEL
     const GameMode pool_mode = GAME_MODE_DEATH_LABEL;
 #else
-    const GameMode pool_mode = GAME_MODE_MAIN;
+    const GameMode pool_mode = black_slot ? GAME_MODE_BLACK_LABEL : GAME_MODE_MAIN;
 #endif
 #ifndef DEATH_LABEL
     const bool two_player = argc == 4 && strcmp(argv[3], "--two-player") == 0;
@@ -289,7 +291,7 @@ int main(int argc, char **argv)
     }
 #ifdef DDPDOJ_BONUS_FEATURES
     extern u8 g_ship_select_state[];
-    const bool hover_one_round = argc == 4 && strcmp(argv[3], "--black-label") == 0;
+    const bool hover_one_round = black_slot || (argc == 4 && strcmp(argv[3], "--black-label") == 0);
     const bool leave_default = argc == 4 && strcmp(argv[3], "--black-label-default") == 0;
     const bool demos = argc == 4 && strcmp(argv[3], "--black-label-demos") == 0;
     unsigned departure_frames = 0;
