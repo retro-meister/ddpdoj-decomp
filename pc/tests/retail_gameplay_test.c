@@ -1,4 +1,7 @@
 #include "cdvd.h"
+#include "combat_state.h"
+#include "state_slot.h"
+#include "pc_arcade_address.h"
 #include "black_label.h"
 #ifdef DDPDOJ_BONUS_FEATURES
 #include "explosion.h"
@@ -222,8 +225,43 @@ static SDL_GamepadButton replay_menu_button(bool *confirmed, int slot)
 }
 #endif
 
+static bool has_relocated_enemy(void)
+{
+    const uintptr_t first = (uintptr_t)g_enemy_entities;
+    for (size_t i = 0; i < SDL_arraysize(g_enemy_slots.slot.others); ++i) {
+        const EnemyState *enemy = &g_enemy_slots.slot.others[i];
+        if (!enemy->state.h) continue;
+        u32 slot = ((u32)enemy->entities[0] << 16) | enemy->entities[1];
+        uintptr_t p = pc_arcade_address_decode(slot);
+        if (p - first >= sizeof(g_enemy_entities) || (p - first) % sizeof(Entity)) continue;
+        EnemyRoutines *table = enemy->kind < 128 ? g_enemy_routines : g_enemy_routines_high;
+        u32 callback = ((u32)enemy->routine[0] << 16) | enemy->routine[1];
+        if (((Entity *)p)->flags.h && callback &&
+            pc_arcade_address_decode(callback) == (uintptr_t)table[enemy->kind % 128].run) return true;
+    }
+    return false;
+}
+
 int main(int argc, char **argv)
 {
+    const char *save_pools = argc == 5 && !strcmp(argv[3], "--save-pools") ? argv[4] : NULL;
+    const char *load_pools = argc == 5 && !strcmp(argv[3], "--load-pools") ? argv[4] : NULL;
+    if (save_pools || load_pools) argc = 3;
+#ifdef DEATH_LABEL
+    const GameMode pool_mode = GAME_MODE_DEATH_LABEL;
+#else
+    const GameMode pool_mode = GAME_MODE_MAIN;
+#endif
+    if (load_pools) {
+        size_t size;
+        PcCombatPools *saved = pc_state_slot_read(load_pools, pool_mode, 1, &size);
+        pc_arcade_address_init();
+        require(saved && size == sizeof(*saved) && pc_combat_restore(saved),
+                "Restore combat pools into a fresh process");
+        require(has_relocated_enemy(), "Resolve the saved entity and callback in this process");
+        SDL_free(saved);
+        return !SDL_RemovePath(load_pools);
+    }
 #ifndef DEATH_LABEL
     const bool two_player = argc == 4 && strcmp(argv[3], "--two-player") == 0;
     const RetailReplay *replay = NULL;
@@ -329,6 +367,13 @@ int main(int argc, char **argv)
         }
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
+        if (save_pools && played >= 300 && has_relocated_enemy()) {
+            PcCombatPools saved;
+            pc_combat_capture(&saved);
+            require(pc_state_slot_write(save_pools, pool_mode, 1, &saved, sizeof(saved)),
+                    "Write pools from live gameplay");
+            goto cleanup;
+        }
 
 #ifndef DEATH_LABEL
         if (replay) {
@@ -375,13 +420,12 @@ int main(int argc, char **argv)
         require(g_black_label_single_loop == hover_one_round, "Accept the highlighted round count without confirmation");
     }
 #endif
+    require(!save_pools, "Reach a live enemy for the combat snapshot");
     if (second) {
         require(together > 100 && g_p2_score != 0, "Both ships play and player two scores");
         SDL_CloseJoystick(second);
     }
-#ifdef DDPDOJ_BONUS_FEATURES
 cleanup:
-#endif
     pc_bgm_close();
     pc_mc_close_storage();
     pc_sfx_shutdown();
