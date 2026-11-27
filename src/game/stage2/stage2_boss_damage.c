@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 #include "explosion.h"
 #include "stage2_boss.h"
@@ -144,7 +145,7 @@ next_100:
     STAGE2_PALETTES(reg_a6)->base = 0x13;
     STAGE2_PALETTES(reg_a6)->right_side_gun = 0x13;
     STAGE2_PALETTES(reg_a6)->left_side_gun = 0xD;
-    reg_d2.w = 0x7700;
+    reg_d2.w = GAME_RULE(0x7700, 0x6900);
     reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
     if (reg_tmp.w > reg_d2.w) goto next_110;

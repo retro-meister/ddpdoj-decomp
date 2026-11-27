@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 s32 sprintf(char *buf, const char *format, ...);
 #ifdef DDPDOJ_PC
@@ -291,6 +292,26 @@ char *g_mc_file_paths[11] = {
     "/BISLPS-25233REPLAY9/BISLPS-25233REPLAY9",
     "/BISLPS-25233REPLAY10/BISLPS-25233REPLAY10",
 };
+
+#ifdef DDPDOJ_BONUS_FEATURES
+void black_label_card_init(void) {
+    static char directories[11][32];
+    static char patterns[11][34];
+    static char paths[11][64];
+    s32 i;
+    for (i = 0; i < 11; i++) {
+        const char *name = g_mc_dir_names[i] + 1;
+        sprintf(directories[i], "/%sBL", name);
+        sprintf(patterns[i], "%s/*", directories[i]);
+        sprintf(paths[i], "%s/%s", directories[i], name);
+        g_mc_dir_names[i] = directories[i];
+        g_mc_dir_patterns[i] = patterns[i];
+        g_mc_file_paths[i] = paths[i];
+    }
+}
+#endif
+
+#define CARD_ICON_PATH(directory, file) GAME_RULE(directory "/" file, directory "BL/" file)
 
 s32 g_mc_icon_bg_color[16] = {
     0x80, 0, 0, 0, 0, 0x80, 0, 0,
@@ -1666,7 +1687,7 @@ void mc_task_write_game(void) {
         }
         break;
     case 0x2:
-        if (sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233/icon.sys", 0x203) == 0) {
+        if (sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233", "icon.sys"), 0x203) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -1750,7 +1771,7 @@ void mc_task_write_game(void) {
         g_mc_wait = 0xA;
         break;
     case 0xA:
-        if (sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233/icon1.ico", 0x203) == 0) {
+        if (sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233", "icon1.ico"), 0x203) == 0) {
             g_mc_step += 1;
         } else {
             g_mc_wait -= 1;
@@ -1959,34 +1980,34 @@ void mc_task_write_replay(void) {
         break;
     case 0x2:
         if (g_mc_file == 1) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY1/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY1", "icon.sys"), 0x203);
         }
         if (g_mc_file == 2) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY2/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY2", "icon.sys"), 0x203);
         }
         if (g_mc_file == 3) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY3/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY3", "icon.sys"), 0x203);
         }
         if (g_mc_file == 4) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY4/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY4", "icon.sys"), 0x203);
         }
         if (g_mc_file == 5) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY5/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY5", "icon.sys"), 0x203);
         }
         if (g_mc_file == 6) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY6/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY6", "icon.sys"), 0x203);
         }
         if (g_mc_file == 7) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY7/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY7", "icon.sys"), 0x203);
         }
         if (g_mc_file == 8) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY8/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY8", "icon.sys"), 0x203);
         }
         if (g_mc_file == 9) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY9/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY9", "icon.sys"), 0x203);
         }
         if (g_mc_file == 10) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY10/icon.sys", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY10", "icon.sys"), 0x203);
         }
         if (ret == 0) {
             g_mc_step += 1;
@@ -2103,34 +2124,34 @@ void mc_task_write_replay(void) {
         break;
     case 0xA:
         if (g_mc_file == 1) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY1/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY1", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 2) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY2/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY2", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 3) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY3/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY3", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 4) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY4/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY4", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 5) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY5/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY5", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 6) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY6/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY6", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 7) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY7/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY7", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 8) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY8/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY8", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 9) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY9/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY9", "icon1.ico"), 0x203);
         }
         if (g_mc_file == 10) {
-            ret = sceMcOpen(g_mc_port, g_mc_slot, "/BISLPS-25233REPLAY10/icon1.ico", 0x203);
+            ret = sceMcOpen(g_mc_port, g_mc_slot, CARD_ICON_PATH("/BISLPS-25233REPLAY10", "icon1.ico"), 0x203);
         }
         if (ret == 0) {
             g_mc_step += 1;

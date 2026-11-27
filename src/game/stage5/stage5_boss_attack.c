@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "ps2_text.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
@@ -1095,7 +1096,7 @@ void stage5_boss_fire_form1_rage(void) {
         reg_d0.b[0] = FORM1_RAGE(reg_a4)->shot_interval;
         reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
         reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
-        if ((u32) reg_tmp.w < 0x15000U) {
+        if ((u32) reg_tmp.w < GAME_RULE(0x15000U, 0x62000U * 15 / 100)) {
             reg_d0.b[0] -= 4;
         }
         FORM1_RAGE(reg_a4)->shot.t.count = (u8) reg_d0.b[0];
@@ -1108,7 +1109,7 @@ void stage5_boss_fire_form1_rage(void) {
         reg_d0.b[0] = FORM1_RAGE(reg_a4)->turn;
         reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
         reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
-        if ((u32) reg_tmp.w < 0x15000U) {
+        if ((u32) reg_tmp.w < GAME_RULE(0x15000U, 0x62000U * 15 / 100)) {
             reg_d0.b[0] = (s8) reg_d0.b[0] * 4;
         }
         FORM1_RAGE(reg_a4)->direction += reg_d0.b[0];

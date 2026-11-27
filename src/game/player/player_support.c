@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
 #else
@@ -15,6 +16,13 @@ extern void (*const D_0028C5E0[2])();
 #else
 extern void (*p1_laser_clear_table[2])();
 extern void (*D_0028C5E0[2])();
+#endif
+
+#ifdef DDPDOJ_BONUS_FEATURES
+u16 black_label_hyper_speeds[2][35] = {
+    { 1,1,1,1,1, 2,2,2,2,2, 3,3,3,3,3, 4,4,4,4,4, 5,5,5,5,6, 6,6,6,7,7, 7,7,8,8,8 },
+    { 1,1,1,1,2, 2,2,2,3,3, 3,3,4,4,5, 5,6,6,7,7, 8,8,9,9,10, 10,11,11,12,12, 13,13,14,14,15 },
+};
 #endif
 
 u16 hyper_bullet_speed_table[] = {
@@ -485,12 +493,12 @@ void hyper_bullet_speed_update(void) {
     if (reg_d0.h[0] == 0) goto next_1;
 next_2:
     reg_d2.h[0] = reg_d0.h[0];
-    reg_a0 = (u8 *) ((u16 *)hyper_bullet_speed_table);
+    reg_a0 = (u8 *) GAME_RULE((u16 *)hyper_bullet_speed_table, black_label_hyper_speeds[g_loop != 0]);
     reg_d2.h[0] -= 1;
     reg_d2.h[0] *= 2;
     reg_d0.h[0] = (reg_d2.h[0] != 0) ? *(u16 *) ((u8 *) reg_a0 + ((s16) reg_d2.h[0] & ~1)) : *(u16 *) reg_a0;
     if (g_boss_present_b1 & 4) {
-        reg_d0.h[0] += 2;
+        reg_d0.h[0] += GAME_RULE(2, g_stage < 2 ? 1 : 2);
     }
 next_1:
     if (g_loop != 0) {
@@ -499,8 +507,8 @@ next_1:
             reg_d0.h[0] += 4;
         }
     }
-    if ((s32) reg_d0.h[0] > 0xA) {
-        reg_d0.h[0] = 0xA;
+    if ((s32) reg_d0.h[0] > GAME_RULE(10, g_loop ? 15 : 8)) {
+        reg_d0.h[0] = GAME_RULE(10, g_loop ? 15 : 8);
     }
     g_hyper_bullet_speed = MAIN_OR_DEATH_LABEL(reg_d0.h[0], 0xA);
 }
@@ -768,7 +776,7 @@ void p1_bomb_item_take(void) {
     PLAYER(((u8 *)g_player1))->flags.b[1] &= 0xBF;
     ((u8 *)g_player1)[0] |= 2;
     if (g_p1_maximum_count[0] == 0x63) goto block_end;
-    g_p1_maximum_value[0] += 0x16;
+    g_p1_maximum_value[0] += GAME_RULE(22, 77);
     g_p1_maximum_count[0] += 1;
     p1_maximum_digits_update();
     p1_bomb_capacity_draw();
@@ -781,7 +789,7 @@ block_end:
     return;
 block_50:
     if (g_p1_maximum_count[0] == 0x63) goto block_end;
-    g_p1_maximum_value[0] += 0x16;
+    g_p1_maximum_value[0] += GAME_RULE(22, 77);
     g_p1_maximum_count[0] += 1;
     reg_tmp.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->flags.b[1]);
     *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player1))->flags.b[1]) &= 0xBF;
@@ -789,7 +797,7 @@ block_50:
     reg_tmp.b[0] = ((u8 *)g_player1)[0];
     ((u8 *)g_player1)[0] |= 2;
     if (reg_tmp.b[0] & 2) goto block_52;
-    g_p1_maximum_value[0] += 0x16;
+    g_p1_maximum_value[0] += GAME_RULE(22, 77);
     g_p1_maximum_count[0] += 1;
 block_52:
     p1_maximum_digits_update();
@@ -808,7 +816,7 @@ void p2_bomb_item_take(void) {
     PLAYER(((u8 *)g_player2))->flags.b[1] &= 0xBF;
     ((u8 *)g_player2)[0] |= 2;
     if (g_p2_maximum_count[0] == 0x63) goto block_end;
-    g_p2_maximum_value[0] += 0x16;
+    g_p2_maximum_value[0] += GAME_RULE(22, 77);
     g_p2_maximum_count[0] += 1;
     p2_maximum_digits_update();
     p2_bomb_capacity_draw();
@@ -821,7 +829,7 @@ block_end:
     return;
 block_50:
     if (g_p2_maximum_count[0] == 0x63) goto block_end;
-    g_p2_maximum_value[0] += 0x16;
+    g_p2_maximum_value[0] += GAME_RULE(22, 77);
     g_p2_maximum_count[0] += 1;
     reg_tmp.b[0] = *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->flags.b[1]);
     *(u8 *)(ArcadeSavedAddress)(&PLAYER(((u8 *)g_player2))->flags.b[1]) &= 0xBF;
@@ -829,7 +837,7 @@ block_50:
     reg_tmp.b[0] = ((u8 *)g_player2)[0];
     ((u8 *)g_player2)[0] |= 2;
     if (reg_tmp.b[0] & 2) goto block_52;
-    g_p2_maximum_value[0] += 0x16;
+    g_p2_maximum_value[0] += GAME_RULE(22, 77);
     g_p2_maximum_count[0] += 1;
 block_52:
     p2_maximum_digits_update();

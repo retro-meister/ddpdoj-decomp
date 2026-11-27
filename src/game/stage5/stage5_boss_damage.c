@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage5_boss.h"
@@ -58,7 +59,7 @@ void stage5_boss_form1_take_damage(void) {
     STAGE5_PALETTES(reg_a6)->arm_guns = 0x16;
     reg_tmp.h[1] = TW(0x16);
     reg_tmp.h[0] = TW(0x18);
-    if (reg_tmp.w >= 0x15000) goto block_chk;
+    if (reg_tmp.w >= GAME_RULE(0x15000, 0x62000 * 15 / 100)) goto block_chk;
     if (g_damage_blink_counter != 0) goto block_chk;
     reg_d0.w = 0x19;
     STAGE5_PALETTES(reg_a6)->head = reg_d0.b[0];
@@ -374,7 +375,7 @@ void stage5_boss_form2_take_damage(void) {
     STAGE5_PALETTES(reg_a6)->belly = 0x12;
     reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
-    if (reg_tmp.w >= 0xE000) {
+    if (reg_tmp.w >= GAME_RULE(0xE000, 0x2BC00 * 40 / 100)) {
         goto next_9;
     }
     if (g_damage_blink_counter != 0) {

@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 project(ddpdoj_pc LANGUAGES C)
 
+option(DDPDOJ_BONUS_FEATURES "Build optional bonus features" OFF)
+
 include(CTest)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(SDL_SHARED ON)
@@ -91,6 +93,9 @@ function(add_game_library target executable group)
     target_link_libraries(${target} PRIVATE ddpdoj_arcade_address)
     # The arcade register bank accesses the same storage through several types.
     target_compile_options(${target} PRIVATE -Wno-int-conversion -fno-common -fno-strict-aliasing)
+    if(DDPDOJ_BONUS_FEATURES AND executable STREQUAL "SLPS_252.33")
+        target_compile_definitions(${target} PRIVATE DDPDOJ_BONUS_FEATURES)
+    endif()
     if(executable STREQUAL "DEATH.ELF")
         target_compile_definitions(${target} PUBLIC DEATH_LABEL)
     endif()
@@ -200,6 +205,9 @@ target_compile_definitions(gallery-mode PRIVATE DDPDOJ_GALLERY_HOST)
 target_link_libraries(gallery-mode PRIVATE
     ddpdoj_gallery ddpdoj_gs ddpdoj_cdvd ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
+if(DDPDOJ_BONUS_FEATURES)
+    target_compile_definitions(main-mode PRIVATE DDPDOJ_BONUS_FEATURES)
+endif()
 set(mode_modules main-mode death-mode gallery-mode)
 set_target_properties(${mode_modules} PROPERTIES PREFIX "")
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -214,6 +222,9 @@ function(add_launcher target name mode)
         MODE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
     target_link_libraries(${target} PRIVATE ddpdoj_disc SDL3::SDL3)
     set_target_properties(${target} PROPERTIES OUTPUT_NAME ${name})
+    if(DDPDOJ_BONUS_FEATURES)
+        target_compile_definitions(${target} PRIVATE DDPDOJ_BONUS_FEATURES)
+    endif()
     add_dependencies(${target} ${mode_modules})
 endfunction()
 add_launcher(ddpdoj_main ddpdoj GAME_MODE_MAIN)
@@ -351,6 +362,16 @@ if(BUILD_TESTING)
         add_executable(ddpdoj_retail_card_test tests/retail_card_test.c)
         target_link_libraries(ddpdoj_retail_card_test PRIVATE ddpdoj_main_system
             ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
+        if(DDPDOJ_BONUS_FEATURES)
+            target_compile_definitions(ddpdoj_retail_card_test PRIVATE DDPDOJ_BONUS_FEATURES)
+            target_compile_definitions(ddpdoj_main_retail_gameplay_test PRIVATE DDPDOJ_BONUS_FEATURES)
+            add_test(NAME black_label_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load" --black-label)
+            add_test(NAME black_label_gameplay COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label)
+            set_tests_properties(black_label_card_save_load black_label_gameplay PROPERTIES
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+        endif()
         add_test(NAME retail_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load")
         set_tests_properties(retail_card_save_load PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy")

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "score_tables.h"
 
@@ -1575,8 +1576,8 @@ void hud_p1_hyper_update(void) {
             reg_d0.h[0] = g_p1_hyper_items;
             g_p1_hyper_total += reg_d0.h[0];
             g_p1_hyper_level = reg_d0.h[0];
-            if (g_p1_hyper_total > 0xF) {
-                g_p1_hyper_total = 0xF;
+            if (g_p1_hyper_total > GAME_RULE(15, 35)) {
+                g_p1_hyper_total = GAME_RULE(15, 35);
             }
             D_0028E5DD = 0;
             (*(s8 *)&g_p1_hyper_combo_decay) = 0;
@@ -1661,8 +1662,8 @@ void hud_p2_hyper_update(void) {
             reg_d0.h[0] = g_p2_hyper_items;
             g_p2_hyper_total += reg_d0.h[0];
             g_p2_hyper_level = reg_d0.h[0];
-            if (g_p2_hyper_total > 0xF) {
-                g_p2_hyper_total = 0xF;
+            if (g_p2_hyper_total > GAME_RULE(15, 35)) {
+                g_p2_hyper_total = GAME_RULE(15, 35);
             }
             D_0028E5D9 = 0;
             (*(s8 *)&g_p2_hyper_combo_decay) = 0;

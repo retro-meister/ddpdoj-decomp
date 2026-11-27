@@ -1,4 +1,5 @@
 #include "cdvd.h"
+#include "black_label.h"
 #include "game_loop.h"
 #include "gs.h"
 #include "presentation.h"
@@ -86,7 +87,7 @@ static SDL_GamepadButton next_button(bool *confirmed, unsigned *inputs)
         return SDL_GAMEPAD_BUTTON_EAST;
     }
     if (g_menu_page == PAGE_MAIN && g_menu_main_step == MENU_READY) {
-        if (g_menu_cursor != PLAY_MENU_ITEM) {
+        if (g_menu_cursor != GAME_RULE(PLAY_MENU_ITEM, 4)) {
             return SDL_GAMEPAD_BUTTON_DPAD_DOWN;
         }
 #ifdef DEATH_LABEL
@@ -158,7 +159,10 @@ int main(int argc, char **argv)
             replay = &super_replays[argv[4][0] - '0'];
         }
     }
-    require(argc == 3 || replay || two_player, "Expected the retail ISO, a test-only memory card directory and optional replay mode");
+#ifdef DDPDOJ_BONUS_FEATURES
+    g_black_label_active = argc == 4 && strcmp(argv[3], "--black-label") == 0;
+#endif
+    require(argc == 3 || replay || two_player || GAME_RULE(0, 1), "Expected the retail ISO, a test-only memory card directory and optional replay mode");
     s32 replay_inputs = 0;
     bool replay_finished = false;
 #else

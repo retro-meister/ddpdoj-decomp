@@ -8,6 +8,7 @@ typedef enum {
     GAME_MODE_MAIN,
     GAME_MODE_DEATH_LABEL,
     GAME_MODE_GALLERY,
+    GAME_MODE_BLACK_LABEL,
 } GameMode;
 
 void game_boot_begin(void);

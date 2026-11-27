@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "score_tables.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -495,6 +496,19 @@ s32 default_death_label_rank_names[5][3] = {
 };
 u16 default_rank_stages[5] = { 3, 3, 2, 2, 1 };
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static s32 black_label_rank_scores[5] = { 0x1182223, 0x846001, 0x816579, 0x775305, 0x699653 };
+static s32 black_label_rank_names[5][3] = {
+    { 0x38, 0x48, 0x0C }, { 0x28, 0x58, 0x48 }, { 0x20, 0x48, 0x38 },
+    { 0x20, 0x30, 0x28 }, { 0x28, 0x30, 0x4C },
+};
+static u16 black_label_rank_hits[5] = { 0x719, 0x719, 0x719, 0x719, 0x720 };
+static u16 black_label_rank_ship_types[5] = { 0, 6, 2, 2, 2 };
+static u16 black_label_rank_power_styles[5] = { 6, 4, 6, 4, 4 };
+static u16 black_label_rank_continues[5] = { 4, 4, 2, 0, 6 };
+static u16 black_label_rank_stages[5] = { 3, 2, 2, 1, 1 };
+#endif
+
 extern s32 g_high_score;
 extern s8 g_stored_ranking_texts_as_s8_a5_a30[5][30];
 extern s8 g_death_label_ranking_texts_as_s8_a5_a30[5][30];
@@ -533,7 +547,7 @@ void rankings_set_defaults(void) {
     s32 j;
 
     dst = g_ranking_scores_as_s32_a;
-    src = default_rank_scores;
+    src = GAME_RULE(default_rank_scores, black_label_rank_scores);
     reg_d0.w = 4;
     do {
         *dst = *src;
@@ -550,7 +564,7 @@ void rankings_set_defaults(void) {
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     reg_a0 = (u8 *) g_ranking_names_as_s32_a;
-    reg_a1 = (u8 *)default_rank_names;
+    reg_a1 = (u8 *)GAME_RULE(default_rank_names, black_label_rank_names);
     reg_d0.w = 4;
     do {
         *(s32 *) reg_a0 = *(s32 *) reg_a1;
@@ -564,7 +578,7 @@ void rankings_set_defaults(void) {
         reg_a0 += 4;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     reg_a0 = (u8 *) g_ranking_hits_as_u16_a;
-    reg_a1 = (u8 *) default_rank_hits;
+    reg_a1 = (u8 *) GAME_RULE(default_rank_hits, black_label_rank_hits);
     reg_d0.w = 4;
     do {
         *(u16 *) reg_a0 = *(u16 *) reg_a1;
@@ -572,7 +586,7 @@ void rankings_set_defaults(void) {
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     reg_a0 = (u8 *) g_ranking_ship_types_as_u16_a;
-    reg_a1 = (u8 *) default_rank_ship_types;
+    reg_a1 = (u8 *) GAME_RULE(default_rank_ship_types, black_label_rank_ship_types);
     reg_d0.w = 4;
     do {
         *(u16 *) reg_a0 = *(u16 *) reg_a1;
@@ -580,7 +594,7 @@ void rankings_set_defaults(void) {
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     reg_a0 = (u8 *) g_ranking_power_styles_as_u16_a;
-    reg_a1 = (u8 *) default_rank_power_styles;
+    reg_a1 = (u8 *) GAME_RULE(default_rank_power_styles, black_label_rank_power_styles);
     reg_d0.w = 4;
     do {
         *(u16 *) reg_a0 = *(u16 *) reg_a1;
@@ -588,7 +602,7 @@ void rankings_set_defaults(void) {
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     reg_a0 = (u8 *) g_ranking_continues_as_u16_a;
-    reg_a1 = (u8 *) default_rank_continues;
+    reg_a1 = (u8 *) GAME_RULE(default_rank_continues, black_label_rank_continues);
     reg_d0.w = 4;
     do {
         *(u16 *) reg_a0 = *(u16 *) reg_a1;
@@ -604,7 +618,7 @@ void rankings_set_defaults(void) {
         reg_a0 += 2;
     } while ((s16) (--reg_d0.h[0]) >= 0);
     reg_a0 = (u8 *) g_ranking_stages_as_u16_a;
-    reg_a1 = (u8 *) default_rank_stages;
+    reg_a1 = (u8 *) GAME_RULE(default_rank_stages, black_label_rank_stages);
     reg_d0.w = 4;
     do {
         *(u16 *) reg_a0 = *(u16 *) reg_a1;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 
 extern void enemy_set_entity_count(s32);
@@ -53,7 +54,7 @@ void stage5_boss_start(void) {
     reg_a2 = (u8 *)stage5_boss_draw_routines;
     reg_a3 = (u8 *)stage5_boss_anim_routines;
     reg_a4 = (u8 *)stage5_boss_mode_routines;
-    g_stage5_boss_all_forms = g_loop;
+    g_stage5_boss_all_forms = GAME_RULE(g_loop, g_loop || g_black_label_single_loop);
     if (g_game_mode == 2) {
         g_stage5_boss_all_forms = 1;
     }

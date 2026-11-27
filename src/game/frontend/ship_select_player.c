@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
 
@@ -114,6 +115,9 @@ extern u16 g_p2_continue_count;
 extern u16 g_p1_continue_count;
 extern u16 g_attract_demo;
 extern u16 g_loop;
+#ifdef DDPDOJ_BONUS_FEATURES
+extern u16 g_stage;
+#endif
 extern u8 g_replay_taken_over;
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
@@ -139,7 +143,7 @@ void join_select_task(void) {
     if (*(u8 *)(reg_a5 + 0xD) != 0) {
         goto block_51;
     }
-    if (g_loop != 0) {
+    if (g_loop != 0 && GAME_RULE(1, g_stage == 4)) {
         goto block_50;
     }
     if (g_setting_start_round != 0) {
@@ -189,7 +193,7 @@ block_51:
     if (*(u8 *)(reg_a5 + 0xD) != 0) {
         goto block_52;
     }
-    if (g_loop != 0) {
+    if (g_loop != 0 && GAME_RULE(1, g_stage == 4)) {
         goto block_52;
     }
     if (g_attract_demo != 0) {

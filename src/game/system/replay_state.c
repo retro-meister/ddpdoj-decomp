@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #include <string.h>
@@ -2409,6 +2410,9 @@ void replay_start_state_load(u8 *p) {
     g_rank_1_16 = *(u16 *)(p + 0x180);
     g_p1_lives = *(u16 *)(p + 0x182);
     g_p2_lives = *(u16 *)(p + 0x184);
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) g_black_label_single_loop = p[0x186] == 1;
+#endif
     g_play_time = *(s32 *)(p + 0x188);
     g_damage_blink_counter = *(u16 *)(p + 0x18C);
     g_name_entry_player = p[0x18E];
@@ -2657,6 +2661,9 @@ void replay_start_state_save(Buf2 *buf) {
     *(u16 *)(p + 0x180) = g_rank_1_16;
     *(u16 *)(p + 0x182) = g_p1_lives;
     *(u16 *)(p + 0x184) = g_p2_lives;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) p[0x186] = (u8)g_black_label_single_loop;
+#endif
     *(s32 *)(p + 0x188) = g_play_time;
     *(u16 *)(p + 0x18C) = g_damage_blink_counter;
     p[0x18E] = g_name_entry_player;

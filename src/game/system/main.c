@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -113,10 +114,24 @@ extern u8 g_replay_file[];
 void game_boot_begin(void) {
     pc_arcade_address_init();
 #else
+#ifdef DDPDOJ_BONUS_FEATURES
+void game_main(s32 argc, char **argv) {
+    s32 strcmp(const char *, const char *);
+#else
 void game_main(void) {
+#endif
     s32 t1;
     s32 t2;
     u32 t3;
+#ifdef DDPDOJ_BONUS_FEATURES
+    g_black_label_active = argc > 0 && strcmp(argv[argc - 1], "black-label") == 0;
+#endif
+#endif
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        black_label_menu_init();
+        black_label_card_init();
+    }
 #endif
 
 #ifdef DEATH_LABEL
@@ -323,6 +338,10 @@ s32 executable_launch(s32 mode) {
         game_request_mode(GAME_MODE_GALLERY);
     } else if (mode == 1) {
         game_request_mode(GAME_MODE_DEATH_LABEL);
+#ifdef DDPDOJ_BONUS_FEATURES
+    } else if (mode == 3) {
+        game_request_mode(GAME_MODE_BLACK_LABEL);
+#endif
     } else {
         game_request_mode(GAME_MODE_MAIN);
     }
@@ -343,6 +362,11 @@ void executable_launch(s32 mode) {
         LoadExecPS2((const char *)executable_launch_table, 0, 0);
     } else if (mode == 1) {
         LoadExecPS2((const char *)D_0026F700, 0, 0);
+#ifdef DDPDOJ_BONUS_FEATURES
+    } else if (mode == 3) {
+        char *args[] = {"black-label"};
+        LoadExecPS2((const char *)D_0026F740, 1, args);
+#endif
     } else {
         LoadExecPS2((const char *)D_0026F740, 0, 0);
     }

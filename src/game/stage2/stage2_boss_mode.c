@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #ifdef DDPDOJ_PC
 #include <assert.h>
@@ -836,7 +837,7 @@ void stage2_boss_mode_high_fast(arg1)
                     HIGH_FAST(reg_a4)->body.t.count = (u8) HIGH_FAST(reg_a4)->body.t.reload;
                     reg_tmp.h[1] = STAGE2_BOSS(reg_a5)->hp[0];
                     reg_tmp.h[0] = STAGE2_BOSS(reg_a5)->hp[1];
-                    if ((s32) reg_tmp.w < 0x7700) {
+                    if ((s32) reg_tmp.w < GAME_RULE(0x7700, 0x6900)) {
                         HIGH_FAST(reg_a4)->body.t.count = 8U;
                     }
                     reg_d0.w = 0xE;

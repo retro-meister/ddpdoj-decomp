@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "fade.h"
 #include "entity.h"
@@ -309,6 +310,12 @@ void stage5_boss_mode_form1_idle_start(void) {
         return;
     }
     MODE(reg_a4)->second_wait = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_black_label_single_loop) {
+        STAGE5_BOSS(reg_a5)->hp[0] = 6;
+        STAGE5_BOSS(reg_a5)->hp[1] = 0x2000;
+    }
+#endif
     ARCADE_REGISTER_CALL(stage5_boss_mode_form1_idle, 0x260);
 }
 
@@ -329,14 +336,14 @@ void stage5_boss_mode_form1_idle() {
     if (temp_v1 != 0) {
         MODE(reg_a4)->second_wait = (u16) (temp_v1 - 1);
         if (MODE(reg_a4)->second_wait == 0) {
-            reg_tmp.w = 0x69000;
+            reg_tmp.w = GAME_RULE(0x69000, 0x62000);
             g_boss_present_b1 |= 1;
             g_boss_present_b1 |= 4;
             g_boss_present |= 1;
             STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
             var_a1 = reg_tmp.h[0];
             STAGE5_BOSS(reg_a5)->hp[1] = var_a1;
-            g_boss_hp_unit = 0x780;
+            g_boss_hp_unit = GAME_RULE(0x780, 0x700);
             reg_a0 = reg_a5 + 0x16;
             g_boss_hp = (u8 *)(reg_a0);
         }
@@ -641,7 +648,7 @@ void stage5_boss_mode_form1_to_form2() {
             boss_movement_start();
             STAGE5_DAMAGE(reg_a6)->form = 1;
             ENTITY(reg_a6)[11].hit_y_minus.sh = 0;
-            reg_tmp.w = 0x23000;
+            reg_tmp.w = GAME_RULE(0x23000, 0x2BC00);
             STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_tmp.h[1];
             STAGE5_BOSS(reg_a5)->hp[1] = (u16) reg_tmp.h[0];
             stage5_boss_shield_off();
@@ -898,12 +905,12 @@ void stage5_boss_mode_form2_to_form3() {
 #endif
             STAGE5_DAMAGE(reg_a6)->form = 2;
             g_true_last_boss = 0xFFFF;
-            reg_d0.w = 0x4D000;
+            reg_d0.w = GAME_RULE(0x4D000, 0x46000);
             STAGE5_BOSS(reg_a5)->hp[0] = (u16) reg_d0.h[1];
             STAGE5_BOSS(reg_a5)->hp[1] = (u16) reg_d0.h[0];
             STAGE5_BOSS(reg_a5)->hp_scratch[0] = (u16) reg_d0.h[1];
             STAGE5_BOSS(reg_a5)->hp_scratch[1] = (u16) reg_d0.h[0];
-            g_boss_hp_unit = 0x580;
+            g_boss_hp_unit = GAME_RULE(0x580, 0x500);
             reg_a0 = (u8 *)(reg_a5 + 0x16);
             (*(void **)&g_boss_hp) = (void *)reg_a0;
             g_boss_present_b1 |= 1;

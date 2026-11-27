@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "enemy.h"
 #include "ending_data.h"
 #include "player.h"
@@ -44,6 +45,13 @@ void ending_second_loop_check(void) {
     if (g_game_mode == 2) goto block_1;
 #endif
     if (g_loop != 0) goto block_1;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        extern u16 g_p1_hyper_total, g_p2_hyper_total;
+        if (g_black_label_single_loop) goto block_1;
+        g_p1_hyper_total = g_p2_hyper_total = 0;
+    }
+#endif
     if (g_p1_hyper_active != 0) {
         p1_hyper_end();
         p1_hyper_state_clear_for_ending();
@@ -52,7 +60,7 @@ void ending_second_loop_check(void) {
         p2_hyper_end();
         p2_hyper_state_clear_for_ending();
     }
-    hyper_ready_displays_reset();
+    if (GAME_RULE(1, 0)) hyper_ready_displays_reset();
     g_boss_hyper_wait = 0;
     if (g_two_player_seen == 3) goto block_1;
     reg_a0 = &(*(u8 *)&g_p1_loop2_extend_ok);
@@ -77,6 +85,12 @@ void ending_second_loop_check(void) {
         cond_flag = 0;
         return;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        cond_flag = 1;
+        return;
+    }
+#endif
     reg_d0.h[0] = *(u16 *)(reg_a1 + 0x5A);
     reg_a0 = (u8 *)D_0028C608;
     reg_d0.h[0] -= 2;

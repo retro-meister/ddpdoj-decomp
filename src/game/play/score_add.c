@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
 s32 bcd_add_registers(u32 *left, u32 *right);
@@ -692,7 +693,7 @@ void p1_boss_hit(void) {
         reg_a0 = (u8 *)&g_p1_hits;
         reg_d0.w = 0;
         if (reg_d1.w & 0x40) {
-            reg_d0.h[0] += reg_d0.h[0];
+            reg_d0.h[0] += GAME_RULE(reg_d0.h[0], 1);
         }
         do {
             saved_d0 = reg_d0.h[0];
@@ -744,6 +745,14 @@ void p1_boss_hit(void) {
 extern u16 g_boss_near_death;
 extern u16 g_boss_hit_decay_timer;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static u16 black_label_boss_laser_hits(u16 hits) {
+    extern u16 g_stage, g_loop;
+    if (g_stage == 3) return hits + (g_loop ? 2 : 0);
+    return hits * (g_loop ? 4 : 2);
+}
+#endif
+
 void p1_boss_hit_chain(void) {
     reg_d3.w = reg_d0.w;
     if (g_boss_hit_decay_timer == 0) {
@@ -760,6 +769,7 @@ void p1_boss_hit_chain(void) {
         return;
     }
     reg_d0.h[0] += g_p1_hyper_level;
+    reg_d0.h[0] = GAME_RULE(reg_d0.h[0], black_label_boss_laser_hits(reg_d0.h[0]));
     p1_boss_hits_add();
 }
 
@@ -813,6 +823,7 @@ void p1_boss_hits_continue(void) {
     reg_d2.w = 0;
     if (g_p1_hyper_active != 0) {
         reg_d0.h[0] += g_p1_hyper_level;
+        reg_d0.h[0] = GAME_RULE(reg_d0.h[0], black_label_boss_laser_hits(reg_d0.h[0]));
     } else {
         reg_d2.w = 8;
         reg_d2.h[0] -= (s16) (u16) PLAYER(((u8 *)g_player1))->laser_power.h;
@@ -832,11 +843,17 @@ void p1_boss_hits_add(void) {
     extern void p1_boss_hits_score(u16);
 #endif
     g_boss_hits += reg_d0.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
+#endif
     if (!(reg_d1.w & 0x40)) {
         ARCADE_REGISTER_CALL(p1_boss_hits_score, reg_d0.h[0]);
         return;
     }
     g_boss_hits += reg_d0.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
+#endif
     ARCADE_REGISTER_CALL(p1_boss_hits_score, reg_d0.h[0]);
 }
 
@@ -919,7 +936,7 @@ void p2_boss_hit(void) {
         reg_a0 = (u8 *)&g_p2_hits;
         reg_d0.w = 0;
         if (reg_d1.w & 0x40) {
-            reg_d0.h[0] += reg_d0.h[0];
+            reg_d0.h[0] += GAME_RULE(reg_d0.h[0], 1);
         }
         do {
             saved_d0 = reg_d0.h[0];
@@ -1017,6 +1034,7 @@ void p2_boss_hits_continue(void) {
     reg_d2.w = 0;
     if (g_p2_hyper_active != 0) {
         reg_d0.h[0] += g_p2_hyper_level;
+        reg_d0.h[0] = GAME_RULE(reg_d0.h[0], black_label_boss_laser_hits(reg_d0.h[0]));
     } else {
         reg_d2.w = 8;
         reg_d2.h[0] -= (s16) (u16) PLAYER(((u8 *)g_player2))->laser_power.h;
@@ -1035,11 +1053,17 @@ void p2_boss_hits_add(void) {
     extern void p2_boss_hits_score(u16);
 #endif
     g_boss_hits += reg_d0.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
+#endif
     if (!(reg_d1.w & 0x40)) {
         ARCADE_REGISTER_CALL(p2_boss_hits_score, reg_d0.h[0]);
         return;
     }
     g_boss_hits += reg_d0.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_boss_hits > 0x7FFF) g_boss_hits = 0x7FFF;
+#endif
     ARCADE_REGISTER_CALL(p2_boss_hits_score, reg_d0.h[0]);
 }
 
@@ -1133,6 +1157,10 @@ void p2_extend_score_set(void) {
     extend_score_set();
 }
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static const u32 black_label_first_extend[4] = { 0x02000000, 0x06000000, 0x00700000, 0xffffffff };
+static const u32 black_label_later_extend[4] = { 0x03000000, 0x06000000, 0x01100000, 0xffffffff };
+#endif
 extern u8 g_setting_extend;
 extern u8 D_006E5C08[];
 
@@ -1144,7 +1172,7 @@ void extend_score_set(void)
         reg_d0.b[0] = D_006E5C08[0];
     }
 
-    reg_a2 = (u8 *)extend_scores_first;
+        reg_a2 = (u8 *)GAME_RULE(extend_scores_first, black_label_first_extend);
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
     *(*(s32 **)&reg_a0) = *(s32 *)(reg_a2 + reg_d0.h[0]);
@@ -1156,7 +1184,7 @@ void extend_score_advance(void) {
     u8 *a5 = reg_a5;
 
     reg_d0.h[0] = *(u16 *) reg_a4;
-    reg_a5 = (u8 *)extend_scores_later;
+        reg_a5 = (u8 *)GAME_RULE(extend_scores_later, black_label_later_extend);
     reg_d1.w = *(u32 *) (reg_a5 + reg_d0.h[0]);
     if (reg_d1.w != -1U) goto next_1;
     *(u32 *) reg_a2 = -1U;

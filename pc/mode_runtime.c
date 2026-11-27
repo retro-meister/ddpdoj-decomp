@@ -1,4 +1,5 @@
 #include "mode_runtime.h"
+#include "black_label.h"
 
 #include "cdvd.h"
 #include "gs.h"
@@ -86,8 +87,13 @@ __declspec(dllexport)
 #endif
 PcRunMode pc_run_mode;
 
-bool pc_run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mode)
+bool pc_run_mode(SDL_Renderer *renderer, const char *iso, GameMode mode, GameMode *next_mode)
 {
+#ifdef DDPDOJ_BONUS_FEATURES
+    g_black_label_active = mode == GAME_MODE_BLACK_LABEL;
+#else
+    (void)mode;
+#endif
     pc_pad_open_connected();
     bool ok = pc_cdvd_mount(iso) && pc_sfx_load(iso) && pc_sfx_open_device() &&
               run_mode(renderer, iso, next_mode);

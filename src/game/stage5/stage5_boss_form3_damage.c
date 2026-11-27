@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage5_boss.h"
@@ -57,7 +58,7 @@ next_1:
     STAGE5_PALETTES(reg_a6)->form3_body = 0x17;
     reg_tmp.h[1] = STAGE5_BOSS(reg_a5)->hp[0];
     reg_tmp.h[0] = STAGE5_BOSS(reg_a5)->hp[1];
-    if (reg_tmp.w >= 0x1ECCC) {
+    if (reg_tmp.w >= GAME_RULE(0x1ECCC, 0x46000 * 30 / 100)) {
         goto next_7;
     }
     if (g_damage_blink_counter != 0) {

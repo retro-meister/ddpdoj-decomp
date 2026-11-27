@@ -13,6 +13,9 @@
 
 static const char *const titles[] = {
     [GAME_MODE_MAIN] = "DoDonPachi Dai-Ou-Jou",
+#ifdef DDPDOJ_BONUS_FEATURES
+    [GAME_MODE_BLACK_LABEL] = "DoDonPachi Dai-Ou-Jou - Black Label",
+#endif
     [GAME_MODE_DEATH_LABEL] = "DoDonPachi Dai-Ou-Jou - Death Label",
     [GAME_MODE_GALLERY] = "DoDonPachi Dai-Ou-Jou - Gallery",
 };
@@ -21,6 +24,9 @@ static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *is
 {
     static const char *const modules[] = {
         [GAME_MODE_MAIN] = "main-mode" MODE_SUFFIX,
+#ifdef DDPDOJ_BONUS_FEATURES
+        [GAME_MODE_BLACK_LABEL] = "main-mode" MODE_SUFFIX,
+#endif
         [GAME_MODE_DEATH_LABEL] = "death-mode" MODE_SUFFIX,
         [GAME_MODE_GALLERY] = "gallery-mode" MODE_SUFFIX,
     };
@@ -47,8 +53,9 @@ static bool run_modes(SDL_Window *window, SDL_Renderer *renderer, const char *is
             return false;
         }
         PcRunMode *run = (PcRunMode *)SDL_LoadFunction(module, "pc_run_mode");
-        mode = GAME_MODE_NONE;
-        bool ok = run && run(renderer, iso, &mode);
+        GameMode next_mode = GAME_MODE_NONE;
+        bool ok = run && run(renderer, iso, mode, &next_mode);
+        mode = next_mode;
         SDL_UnloadObject(module);
         if (!ok) {
             return false;

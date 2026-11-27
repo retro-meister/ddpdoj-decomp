@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "simulation.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
@@ -372,11 +373,80 @@ extern u8 g_game_mode;
 extern u8 D_0028E7B4;
 #endif
 
+#ifdef DDPDOJ_BONUS_FEATURES
+extern u16 g_input_p1_pressed, g_input_p2_pressed;
+void text_layer_print(void);
+void sfx_menu_move(void);
+void sfx_menu_confirm(void);
+
+u16 g_black_label_single_loop;
+static u16 round_select_delay, round_select_blink;
+static int round_select_done;
+
+static void draw_round_options(int cursor) {
+    reg_d0.w = 7;
+    reg_d1.w = 29;
+    reg_d2.w = 0;
+    reg_a0 = (u8 *)(cursor && g_black_label_single_loop ? ">1 ROUND GAME" : " 1 ROUND GAME");
+    text_layer_print();
+    reg_d0.w = 7;
+    reg_d1.w = 25;
+    reg_a0 = (u8 *)(cursor && !g_black_label_single_loop ? ">2 ROUND GAME" : " 2 ROUND GAME");
+    text_layer_print();
+}
+
+static int black_label_round_select(void) {
+    u16 pressed = 0;
+    if (round_select_done || g_loop != 0) return 0;
+    if (g_ship_select_state[1]) {
+        if (g_ship_select_state[0] < 6) return 0;
+        pressed |= g_input_p1_pressed;
+    }
+    if (g_ship_select_state[0x71]) {
+        if (g_ship_select_state[0x70] < 6) return 0;
+        pressed |= g_input_p2_pressed;
+    }
+    if (!g_ship_select_state[1] && !g_ship_select_state[0x71]) return 0;
+    if (round_select_delay) {
+        --round_select_delay;
+    } else if (round_select_blink) {
+        if (--round_select_blink == 0) {
+            round_select_done = 1;
+            text_layer_clear();
+            return 0;
+        }
+    } else {
+        if ((pressed & 1) && !g_black_label_single_loop) {
+            g_black_label_single_loop = 1;
+            sfx_menu_move();
+        } else if ((pressed & 2) && g_black_label_single_loop) {
+            g_black_label_single_loop = 0;
+            sfx_menu_move();
+        }
+        if (pressed & 0x70) {
+            round_select_blink = 32;
+            sfx_menu_confirm();
+        }
+    }
+    draw_round_options(!round_select_delay && !(round_select_blink & 2));
+    return 1;
+}
+#endif
+
 void ship_select_task(void) {
     u8 t1;
 
     t1 = *(u8 *)(reg_a5 + 3);
     if (t1 == 0) {
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && g_loop == 0) {
+            round_select_done = 0;
+            round_select_delay = 60;
+            round_select_blink = 0;
+            g_black_label_single_loop = 0;
+            g_loop2_starting_lives[0] = g_loop2_starting_lives[1] = 0;
+        }
+#endif
         ship_select_task_begin();
         return;
     }
@@ -384,6 +454,9 @@ void ship_select_task(void) {
         ship_select_task_finish();
         return;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && black_label_round_select()) return;
+#endif
     *(s8 *)(reg_a5 + 2) = 0;
     reg_a6 = (u8 *)g_ship_select_state;
     reg_d7.w = 1;

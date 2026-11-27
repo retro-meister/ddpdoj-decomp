@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "stage1_boss.h"
@@ -78,7 +79,7 @@ void stage1_boss_damage(void) {
             (*(u8 *)((u8 *)(v2) + (0x1C))) = 0x13U;
             ENTITY(reg_a6)[5].attr.b.palette = 0x16U;
             v1 = (u8 *)(reg_a5);
-            reg_d2.w = 0x6D33;
+            reg_d2.w = GAME_RULE(0x6D33, 0x16C00 / 5);
             reg_tmp.h[1] = (*(u16 *)((u8 *)(v1) + (0x16)));
             reg_tmp.h[0] = (*(u16 *)((u8 *)(v1) + (0x18)));
             if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (g_damage_blink_counter == 0)) {
@@ -126,8 +127,8 @@ next_1:
                     if (g_game_mode == 2) {
                         if ((s32) hp > 0x7FFF) {
                             reg_tmp.w += hp - 0x7FFF;
-                            if (reg_tmp.w >= 0x9000) {
-                                reg_tmp.w = 0x9000;
+                            if (reg_tmp.w >= GAME_RULE(0x9000, 0xA000)) {
+                                reg_tmp.w = GAME_RULE(0x9000, 0xA000);
                             }
                         } else {
                             reg_tmp.w -= reg_d2.w;
@@ -142,7 +143,7 @@ next_1:
                 ENTITY(reg_a6)[1].hp.h = (u16) reg_d0.h[0];
             } else {
                 ENTITY(reg_a6)[1].attr.b.palette = 0x15U;
-                reg_d2.w = 0x2B33;
+                reg_d2.w = GAME_RULE(0x2B33, 0x3000);
                 reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->right_hp[0];
                 reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->right_hp[1];
                 if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (g_damage_blink_counter == 0)) {
@@ -208,8 +209,8 @@ next_3:
                     if (g_game_mode == 2) {
                         if ((s32) hp > 0x7FFF) {
                             reg_tmp.w += hp - 0x7FFF;
-                            if (reg_tmp.w >= 0x9000) {
-                                reg_tmp.w = 0x9000;
+                            if (reg_tmp.w >= GAME_RULE(0x9000, 0xA000)) {
+                                reg_tmp.w = GAME_RULE(0x9000, 0xA000);
                             }
                         } else {
                             reg_tmp.w -= reg_d2.w;
@@ -224,7 +225,7 @@ next_3:
                 ENTITY(reg_a6)[3].hp.h = (u16) reg_d0.h[0];
             } else {
                 ENTITY(reg_a6)[3].attr.b.palette = 0x15U;
-                reg_d2.w = 0x2B33;
+                reg_d2.w = GAME_RULE(0x2B33, 0x3000);
                 reg_tmp.h[1] = STAGE1_BOSS(reg_a5)->left_hp[0];
                 reg_tmp.h[0] = STAGE1_BOSS(reg_a5)->left_hp[1];
                 if (((u32) reg_tmp.w <= (u32) reg_d2.w) && (g_damage_blink_counter == 0)) {

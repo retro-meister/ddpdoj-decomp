@@ -40,8 +40,10 @@ def prepare_compile_source(source, output):
 DEATH_DEFINE = "DEATH_LABEL"
 
 
-def target_defines(target_name, source):
-    """Extra compiler flags for a unit: Death Label sees DEATH_LABEL, in sources that test it."""
+def target_defines(target_name, source, bonus_features=False):
+    """Compile the optional main-game rules and the original Death Label variant."""
+    if bonus_features and target_name == "SLPS_252.33":
+        return ("-DDDPDOJ_BONUS_FEATURES",)
     if target_name != "DEATH.ELF":
         return ()
     try:
@@ -612,14 +614,14 @@ def _prepare_compact_link(folder, work_target, binutils, chunk_size=64):
 
 
 def link_target(folder, work_target, filename, original, target, units, version, objects, binutils, matching, write_map=False,
-                shift=0, emit_relocs=False):
+                shift=0, emit_relocs=False, bonus_features=False):
     name = filename
     assemble_split(folder, binutils)
     objects_root = folder / "objects"
     for unit in units:
         dest = objects_root / f"{unit['source']}.o"
         dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(objects[(version, unit["source"], target_defines(name, unit["source"]))], dest)
+        shutil.copyfile(objects[(version, unit["source"], target_defines(name, unit["source"], bonus_features))], dest)
     work_target.mkdir(parents=True, exist_ok=True)
     elf = work_target / "image.elf"
     link_map = work_target / "image.map"
@@ -689,7 +691,9 @@ def link_target(folder, work_target, filename, original, target, units, version,
         )
 
 
-def build(local, target=None, mod=False, compiler=None, iso=None, write_map=False, shift=0, emit_relocs=False, output=None):
+def build(local, target=None, mod=False, compiler=None, iso=None, write_map=False, shift=0, emit_relocs=False, output=None, bonus_features=False):
+    if bonus_features and not mod:
+        raise ValueError("--bonus-features requires --mod")
     names = [target] if target else list(TARGETS)
     originals = {
         name: verify((BASEROM / name).read_bytes(), TARGETS[name]["sha256"], f"baserom/{name}")
@@ -698,7 +702,7 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
     units_by_target = {name: target_units(name) + data_units(name) for name in names}
     versions = {name: target_compiler(name, local, compiler) for name in names}
     jobs = sorted({
-        (versions[name], unit["source"], target_defines(name, unit["source"]))
+        (versions[name], unit["source"], target_defines(name, unit["source"], bonus_features))
         for name in names
         for unit in units_by_target[name]
     })
@@ -716,7 +720,7 @@ def build(local, target=None, mod=False, compiler=None, iso=None, write_map=Fals
         for name in names:
             link_target(split_folders[name], work / name, name, originals[name], TARGETS[name],
                         units_by_target[name], versions[name], objects, local["binutils"],
-                        matching=not mod, write_map=write_map, shift=shift, emit_relocs=emit_relocs)
+                        matching=not mod, write_map=write_map, shift=shift, emit_relocs=emit_relocs, bonus_features=bonus_features)
         full_mod = mod and target is None
         if full_mod:
             hashes = {name: hashlib.sha256((work / name / name).read_bytes()).hexdigest()
@@ -758,11 +762,12 @@ def main():
     parser = argparse.ArgumentParser(description="Build and verify all three matching PS2 executables.")
     parser.add_argument("--target", choices=TARGETS, help="build one executable")
     parser.add_argument("--mod", action="store_true", help="build edits into build/mod")
+    parser.add_argument("--bonus-features", action="store_true", help="Build optional bonus features")
     parser.add_argument("--iso", nargs="?", const="", help="with --mod, incrementally sync assets/ into build/mod/ddpdoj.iso")
     parser.add_argument("--compiler", choices=TOOLCHAINS["compilers"], help="override the target compiler")
     parser.add_argument("--map", action="store_true", help="emit linker .map files into build/")
     args = parser.parse_args()
-    build(require_local(), args.target, args.mod, args.compiler, args.iso, write_map=args.map)
+    build(require_local(), args.target, args.mod, args.compiler, args.iso, write_map=args.map, bonus_features=args.bonus_features)
 
 
 if __name__ == "__main__":

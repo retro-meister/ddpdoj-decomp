@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "fade.h"
 #include "entity.h"
 #include "stage1_boss.h"
@@ -74,6 +75,12 @@ void stage1_boss_start(void) {
     }
     reg_d0.h[0] = t - 1;
     enemy_set_task_state();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        STAGE1_BOSS(reg_a5)->left_hp[1] = 0xA000;
+        STAGE1_BOSS(reg_a5)->right_hp[1] = 0xA000;
+    }
+#endif
     reg_tmp.w = 0x97FFFE00;
     ENTITY(reg_a6)->y.h = (u16) reg_tmp.h[1];
     ENTITY(reg_a6)->x.h = (u16) reg_tmp.h[0];

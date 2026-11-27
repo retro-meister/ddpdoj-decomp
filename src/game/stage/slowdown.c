@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 
 /* How many objects a frame may hold before the game slows down, by stage: the base number, and what is
@@ -40,6 +41,7 @@ extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_enemy_count_second;
 extern u16 g_loop;
+extern u16 g_true_last_boss;
 extern u16 g_stage_x4;
 extern u16 g_stage_x2;
 extern u16 g_bullets_alive[];
@@ -65,7 +67,12 @@ next_5:
     reg_d0.h[0] += g_player_laser_count;
     reg_d1.w = 0;
     tbl = (u8 *)slowdown_load_thresholds;
-    if (g_loop == 0) goto next_8;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_loop == 0 && (g_stage_x4 == 4 || g_stage_x4 == 8)) {
+        reg_d1.h[0] -= 5;
+    }
+#endif
+    if (GAME_RULE(g_loop == 0, g_loop == 0 && !(g_black_label_single_loop && g_true_last_boss > 1))) goto next_8;
     tbl = (u8 *)slowdown_load_thresholds_loop2;
     if ((u16)g_slowdown_loop2_allowed == 0) return;
     reg_d1.h[0] += 0x28;
@@ -87,7 +94,7 @@ next_12:
     goto next_20;
 next_15:
     tbl = (u8 *)slowdown_budget_limits;
-    if (g_loop == 0) goto next_17;
+    if (GAME_RULE(g_loop == 0, g_loop == 0 && !(g_black_label_single_loop && g_true_last_boss > 1))) goto next_17;
     tbl = (u8 *)slowdown_budget_limits_loop2;
 next_17:
     reg_d2.h[0] = (s32) g_stage_x2 >> 1;

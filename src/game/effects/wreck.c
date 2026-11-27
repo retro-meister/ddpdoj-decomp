@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "simulation.h"
 #include "fade.h"
 #include "enemy.h"
@@ -462,6 +463,10 @@ extern s16 g_player1[];
 #ifdef DEATH_LABEL
 #endif
 
+#ifdef DDPDOJ_BONUS_FEATURES
+u16 g_loop2_starting_lives[2];
+#endif
+
 void clear_bonus_p1_step(void) {
     u8 *p;
 
@@ -476,6 +481,12 @@ void clear_bonus_p1_step(void) {
     if (g_p1_score_digits != 0) {
         goto block_2;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_loop == 0 && !g_black_label_single_loop) {
+        g_loop2_starting_lives[0] = g_p1_lives;
+        goto block_2;
+    }
+#endif
     *(u16 *)(reg_a6 + 0xE) += 1;
     if (g_loop == 0) {
         *(u16 *)(reg_a6 + 6) = 1;
@@ -498,7 +509,7 @@ block_3:
         case 0:
             goto block_1;
         }
-        reg_d0.w = 0x01000000;
+        reg_d0.w = GAME_RULE(0x01000000, 0x03000000);
         score_add_p1();
         g_p1_lives -= 1;
         hud_p1_lives_put();
@@ -540,7 +551,7 @@ block_3:
         if (*p == 0) {
             goto block_1;
         }
-        reg_d0.w = 0x01000000;
+        reg_d0.w = GAME_RULE(0x01000000, 0x00500000);
 #ifdef DEATH_LABEL
         if (g_sim_rules.p1_power_style == 2) {
             *(s32 *)&reg_d0 = 0x01000000;
@@ -586,6 +597,12 @@ void clear_bonus_p2_step(void) {
     if (g_p2_score_digits != 0) {
         goto block_2;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_loop == 0 && !g_black_label_single_loop) {
+        g_loop2_starting_lives[1] = g_p2_lives;
+        goto block_2;
+    }
+#endif
     *(u16 *)(reg_a6 + 0xE) += 1;
     if (g_loop == 0) {
         *(u16 *)(reg_a6 + 8) = 1;
@@ -608,7 +625,7 @@ block_3:
         case 0:
             goto block_1;
         }
-        reg_d0.w = 0x01000000;
+        reg_d0.w = GAME_RULE(0x01000000, 0x03000000);
         score_add_p2();
         g_p2_lives -= 1;
         hud_p2_lives_put();
@@ -664,7 +681,7 @@ block_3:
     if (*p == 0) {
         goto block_1;
     }
-    reg_d0.w = 0x01000000;
+    reg_d0.w = GAME_RULE(0x01000000, 0x00500000);
 #ifdef DEATH_LABEL
     if (g_sim_rules.p2_power_style == 2) {
         *(s32 *)&reg_d0 = 0x01000000;

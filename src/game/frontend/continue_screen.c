@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "continue_screen.h"
 #include "task.h"
 
@@ -693,7 +694,7 @@ void continue_task(void) {
         continue_to_game_over();
         return;
     }
-    if (g_loop != 0) {
+    if (g_loop != 0 && GAME_RULE(1, g_stage == 4)) {
         goto next_8;
     }
     if (g_setting_continue == 0) {

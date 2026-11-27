@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
 #else
@@ -41,6 +42,7 @@ s32 sfx_extend();
 s32 hud_p1_lives_put();
 extern u16 g_p1_stage_bomb_used;
 extern u16 g_p1_stage_misses;
+extern u16 g_p1_continued;
 extern u8 g_game_mode;
 extern s8 g_bomb_panel_seen;
 extern u16 g_p1_lives;
@@ -85,7 +87,8 @@ void p1_stage_clear_reward(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    if ((g_game_mode == 2) || ((g_loop != 0) && ((g_p1_stage_misses == 0) || (g_p1_stage_bomb_used == 0)))) {
+    if ((g_game_mode == 2) || ((g_loop != 0) && GAME_RULE(((g_p1_stage_misses == 0) || (g_p1_stage_bomb_used == 0)),
+            !g_p1_continued && !g_p1_stage_misses && !g_p1_lives))) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 == 0)
 #endif
@@ -129,6 +132,7 @@ void p1_stage_clear_reward(void) {
 s32 hud_p2_lives_put();
 extern u16 g_p2_stage_bomb_used;
 extern u16 g_p2_stage_misses;
+extern u16 g_p2_continued;
 extern u16 g_p2_lives;
 
 #ifdef DEATH_LABEL
@@ -169,7 +173,8 @@ void p2_stage_clear_reward(void) {
     save_a4 = reg_a4;
     save_a5 = reg_a5;
     save_a6 = reg_a6;
-    if ((g_game_mode == 2) || ((g_loop != 0) && ((g_p2_stage_misses == 0) || (g_p2_stage_bomb_used == 0)))) {
+    if ((g_game_mode == 2) || ((g_loop != 0) && GAME_RULE(((g_p2_stage_misses == 0) || (g_p2_stage_bomb_used == 0)),
+            !g_p2_continued && !g_p2_stage_misses && !g_p2_lives))) {
 #ifdef DEATH_LABEL
         if (death_D_00290DC0 == 0)
 #endif
@@ -750,6 +755,16 @@ s32 p2_hyper_item_take();
 s32 weapon_level_data_set(u8 *);
 s32 p1_hyper_items_pending_take();
 s32 p2_hyper_items_pending_take();
+#ifdef DDPDOJ_BONUS_FEATURES
+static const u16 black_label_ship_bounds[] = {
+    0x0000, 0x4000, 0x0080, 0x0100, 0x0000, 0x4050, 0x0100, 0x0080,
+};
+#endif
+#ifdef DDPDOJ_BONUS_FEATURES
+static const u16 black_label_ship_speeds[] = {
+    0x160c, 0x130c, 0x1610, 0x130f, 0x1610, 0x130f,
+};
+#endif
 extern u16 player_spawn_table[];
 extern u16 player_spawn_table_2[];
 extern u16 player_weapon_tables[24];
@@ -1104,7 +1119,7 @@ next_85:
     PLAYER(reg_a6)->y.h = *(u16 *)(reg_a5 + 8);
     PLAYER(reg_a6)->x.h = *(u16 *)(reg_a5 + 0xA);
     reg_d0.h[0] = PLAYER(reg_a6)->ship_type.h;
-    reg_a0 = (u8 *)player_spawn_table;
+    reg_a0 = (u8 *)GAME_RULE(player_spawn_table, black_label_ship_bounds);
     reg_d0.h[0] <<= 2;
     reg_a0 += reg_d0.h[0];
     PLAYER(reg_a6)->sprite_hi.h = *(u16 *)reg_a0;
@@ -1124,7 +1139,7 @@ next_85:
     reg_d0.h[0] += reg_d2.h[0];
     reg_d2.h[0] <<= 1;
     reg_d1.h[0] += reg_d2.h[0];
-    reg_a0 = (u8 *)player_spawn_table_2;
+    reg_a0 = (u8 *)GAME_RULE(player_spawn_table_2, black_label_ship_speeds);
     reg_a0 += reg_d0.h[0];
     PLAYER(reg_a6)->move.b.speed = reg_a0[1];
     reg_a6[0x38] = reg_a0[1];
@@ -1572,6 +1587,12 @@ void player_sprite_update(void) {
     reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     PLAYER(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        PLAYER(reg_a6)->hit_x_plus.h -= 0x40;
+        PLAYER(reg_a6)->hit_x_minus.h -= 0x40;
+    }
+#endif
     if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = PLAYER(reg_a6)->y.h;
         reg_d1.h[0] = PLAYER(reg_a6)->x.h;
@@ -1888,7 +1909,7 @@ block_13:
                 PLAYER(reg_a6)->input.b.filtered |= 0x10;
             }
         }
-        if (((s32) g_scroll_line >= 4) && (PLAYER(reg_a6)->input.b.raw & 0x20)) {
+        if (((s32) g_scroll_line >= 4) && (GAME_RULE(PLAYER(reg_a6)->input.b.raw, PLAYER(reg_a6)->input.b.filtered) & 0x20)) {
             temp_a2_2 = (u8 *)(reg_a5 + 6);
             if (*(u8 *)(reg_a5 + 6) == 0) {
                 reg_a0 = (u8 *)p1_laser_stop;
@@ -1909,7 +1930,7 @@ block_13:
             if (reg_d1.h[0] != 0) {
                 reg_d1.h[0] -= 1;
                 reg_d1.h[0] *= 2;
-                reg_a1 = (u8 *)hyper_bullet_speed_table;
+                reg_a1 = (u8 *)GAME_RULE(hyper_bullet_speed_table, (u8 *)black_label_hyper_speeds[g_loop != 0]);
                 reg_d6.h[0] -= 1;
                 reg_d6.h[0] *= 2;
                 reg_d6.h[0] = (reg_d6.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d6.h[0] & ~1)) : *(u16 *)reg_a1;
@@ -1990,7 +2011,7 @@ block_13:
                     if (!(PLAYER(reg_a6)->flags.b[1] & 0x40)) {
                         temp_v0_2 = *(u16 *)reg_a4;
                         if (temp_v0_2 != 0) {
-                            *(u16 *)reg_a4 = (u16) (temp_v0_2 - 0x2C);
+                            *(u16 *)reg_a4 = (u16) (temp_v0_2 - GAME_RULE(44, 154));
                             reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xC);
                             *(u16 *)(reg_a4 + 0xC) -= 2;
                             if ((s32) reg_tmp.h[0] < 2) {
@@ -2366,6 +2387,12 @@ block_244:
     reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     PLAYER(reg_a6)->hit_x_plus.h = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a0;
     PLAYER(reg_a6)->hit_x_minus.h = ((reg_d0.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d0.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        PLAYER(reg_a6)->hit_x_plus.h -= 0x40;
+        PLAYER(reg_a6)->hit_x_minus.h -= 0x40;
+    }
+#endif
     if ((g_players_hidden == 0) && (g_frame_mod2 == 0) && (g_loop == 0) && (g_stage != 2)) {
         reg_d1.h[1] = PLAYER(reg_a6)->y.h;
         reg_d1.h[0] = PLAYER(reg_a6)->x.h;
@@ -2636,13 +2663,13 @@ block_4:
         reg_d0.h[0] &= 0x2000;
         reg_d1.h[0] = PLAYER(reg_a6)->power_style.h;
         var_a1 = (u8 *)(reg_a6 + 0x5A);
-        if (reg_d1.h[0] & 2) {
+        if ((reg_d1.h[0] & 2) || GAME_RULE(0, g_loop != 0)) {
             reg_d2.h[0] = PLAYER(reg_a6)->shot_power.h;
             if (reg_d2.h[0] != 0) {
                 reg_d2.h[0] -= 2;
             }
         }
-        if (reg_d1.h[0] & 4) {
+        if ((reg_d1.h[0] & 4) || GAME_RULE(0, g_loop != 0)) {
             reg_d3.h[0] = PLAYER(reg_a6)->laser_power.h;
             if (reg_d3.h[0] != 0) {
                 reg_d3.h[0] -= 2;

@@ -1,5 +1,13 @@
 #include "common.h"
 #include "simulation.h"
+#include "black_label.h"
+#ifdef DDPDOJ_BONUS_FEATURES
+int g_black_label_active;
+s32 executable_launch(s32 mode);
+#define MENU_AFTER_DEATH 1
+#else
+#define MENU_AFTER_DEATH 0
+#endif
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -213,7 +221,7 @@ extern char *menu_debug_option_draw_table_4[2];
 #ifdef DEATH_LABEL
 extern char *g_menu_main_items[7];
 #else
-extern char *g_menu_main_items[10];
+extern char *g_menu_main_items[10 + MENU_AFTER_DEATH];
 #endif
 extern char *g_menu_game_option_items[7];
 extern char *g_menu_save_load_items[7];
@@ -264,7 +272,7 @@ extern char *g_menu_dot_text;
 #ifdef DEATH_LABEL
 extern char *g_menu_main_help[7];
 #else
-extern char *g_menu_main_help[10];
+extern char *g_menu_main_help[10 + MENU_AFTER_DEATH];
 #endif
 extern char *g_menu_game_option_help[7];
 extern char *g_menu_lever_set_help[2];
@@ -1321,7 +1329,7 @@ s8 g_menu_page_item_counts[32] = {
 };
 #else
 s8 g_menu_page_item_counts[32] = {
-    9, 7, 5, 6, 0, 0, 0, 6, 6, 6, 0xc, 1, 0xc, 0xf, 6, 0xe,
+    9 + MENU_AFTER_DEATH, 7, 5, 6, 0, 0, 0, 6, 6, 6, 0xc, 1, 0xc, 0xf, 6, 0xe,
     0, 8, 0xc, 9, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0,
 };
 #endif
@@ -1378,11 +1386,14 @@ char *g_menu_main_items[7] = {
     "DEBUG OPTION",
 };
 #else
-char *g_menu_main_items[10] = {
+char *g_menu_main_items[10 + MENU_AFTER_DEATH] = {
     " ",
     "ARCADE MODE",
     "SIMULATION MODE",
     "DEATH LABEL",
+#ifdef DDPDOJ_BONUS_FEATURES
+    "BLACK LABEL",
+#endif
     "GALLERY",
     "RANKING",
     "SYSTEM OPTION",
@@ -1728,11 +1739,14 @@ char *g_menu_main_help[7] = {
     SJIS("デバックオプションの設定を／変更します。￥"),
 };
 #else
-char *g_menu_main_help[10] = {
+char *g_menu_main_help[10 + MENU_AFTER_DEATH] = {
     SJIS("￥"),
     SJIS("アーケードモードで／遊びます。￥"),
     SJIS("シミュレーションモードで／遊びます。￥"),
     SJIS("デスレーベルを起動します。￥"),
+#ifdef DDPDOJ_BONUS_FEATURES
+    SJIS("ブラックレーベルで／遊びます。￥"),
+#endif
     SJIS("ギャラリーを起動します。￥"),
     SJIS("ランキングを表示します。￥"),
     SJIS("システムオプションの設定を／変更します。￥"),
@@ -2486,6 +2500,22 @@ void sim_rules_set_defaults(void) {
 
 extern s8 g_menu_main_step;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+void black_label_menu_init(void) {
+    g_menu_main_items[6] = "BLACK LABEL RANKING";
+    g_menu_main_items[8] = "BLACK LABEL SAVE/LOAD";
+    g_menu_page_item_counts[MENU_PAGE_SIMULATION] = 5;
+    g_menu_simulation_items[4] = g_menu_simulation_items[5];
+    g_menu_simulation_help[4] = g_menu_simulation_help[5];
+    g_menu_extend_names[0][0] = "1ST 20000000PTS";
+    g_menu_extend_names[0][1] = "2ND 50000000PTS";
+    g_menu_extend_names[1][0] = "1ST 60000000PTS";
+    g_menu_extend_names[1][1] = "2ND120000000PTS";
+    g_menu_extend_names[2][0] = "1ST  7000000PTS";
+    g_menu_extend_names[2][1] = "2ND 18000000PTS";
+}
+#endif
+
 void menu_main_page(void) {
     switch (g_menu_main_step) {
     case 0:
@@ -2572,14 +2602,14 @@ void menu_main_step2(void) {
         (*(u16 *)&g_menu_idle_timer) -= 1;
         if ((s32) (u16)g_menu_idle_timer <= 0) {
             var_a1 = 1;
-            g_menu_cursor = MAIN_OR_DEATH_LABEL(8, 5);
+            g_menu_cursor = MAIN_OR_DEATH_LABEL(8 + MENU_AFTER_DEATH, 5);
         }
     } else {
         g_menu_idle_timer = 0xE10;
     }
     if (g_pad_trigger[2] & 0x40) {
         var_a1 = 1;
-        g_menu_cursor = MAIN_OR_DEATH_LABEL(8, 5);
+        g_menu_cursor = MAIN_OR_DEATH_LABEL(8 + MENU_AFTER_DEATH, 5);
     } else if (g_pad_trigger[2] & 0x20) {
         var_a1 = 1;
     }
@@ -2635,7 +2665,21 @@ void menu_main_step2(void) {
         switch (g_menu_cursor) {
         case 0:
             break;
+#ifdef DDPDOJ_BONUS_FEATURES
+        case 4:
+            if (!g_black_label_active) {
+                executable_launch(3);
+                break;
+            }
+            /* fall through */
+#endif
         case 1:
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active && g_menu_cursor == 1) {
+                executable_launch(2);
+                break;
+            }
+#endif
             g_menu_arcade_step = 0;
             g_menu_page = MENU_PAGE_ARCADE;
             g_menu_arcade_cursor = 0;
@@ -2646,23 +2690,23 @@ void menu_main_step2(void) {
             g_menu_launch_cursor = 0;
             g_menu_launch_kind = 2;
             break;
-        case 4:
+        case 4 + MENU_AFTER_DEATH:
             g_menu_launch_step = 0;
             g_menu_page = MENU_PAGE_LAUNCH;
             g_menu_launch_cursor = 0;
             g_menu_launch_kind = 1;
             break;
-        case 5:
+        case 5 + MENU_AFTER_DEATH:
             g_menu_ranking_step = 0;
             g_menu_page = MENU_PAGE_RANKING;
             g_menu_ranking_cursor = 0;
             break;
-        case 6:
+        case 6 + MENU_AFTER_DEATH:
             g_menu_system_option_step = 0;
             g_menu_page = MENU_PAGE_SYSTEM_OPTION;
             g_menu_system_option_cursor = 0;
             break;
-        case 7:
+        case 7 + MENU_AFTER_DEATH:
             g_menu_save_load_step = 0;
             g_menu_page = MENU_PAGE_SAVE_LOAD;
             g_menu_save_load_cursor = 0;
@@ -2677,12 +2721,12 @@ void menu_main_step2(void) {
                 g_menu_pad = 1;
             }
             break;
-        case 9:
+        case 9 + MENU_AFTER_DEATH:
             g_menu_debug_option_step = 0;
             g_menu_page = MENU_PAGE_DEBUG_OPTION;
             g_menu_debug_option_cursor = 0;
             break;
-        case 8:
+        case 8 + MENU_AFTER_DEATH:
             fade_start_out();
             g_menu_task_phase = 2;
             break;
@@ -4613,6 +4657,11 @@ void menu_arcade_draw(void) {
         }
         item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].alpha = g_menu_arcade_alpha;
         reg_a0 = (u8 *)g_menu_arcade_items[i];
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && i == 0) {
+            reg_a0 = (u8 *)"BLACK LABEL";
+        }
+#endif
         x = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].x;
         alpha = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].alpha;
         top = item[MENU_PAGE_ARCADE * MENU_ITEMS_PER_PAGE].y;
@@ -5431,7 +5480,7 @@ void menu_reset() {
     g_menu_notice_alpha = 0;
     g_menu_replay_chosen = 0;
     g_menu_task_phase = 1;
-    g_menu_main_cursor = 1;
+    g_menu_main_cursor = GAME_RULE(1, 4);
     memset(&g_menu_simulation, 0, 6);
     memset(&g_menu_sim_setting, 0, 6);
     memset(&g_menu_sim_player, 0, 6);

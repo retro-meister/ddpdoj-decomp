@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "player_slot.h"
 #ifdef DDPDOJ_PC
 #include "pc_enemy_animation.h"
@@ -555,7 +556,7 @@ void player_slot_start(void) {
     reg_d0.h[0] += reg_d0.h[0];
     *(u16 *)reg_a0 = (reg_d0.h[0] != 0) ? *(u16 *)((u8 *)reg_a1 + ((s16)reg_d0.h[0] & ~1)) : *(u16 *)reg_a1;
     if (g_loop != 0) {
-        *(u16 *)reg_a0 = 0U;
+        *(u16 *)reg_a0 = GAME_RULE(0U, g_loop2_starting_lives[PLAYER_SLOT(reg_a6)->player]);
     }
     if (g_simulation_active == 1) {
         if (D_006E5C06[0] == 0x14) {
