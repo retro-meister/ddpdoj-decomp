@@ -255,6 +255,41 @@ typedef struct {
     u8 regions[];
 } GameplaySnapshot;
 
+static void test_frame_continuation(SDL_Renderer *renderer, GameplaySnapshot *saved)
+{
+    enum { frames = 12 };
+    PcPlayerState *expected = SDL_calloc(frames, sizeof(*expected));
+    require(expected != NULL, "Allocate expected frame sequence");
+    PcPlayerState player;
+    for (unsigned pass = 0; pass < 2; ++pass) {
+        if (pass) {
+            require(pc_combat_restore(&saved->pools) && pc_tasks_restore(&saved->tasks) &&
+                    pc_player_state_restore(&saved->players) && pc_replay_frame_restore(&saved->replay) &&
+                    pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
+                    "Return to the captured gameplay frame");
+        }
+        for (unsigned i = 0; i < frames; ++i) {
+            pc_pad_capture();
+            game_run_frame();
+            require(pc_gs_ok() && SDL_RenderPresent(renderer), "Advance restored gameplay");
+            pc_player_state_capture(&player);
+            if (!pass) expected[i] = player;
+            else if (memcmp(&player, &expected[i], sizeof(player))) {
+                const u8 *actual = (const u8 *)&player;
+                const u8 *wanted = (const u8 *)&expected[i];
+                for (size_t j = 0; j < sizeof(player); ++j) {
+                    if (actual[j] != wanted[j]) {
+                        SDL_Log("Frame %u offset %#zx expected %u got %u", i + 1, j, wanted[j], actual[j]);
+                        break;
+                    }
+                }
+                require(false, "Repeat the same player and weapon trajectory");
+            }
+        }
+    }
+    SDL_free(expected);
+}
+
 int main(int argc, char **argv)
 {
     const char *save_pools = argc == 5 && !strcmp(argv[3], "--save-pools") ? argv[4] : NULL;
@@ -402,6 +437,7 @@ int main(int argc, char **argv)
                     "Capture stage flow and screen layers");
             require(pc_state_slot_write(save_pools, pool_mode, 1, saved, size),
                     "Write pools from live gameplay");
+            test_frame_continuation(renderer, saved);
             SDL_free(saved);
             goto cleanup;
         }
