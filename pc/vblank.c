@@ -7,13 +7,17 @@
 static const Uint64 three_fields_ns = 50050000;
 static Uint64 epoch;
 static Uint64 next_field;
+static Uint64 epoch_field;
+static unsigned fields_per_period = 3;
+enum { fast_forward_speed = 4 };
+static unsigned frames_until_present;
 static Uint64 poll_time;
 static Uint64 render_budget = 4000000;
 static SDL_Renderer *display_renderer;
 
 static Uint64 field_deadline(void)
 {
-    return epoch + (next_field * three_fields_ns + 2) / 3;
+    return epoch + ((next_field - epoch_field) * three_fields_ns + fields_per_period - 1) / fields_per_period;
 }
 
 static void start_clock(Uint64 now)
@@ -22,6 +26,25 @@ static void start_clock(Uint64 now)
         epoch = now;
         next_field = 1;
     }
+}
+
+bool pc_frame_should_present(bool fast_forward)
+{
+    unsigned rate = fast_forward ? 3 * fast_forward_speed : 3;
+    if (fields_per_period != rate) {
+        epoch = SDL_GetTicksNS();
+        start_clock(epoch);
+        epoch_field = next_field - 1;
+        fields_per_period = rate;
+        poll_time = 0;
+        frames_until_present = 0;
+    }
+    if (frames_until_present) {
+        --frames_until_present;
+        return false;
+    }
+    frames_until_present = fast_forward ? fast_forward_speed - 1 : 0;
+    return true;
 }
 
 void pc_wait_to_poll_input(SDL_Renderer *renderer)
@@ -60,7 +83,7 @@ s32 sceGsSyncV(s32 mode)
     } else {
         /* A late frame already crossed its field boundary. Additional game
          * waits for arcade slowdown still consume one full field each. */
-        next_field = SDL_max(next_field, (now - epoch) * 3 / three_fields_ns);
+        next_field = SDL_max(next_field, epoch_field + (now - epoch) * fields_per_period / three_fields_ns);
     }
     return (s32)(next_field++ & 1);
 }

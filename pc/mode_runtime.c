@@ -15,7 +15,7 @@
 #include "pc_sound.h"
 #endif
 
-static bool process_input(SDL_Renderer *renderer)
+static bool process_input(SDL_Renderer *renderer, bool *present)
 {
     pc_wait_to_poll_input(renderer);
     SDL_Event event;
@@ -25,6 +25,10 @@ static bool process_input(SDL_Renderer *renderer)
         }
         pc_pad_handle_event(&event);
     }
+    bool held = SDL_GetKeyboardFocus() == SDL_GetRenderWindow(renderer) &&
+                SDL_GetKeyboardState(NULL)[SDL_SCANCODE_TAB];
+    *present = pc_frame_should_present(held);
+    pc_gs_skip_window_draws(!*present);
     pc_pad_capture();
     return true;
 }
@@ -38,7 +42,8 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
         return false;
     }
     bool ok = true;
-    while (process_input(renderer)) {
+    bool present;
+    while (process_input(renderer, &present)) {
         s32 state = gallery_run_frame();
         if (state < 0) {
             ok = false;
@@ -49,7 +54,7 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
             break;
         }
         sceGsSyncV(0);
-        if (!SDL_RenderPresent(renderer)) {
+        if (present && !SDL_RenderPresent(renderer)) {
             ok = false;
             break;
         }
@@ -63,13 +68,14 @@ static bool run_mode(SDL_Renderer *renderer, const char *iso, GameMode *next_mod
     pc_gs_bind_game(renderer);
     game_boot_begin();
     bool loaded = false;
-    while (process_input(renderer)) {
+    bool present;
+    while (process_input(renderer, &present)) {
         if (loaded) {
             game_run_frame();
         } else {
             loaded = game_boot_frame();
         }
-        if (!pc_gs_ok() || !SDL_RenderPresent(renderer)) {
+        if (!pc_gs_ok() || (present && !SDL_RenderPresent(renderer))) {
             return false;
         }
         *next_mode = game_take_mode_request();
@@ -101,6 +107,7 @@ bool pc_run_mode(SDL_Renderer *renderer, const char *iso, GameMode mode, GameMod
     pc_bgm_close();
     pc_mc_close_storage();
 #endif
+    pc_gs_skip_window_draws(false);
     pc_sfx_shutdown();
     pc_cdvd_unmount();
     pc_pad_shutdown();

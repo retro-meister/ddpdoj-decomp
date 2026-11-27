@@ -33,6 +33,12 @@ typedef struct {
 } GsDrawState;
 
 static GsDrawState gs;
+static bool skip_window_draws;
+
+void pc_gs_skip_window_draws(bool skip)
+{
+    skip_window_draws = skip;
+}
 
 static void destroy_game_target(void)
 {
@@ -113,6 +119,9 @@ bool pc_gs_ok(void)
 
 bool pc_gs_begin_frame(void)
 {
+    if (skip_window_draws && !SDL_GetRenderTarget(gs.renderer)) {
+        return pc_gs_ok();
+    }
     return pc_gs_ok() && SDL_SetRenderDrawColor(gs.renderer, 0, 0, 0, 255) &&
            (!gs.game || SDL_SetRenderClipRect(gs.renderer, NULL)) && SDL_RenderClear(gs.renderer);
 }
@@ -206,6 +215,9 @@ static bool draw_solid_triangle(GsDrawState *state)
 
 static void vertex_kick(GsDrawState *state, u64 value)
 {
+    if (skip_window_draws && !SDL_GetRenderTarget(state->renderer)) {
+        return;
+    }
     SDL_FPoint point = { ((int)(value & 0xFFFF) - (int)state->origin_x) / 16.0f,
                          ((int)((value >> 16) & 0xFFFF) - (int)state->origin_y) *
                              (state->vertical_scale / 16.0f) };
