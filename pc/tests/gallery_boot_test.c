@@ -3,6 +3,7 @@
 #include "game_loop.h"
 #include "gs.h"
 #include "pc_input.h"
+#include "presentation.h"
 #include "sfx.h"
 
 #include <SDL3/SDL.h>
@@ -95,20 +96,17 @@ static void expect_audio(int pcm_at_start, int pcm_at_333, int volume)
 
 int main(int argc, char **argv)
 {
-#ifdef _WIN32
-    const char *driver = "direct3d11";
-#elif defined(__APPLE__)
-    const char *driver = "metal";
-#else
-    const char *driver = NULL;
-#endif
     bool audio_device = argc == 3 && SDL_strcmp(argv[2], "--audio-device") == 0;
     require(argc == 2 || audio_device, "Expected the retail ISO path and optional --audio-device");
     SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
     require(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMEPAD), "Initialize desktop video and input");
     SDL_Window *window = SDL_CreateWindow("Gallery boot test", 640, 448, SDL_WINDOW_HIDDEN);
     require(window != NULL, "Create the Gallery test window");
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, driver);
+#ifdef _WIN32
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, "direct3d11");
+#else
+    SDL_Renderer *renderer = pc_create_renderer(window);
+#endif
     require(renderer != NULL, "Create the Gallery renderer");
     pc_gs_bind_gallery(renderer);
     require(gallery_boot() == 0 && g_gallery == NULL, "Gallery requires a mounted disc");

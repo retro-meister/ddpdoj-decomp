@@ -138,6 +138,9 @@ set_target_properties(ddpdoj_gallery PROPERTIES C_STANDARD 11 C_STANDARD_REQUIRE
 add_dependencies(ddpdoj_gallery stage_gallery_sjis)
 target_compile_definitions(ddpdoj_gallery PUBLIC DDPDOJ_PC)
 target_include_directories(ddpdoj_gallery PUBLIC ../include)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    target_link_libraries(ddpdoj_gallery PRIVATE m)
+endif()
 
 add_library(ddpdoj_gif STATIC gif_packet.c gif_stream.c)
 target_compile_features(ddpdoj_gif PRIVATE c_std_11)
@@ -220,6 +223,13 @@ else()
         install(FILES "$<TARGET_FILE:SDL3-shared>" DESTINATION DaiOuJou
                 RENAME "$<TARGET_SONAME_FILE_NAME:SDL3-shared>")
     endif()
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(CPACK_GENERATOR TGZ)
+    set(CPACK_PACKAGE_FILE_NAME "DaiOuJou-Linux-${CMAKE_SYSTEM_PROCESSOR}")
+    set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY OFF)
+    include(CPack)
 endif()
 
 if(BUILD_TESTING)

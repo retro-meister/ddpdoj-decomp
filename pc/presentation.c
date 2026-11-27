@@ -14,19 +14,32 @@ SDL_Renderer *pc_create_renderer(SDL_Window *window)
     if (!driver) {
         driver = "metal";
     }
+#elif defined(__linux__)
+    if (!driver) {
+        /* Both backends support Gallery's separate color and alpha blend operations. */
+        driver = "gpu,opengles2";
+    }
 #endif
 
     SDL_Renderer *renderer = SDL_CreateRenderer(window, driver);
     if (!renderer) {
         return NULL;
     }
+#if defined(_WIN32) || defined(__linux__)
+    SDL_GPUDevice *device = NULL;
+    if (SDL_strcmp(SDL_GetRendererName(renderer), "gpu") == 0) {
+        device = SDL_GetGPURendererDevice(renderer);
+#ifdef __linux__
+        interval = SDL_WindowSupportsGPUPresentMode(device, window, SDL_GPU_PRESENTMODE_MAILBOX) ? 0 : 1;
+#endif
+    }
+#endif
     if (!SDL_SetRenderVSync(renderer, interval)) {
         SDL_DestroyRenderer(renderer);
         return NULL;
     }
-#ifdef _WIN32
-    if (SDL_strcmp(SDL_GetRendererName(renderer), "gpu") == 0) {
-        SDL_GPUDevice *device = SDL_GetGPURendererDevice(renderer);
+#if defined(_WIN32) || defined(__linux__)
+    if (device && interval == 0) {
         /* SDL's GPU renderer prefers mailbox at interval zero. Request it
          * explicitly so a driver that cannot supply it reports the failure. */
         if (!SDL_SetGPUSwapchainParameters(device, window, SDL_GPU_SWAPCHAINCOMPOSITION_SDR,
