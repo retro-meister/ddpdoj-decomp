@@ -12,9 +12,7 @@ void p1_laser_front_hyper(void);
 void p2_laser_front_hyper(void);
 void laser_front_update();
 void laser_muzzle_update();
-#ifndef DDPDOJ_PC
 void laser_muzzle_update_strong();
-#endif
 void p1_laser_ship_glow_hyper(void);
 void p2_laser_ship_glow_hyper(void);
 void laser_ship_glow_update(void);

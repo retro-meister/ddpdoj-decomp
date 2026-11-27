@@ -879,14 +879,12 @@ extern u16 g_pad_vib_saved_timer_p2;
 extern u16 g_pad_vib_saved_timer_p1;
 
 void vibration_suspend(void) {
-#ifndef DDPDOJ_PC
     extern u16 g_pad_vib_power_p2;
     extern u16 g_pad_vib_power_p1;
     extern u16 g_pad_vib_timer_p2;
     extern u16 g_pad_vib_timer_p1;
     extern u8 g_pad_vib_state_p2;
     extern u8 g_pad_vib_state_p1;
-#endif
     g_pad_vib_saved_power_p1 = 0;
     g_pad_vib_saved_timer_p1 = 0;
     g_pad_vib_saved_power_p2 = 0;

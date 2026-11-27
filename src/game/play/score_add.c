@@ -55,9 +55,7 @@ void bcd_word_increment(void) {
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern s32 g_p1_score_pending;
-#ifdef DDPDOJ_PC
 extern s32 g_p2_score_pending;
-#endif
 extern u8 g_p2_extend_table;
 extern u8 g_boss_present_b1;
 extern u16 g_bomb_entities[];
@@ -2254,9 +2252,7 @@ void score_panel_intro_begin(void) {
 }
 
 void hud_p1_caption_clear(void) {
-#ifndef DDPDOJ_PC
     void deferred_text_clear(void);
-#endif
     reg_d0.h[0] = 0xD4;
     reg_d2.sh[0] = 7;
     reg_d3.sh[0] = 7;
@@ -2265,9 +2261,7 @@ void hud_p1_caption_clear(void) {
 }
 
 void hud_p2_caption_clear(void) {
-#ifndef DDPDOJ_PC
     void deferred_text_clear(void);
-#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
     reg_d2.sh[0] = 7;
@@ -2290,9 +2284,7 @@ extern Reg32 reg_d0;
 extern Reg32 reg_d1;
 
 void hud_p1_caption_put(void) {
-#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
-#endif
     reg_d0.h[0] = 0xD4;
     reg_d2.sh[0] = 7;
     reg_d3.sh[0] = 1;
@@ -2313,9 +2305,7 @@ void hud_p2_caption_refresh(void) {
 }
 
 void hud_p2_caption_put(void) {
-#ifndef DDPDOJ_PC
     extern void deferred_text_put(void);
-#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1A00;
     reg_d2.sh[0] = 7;
@@ -2326,9 +2316,7 @@ void hud_p2_caption_put(void) {
 
 void hud_p1_caption_clear_shifted(void)
 {
-#ifndef DDPDOJ_PC
     extern void deferred_text_clear(void);
-#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0;
     reg_d2.h[0] = 7;

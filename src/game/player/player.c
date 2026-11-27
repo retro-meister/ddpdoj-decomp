@@ -30,9 +30,7 @@ void player_shot_fire_volley_b(void);
 void player_roll_recenter(void);
 void player_draw(void);
 void player_draw_plain(void);
-#ifndef DDPDOJ_PC
 void player_draw_entering();
-#endif
 
 
 void player_option_delay_clear(void) {
@@ -1152,10 +1150,8 @@ extern u16 D_006E5C0E[];
 extern u16 D_006E5C10[];
 
 void player_spawn_power_setup(void) {
-#ifndef DDPDOJ_PC
     void p1_maximum_level_show(void);
     void p2_maximum_level_show(void);
-#endif
     u8 *sa0;
     u8 *sa1;
     u8 *sa2;
@@ -3091,9 +3087,7 @@ void player_draw_plain(void) {
 void sprite_draw_with_players_keep(void);
 
 void player_draw_entering() {
-#ifndef DDPDOJ_PC
     void entity_draw_with_players(void);
-#endif
     if (PLAYER(reg_a6)->flags.b[1] & 4) return;
     if (PLAYER(reg_a6)->input.h != 0) {
         PLAYER(reg_a6)->input.h -= 1;

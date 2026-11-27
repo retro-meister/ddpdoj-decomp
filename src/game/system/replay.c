@@ -563,9 +563,7 @@ extern u8 D_0026B5F0[];
 extern s8 g_result_menu_step;
 
 void replay_result_menu(void) {
-#ifndef DDPDOJ_PC
     extern void game_screen_teardown(void);
-#endif
     s32 step;
     s32 done;
     u8 *save_a0;
@@ -810,12 +808,10 @@ extern u16 D_006C8E5C[];
 #endif
 
 void replay_playback_begin(void) {
-#ifndef DDPDOJ_PC
     extern void text_layer_clear(void);
     extern void stage_doors_clear(void);
     extern void text_palette_load(void);
     extern void replay_header_save(void);
-#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -1211,14 +1207,12 @@ extern u8 g_simulation_boss_start;
 extern u8 g_start_rule_rank;
 
 void replay_run_start(void) {
-#ifndef DDPDOJ_PC
     extern void enemies_stop(void);
     extern void enemies_resume(void);
     extern void stage_doors_open_request(void);
     extern void stage_doors_open_requested_check(void);
     extern void stage_doors_update(void);
     extern void music_play_bgm2(void);
-#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;

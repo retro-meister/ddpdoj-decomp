@@ -488,12 +488,10 @@ void pickup_collect_score_item() {
 
 
 void score_pickup_kind0(void) {
-#ifndef DDPDOJ_PC
     void pickup_draw_alternating(void);
     void bullet_release(void);
     void pickup_accelerate(void);
     void pickup_spin_frames_0(void);
-#endif
     if ((u16)(reg_d1.h[0] &= 0x1800) != 0) {
         pickup_collect_score_item();
         return;
@@ -1425,9 +1423,7 @@ extern u8 D_00269708[];
 #endif
 
 void pickup_collected_begin(void) {
-#ifndef DDPDOJ_PC
     void velocity_from_direction(void);
-#endif
     reg_d0.h[1] = ENTITY(reg_a6)->hit_y_plus.h;
     reg_d0.h[0] = ENTITY(reg_a6)->hit_y_minus.h;
 #ifdef DDPDOJ_PC
@@ -1612,9 +1608,7 @@ extern u16 g_loop;
 extern u16 g_stage;
 
 void pickup_draw_value_large(void) {
-#ifndef DDPDOJ_PC
     void sprite_draw_with_special_items(void);
-#endif
     u32 sd6;
     u32 sd7;
 
@@ -1717,9 +1711,7 @@ void bullet_slot_reset(void) {
 
 extern u8 g_bullets[];
 
-#ifdef DDPDOJ_PC
 extern u8 *D_00299770[];
-#endif
 
 void bullets_clear(void) {
 #ifdef DDPDOJ_PC

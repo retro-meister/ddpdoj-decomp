@@ -516,10 +516,8 @@ extern u16 death_D_00254982[];
 extern void bullet_type_24_setup(void);
 #endif
 
-#ifdef DDPDOJ_PC
 void debris_frame_addresses_init(void);
 void spark_and_wreck_frame_addresses_init(void);
-#endif
 
 void checked_pointers_store(void) {
     extern void input_get_p1_held(void);

@@ -1,8 +1,6 @@
 #include "common.h"
-#ifndef DDPDOJ_PC
 s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 s32 sprintf(char *buf, const char *format, ...);
-#endif
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -575,9 +573,7 @@ void mc_operation_begin() {
     }
 }
 
-#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
-#endif
 extern s32 D_006C4AE8[];
 extern u8 g_mc_save_buf[];
 extern s32 D_006C5494[];
@@ -824,9 +820,7 @@ void mc_card_present_poll(s32 arg0) {
 extern u8 g_mc_message_variant;
 
 void mc_title_draw(void) {
-#ifndef DDPDOJ_PC
     void mc_message_draw(s32 x, char *text, s32 a, s32 b, s32 c, s32 d, s32 e);
-#endif
     if (g_mc_auto != 0) {
         mc_message_draw(0x64, g_mc_msg_title_auto[g_mc_operation], 0, 0x14, 0xE, (*(u16 *)&g_mc_message_alpha), 0x64);
     } else {
@@ -1926,9 +1920,7 @@ void mc_task_write_game(void) {
 }
 
 extern u8 g_mc_replay_icon_file[];
-#ifndef DDPDOJ_PC
 extern u8 g_replay_file_loaded[];
-#endif
 void mc_task_write_replay(void) {
     s32 sceMcOpen(s32 arg0, s32 arg1, char *arg2, s32 arg3);
     s32 sceMcClose(s32 arg0);
@@ -4637,18 +4629,14 @@ void mc_load_ask_message_draw(s32 index) {
 
 
 void mc_load_done_message_draw(void) {
-#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
-#endif
     mc_message_draw(0xC8, g_mc_msg_load_done, 0, 0x14, 0xE, (*(u16 *)&g_mc_message_alpha), 0x64);
 }
 
 
 
 void mc_load_failed_message_draw(void) {
-#ifndef DDPDOJ_PC
     void mc_message_draw(s32, char *, s32, s32, s32, s32, s32);
-#endif
     mc_message_draw(0xC8, g_mc_msg_load_failed, 0, 0x14, 0xE, (*(u16 *)&g_mc_message_alpha), 0x64);
 }
 

@@ -177,9 +177,7 @@ next_1:
 extern u8 g_explosions[];
 
 
-#ifdef DDPDOJ_PC
 extern u8 explosion_spawn_buffer[64];
-#endif
 
 void explosions_clear(void) {
 #ifdef DDPDOJ_PC

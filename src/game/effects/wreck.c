@@ -11,9 +11,7 @@
 
 extern u16 D_0026ED10[];
 extern u16 D_0028DC68[];
-#ifdef DDPDOJ_PC
 extern u16 D_0028DC6C[];
-#endif
 
 extern u8 D_00269920[];
 
@@ -717,9 +715,7 @@ block_3:
 
 
 
-#ifdef DDPDOJ_PC
 extern u16 g_wreck_count[8];
-#endif
 
 void wrecks_clear(void) {
 #ifdef DDPDOJ_PC
