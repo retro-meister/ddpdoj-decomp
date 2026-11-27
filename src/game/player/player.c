@@ -794,7 +794,7 @@ extern u16 D_006E5BFC[];
 extern u16 D_006E5C12[];
 extern u16 D_006E5C14[];
 
-#ifdef DEATH_LABEL
+#if defined(DEATH_LABEL) || defined(DDPDOJ_BONUS_FEATURES)
 extern u16 g_attract_demo;
 extern u16 D_0028E810;
 #endif
@@ -878,10 +878,10 @@ next_30:
         player_spawn_power_setup();
     }
     player_slot_request_bomb_display();
-#ifdef DEATH_LABEL
-    if (g_attract_demo != 0) {
+#if defined(DEATH_LABEL) || defined(DDPDOJ_BONUS_FEATURES)
+    if (GAME_RULE(MAIN_OR_DEATH_LABEL(0, g_attract_demo), g_attract_demo)) {
         reg_d1.w = 0;
-        reg_d1.h[0] = D_0028E810;
+        reg_d1.h[0] = GAME_RULE(D_0028E810, black_label_demo_power());
         PLAYER(reg_a6)->shot_power.h = reg_d1.h[0];
         PLAYER(reg_a6)->laser_power.h = reg_d1.h[0];
         reg_d0.h[0] = PLAYER(reg_a6)->power_style.h;
@@ -904,6 +904,9 @@ next_30:
         reg_tmp.w += reg_d1.w;
         *(u16 *)(reg_a4 + 4) = reg_tmp.h[1];
         *(u16 *)(reg_a4 + 6) = reg_tmp.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+        for (i = 0; i < 5; ++i) p1_hyper_item_take();
+#endif
     }
 #endif
     if (g_game_mode != 2) goto next_40;

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -241,6 +242,41 @@ extern u8 D_0028DF08;
 extern u16 g_attract_demo;
 extern s8 g_menu_pad;
 
+#ifdef DDPDOJ_BONUS_FEATURES
+#include "black_label_demo_inputs.h"
+
+extern u16 g_attract_demo_stage;
+static const struct {
+    u16 ship, style, power;
+    const u8 (*inputs)[2];
+    unsigned count;
+} demo_ships[] = {
+    { 2, 2, 0, stage_1_demo_inputs, sizeof(stage_1_demo_inputs) / sizeof(stage_1_demo_inputs[0]) },
+    { 0, 4, 4, stage_2_demo_inputs, sizeof(stage_2_demo_inputs) / sizeof(stage_2_demo_inputs[0]) },
+    { 2, 6, 8, stage_3_demo_inputs, sizeof(stage_3_demo_inputs) / sizeof(stage_3_demo_inputs[0]) },
+};
+static unsigned demo_input_index, demo_input_ticks, demo_wait;
+static u8 demo_buttons;
+
+u16 black_label_demo_power(void) {
+    return demo_ships[g_attract_demo_stage].power;
+}
+
+u8 black_label_demo_input(void) {
+    const u8 (*inputs)[2] = demo_ships[g_attract_demo_stage].inputs;
+    if (demo_wait) return 0;
+    if (demo_input_ticks > 1) {
+        --demo_input_ticks;
+    } else if (demo_input_index < demo_ships[g_attract_demo_stage].count) {
+        demo_input_ticks = inputs[demo_input_index][0];
+        demo_buttons = inputs[demo_input_index++][1];
+    } else {
+        demo_buttons = 0;
+    }
+    return demo_buttons;
+}
+#endif
+
 void attract_demo_begin(void) {
     D_0028DF08 = 0;
     D_0028DF00 = 0x960;
@@ -248,6 +284,15 @@ void attract_demo_begin(void) {
     g_attract_demo = 1;
     D_0028DEF8 = 1;
     g_menu_pad = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        D_0028DF08 = 4;
+        demo_input_index = 0;
+        demo_input_ticks = 0;
+        demo_buttons = 0;
+        demo_wait = 16;
+    }
+#endif
 }
 #endif
 
@@ -352,10 +397,59 @@ extern u8 g_replay_file_id_7[];
 extern u8 g_replay_snapshot[];
 #endif
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static void black_label_demo_step(void) {
+    void stage_doors_clear(void);
+    void stage_doors_update(void);
+    void stage_doors_open_request(void);
+    void ship_select_apply(void);
+    void frame_counters_reset(void);
+    void bg_scroll_reset(void);
+    void bg_layer_clear(void);
+    void layers_reset(void);
+    extern u16 g_game_frame;
+
+    if (demo_wait == 16) {
+        reg_d0.h[0] = TASK_GAME;
+        task_start();
+        *(u16 *)(reg_a0 + 4) = g_attract_demo_stage;
+        stage_doors_clear();
+        reg_a0 = (u8 *)attract_picture_palette;
+        reg_d0.h[0] = 12;
+        text_palette_load();
+    }
+    stage_doors_update();
+    attract_picture_draw();
+    if (!(g_game_frame & 1)) g_attract_picture_frame = (g_attract_picture_frame + 4) & 15;
+    if (demo_wait && --demo_wait == 0) {
+        frame_counters_reset();
+        demo_buttons = demo_ships[g_attract_demo_stage].inputs[0][1];
+        demo_input_ticks = demo_ships[g_attract_demo_stage].inputs[0][0];
+        demo_input_index = 1;
+        stage_doors_open_request();
+        reg_d0.w = demo_ships[g_attract_demo_stage].ship;
+        reg_d1.w = demo_ships[g_attract_demo_stage].style;
+        reg_d2.h[0] = reg_d3.h[0] = 0xFF;
+        reg_d4.w = 1;
+        ship_select_apply();
+    }
+    if (!demo_wait && --D_0028DF00 == 0) {
+        bg_scroll_reset();
+        bg_layer_clear();
+        layers_reset();
+        g_attract_demo_stage = (g_attract_demo_stage + 1) % 3;
+        g_attract_demo = 0;
+        cond_flag = 0;
+    } else {
+        cond_flag = 1;
+    }
+}
+#endif
+
 void attract_demo_start(void) {
-    s32 layers_reset();
-    s32 bg_scroll_reset();
-    s32 bg_layer_clear();
+    void layers_reset(void);
+    void bg_scroll_reset(void);
+    void bg_layer_clear(void);
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -386,6 +480,12 @@ void attract_demo_start(void) {
     save_a3 = reg_a3;
     save_a4 = reg_a4;
     save_a5 = reg_a5;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        black_label_demo_step();
+        goto restore_registers;
+    }
+#endif
     temp_a1 = D_0028DF08;
     cond_flag = 1;
     attract_demo_start_state += 1;
@@ -452,6 +552,9 @@ void attract_demo_start(void) {
             g_attract_picture_frame &= 0xF;
         }
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+restore_registers:
+#endif
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

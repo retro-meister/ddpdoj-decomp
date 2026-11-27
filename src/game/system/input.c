@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 
 /*
  * The players' controls. Each word has one player's stick and buttons, a set bit meaning held.
@@ -27,6 +28,7 @@ s32 replay_filter_input();
 s32 scripted_input_apply();
 extern s8 g_arcade_input_port[];
 extern u8 g_paused;
+extern u16 g_attract_demo;
 
 void input_read(void) {
     u32 port;
@@ -56,8 +58,14 @@ void input_read(void) {
     reg_d1.h[0] = ~reg_d1.sh[0];
 #ifdef DEATH_LABEL
     scripted_input_apply();
+#elif defined(DDPDOJ_BONUS_FEATURES)
+    if (g_black_label_active && g_attract_demo) {
+        reg_d0.b[0] = black_label_demo_input();
+    } else
 #endif
-    replay_filter_input();
+    {
+        replay_filter_input();
+    }
     g_input_p1_held = reg_d0.h[0];
     g_input_p2_held = reg_d1.h[0];
 }

@@ -371,6 +371,9 @@ if(BUILD_TESTING)
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label)
             add_test(NAME black_label_default_rounds COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label-default)
+            add_test(NAME black_label_attract COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-attract" --black-label-demos)
+            set_tests_properties(black_label_attract PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 360)
             set_tests_properties(black_label_card_save_load black_label_gameplay black_label_default_rounds PROPERTIES
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
         endif()

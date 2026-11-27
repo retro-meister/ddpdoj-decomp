@@ -2,6 +2,7 @@
 #include "black_label.h"
 #ifdef DDPDOJ_BONUS_FEATURES
 #include "explosion.h"
+#include "player.h"
 #endif
 #include "game_loop.h"
 #include "gs.h"
@@ -55,6 +56,44 @@ static void require(bool condition, const char *message)
 }
 
 #ifdef DDPDOJ_BONUS_FEATURES
+static bool player_active(void);
+
+static void check_attract_demos(SDL_Renderer *renderer)
+{
+    extern u16 g_attract_demo, g_attract_demo_stage, g_stage, g_p1_hyper_items, g_input_p1_held;
+    extern u32 g_p1_score;
+    unsigned completed = 0, frames = 0, fired = 0;
+    bool loaded = false, saw_loadout = false;
+    for (unsigned field = 0; field < 22000 && completed < 3; ++field) {
+        SDL_PumpEvents();
+        pc_pad_capture();
+        if (loaded) game_run_frame();
+        else loaded = game_boot_frame();
+        require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render the attract sequence");
+        if (g_attract_demo) {
+            ++frames;
+            require(g_attract_demo_stage == completed, "Cycle through the three attract stages in order");
+            if (g_stage == completed && player_active()) {
+                if (g_p1_hyper_items == 5) {
+                    require(PLAYER(g_player1)->ship_type.h == (completed == 1 ? 0 : 2), "Select the recorded ship");
+                    require(PLAYER(g_player1)->power_style.h == (completed + 1) * 2, "Select the recorded doll");
+                    saw_loadout = true;
+                }
+                if (g_input_p1_held & 0x10) ++fired;
+            }
+        } else if (frames) {
+            SDL_Log("Attract stage %u played %u frames, score %08x", completed + 1, frames, g_p1_score);
+            require(frames == 2414, "Play the full recording");
+            require(saw_loadout, "Start with five hypers");
+            require(fired > 100, "Apply the recorded fire button");
+            ++completed;
+            frames = fired = 0;
+            saw_loadout = false;
+        }
+    }
+    require(completed == 3 && g_attract_demo_stage == 0, "Return to the first recording after stage three");
+}
+
 static void check_boss_death_effect(void)
 {
     extern u8 g_explosions[];
@@ -196,8 +235,9 @@ int main(int argc, char **argv)
     extern u8 g_ship_select_state[];
     const bool hover_one_round = argc == 4 && strcmp(argv[3], "--black-label") == 0;
     const bool leave_default = argc == 4 && strcmp(argv[3], "--black-label-default") == 0;
+    const bool demos = argc == 4 && strcmp(argv[3], "--black-label-demos") == 0;
     unsigned departure_frames = 0;
-    g_black_label_active = hover_one_round || leave_default;
+    g_black_label_active = hover_one_round || leave_default || demos;
 #endif
     require(argc == 3 || replay || two_player || GAME_RULE(0, 1), "Expected the retail ISO, a test-only memory card directory and optional replay mode");
     s32 replay_inputs = 0;
@@ -211,7 +251,7 @@ int main(int argc, char **argv)
 
     SDL_Window *window = SDL_CreateWindow("DaiOuJou gameplay test", 640, 480, SDL_WINDOW_HIDDEN);
     require(window != NULL, "Create test window");
-    SDL_Renderer *renderer = replay ? SDL_CreateRenderer(window, NULL) : pc_create_renderer(window);
+    SDL_Renderer *renderer = (replay || GAME_RULE(0, demos)) ? SDL_CreateRenderer(window, NULL) : pc_create_renderer(window);
     require(renderer != NULL, "Create test renderer");
     require(pc_cdvd_mount(argv[1]) && pc_bgm_open(argv[1]) && pc_sfx_load(argv[1]), "Load retail assets");
     require(pc_mc_open_storage(argv[2]), "Open test memory card");
@@ -221,6 +261,12 @@ int main(int argc, char **argv)
 
     pc_gs_bind_game(renderer);
     game_boot_begin();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (demos) {
+        check_attract_demos(renderer);
+        goto cleanup;
+    }
+#endif
     bool loaded = false, confirmed = false, bomb_finished = false;
     SDL_GamepadButton pressed = SDL_GAMEPAD_BUTTON_INVALID;
     unsigned played = 0, inputs = 0, shot_frames = 0, laser_frames = 0, bomb_frames = 0;
@@ -331,6 +377,9 @@ int main(int argc, char **argv)
         require(together > 100 && g_p2_score != 0, "Both ships play and player two scores");
         SDL_CloseJoystick(second);
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+cleanup:
+#endif
     pc_bgm_close();
     pc_mc_close_storage();
     pc_sfx_shutdown();

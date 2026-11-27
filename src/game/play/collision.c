@@ -332,6 +332,10 @@ loop_5:
 skip_17:
                 reg_a6 += 0x2A;
 loop_17:
+#ifdef DDPDOJ_PC
+                    /* The count is tested after each active slot. Stop at the last physical slot. */
+                    if (reg_a6 == g_pickups + sizeof(g_pickups)) goto pickups_checked;
+#endif
                     reg_tmp.h[0] = ENTITY(reg_a6)->flags.h;
                     reg_a6 += 2;
                     if ((s16) reg_tmp.h[0] >= 0) goto skip_17;
@@ -359,6 +363,9 @@ next_17:
                     tmp_dec = reg_d6.h[0] - 1; reg_d6.h[0] = tmp_dec;
                     if (((s64) ((s64) (tmp_dec & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_17;
             }
+#ifdef DDPDOJ_PC
+pickups_checked:
+#endif
             reg_a6 = (u8 *)g_enemy_entities;
             reg_d6.h[0] = g_enemy_count;
             reg_d6.h[0] += g_enemy_count_second;

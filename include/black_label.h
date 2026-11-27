@@ -5,6 +5,8 @@
 extern int g_black_label_active;
 extern unsigned short g_black_label_single_loop;
 extern unsigned short g_loop2_starting_lives[2];
+unsigned short black_label_demo_power(void);
+unsigned char black_label_demo_input(void);
 void black_label_card_init(void);
 void black_label_menu_init(void);
 void black_label_title_init(void);

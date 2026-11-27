@@ -274,7 +274,10 @@ void attract_step_settings_notice_timed(void) {
         disc_notice_begin();
     }
     if (reg_a5[2] == 1) {
-        g_stage = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+        extern u16 g_attract_demo_stage;
+#endif
+        g_stage = GAME_RULE(0, g_attract_demo_stage);
         stage_load_step();
         if (g_loaded_stage == g_stage) {
             reg_a5[2] = 2U;
