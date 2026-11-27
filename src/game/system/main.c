@@ -295,11 +295,8 @@ loop_15:
             D_0028E249[0] = D_0028E9A5;
         }
     } else {
-#ifdef DDPDOJ_BONUS_FEATURES
-        if (g_black_label_active) frame_counters_advance();
-#endif
         task_run_all();
-        if (GAME_RULE(1, 0)) frame_counters_advance();
+        frame_counters_advance();
         fades_update();
         sprite_lists_build();
         if (g_stage_load_finished != 0) {
