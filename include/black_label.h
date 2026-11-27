@@ -13,6 +13,7 @@ void black_label_title_init(void);
 void black_label_boss_burst(unsigned short y, unsigned short x);
 void black_label_shake_start(void);
 void black_label_shake_step(void);
+void black_label_shake_stop(void);
 extern short g_boss_shake_y, g_boss_shake_x;
 extern short g_slowdown_boss_allowed;
 void black_label_round_select(int departure_finished);
