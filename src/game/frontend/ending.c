@@ -273,6 +273,12 @@ void ending_text_lines_clear(void) {
 
 #ifndef DEATH_LABEL
 
+#ifdef DDPDOJ_BONUS_FEATURES
+static u16 ending_glyph_priority[200];
+void sprite_draw_layer2_keep(void);
+void sprite_draw_layer3_keep(void);
+#endif
+
 void ending_text_lines_draw(void) {
     reg_a3 = (u8 *)g_spare_entities;
     reg_d7.h[0] = 0xC7;
@@ -284,6 +290,12 @@ void ending_text_lines_draw(void) {
             reg_d1.h[0] = *(u16 *)(reg_a3 + 6);
             reg_d3.h[0] = 0x410;
             reg_d4.h[0] = 0;
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active) {
+                if (ending_glyph_priority[reg_d7.h[0]]) sprite_draw_layer2_keep();
+                else sprite_draw_layer3_keep();
+            } else
+#endif
             sprite_draw_keep();
         }
         reg_a3 += 8;
@@ -305,6 +317,9 @@ loop_1:
     *(u16 *) (reg_a3 + 2) = reg_d0.h[0];
     *(u16 *) (reg_a3 + 4) = reg_d1.h[1];
     *(u16 *) (reg_a3 + 6) = reg_d1.h[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) ending_glyph_priority[reg_d7.h[0]] = reg_d2.h[0];
+#endif
     goto block_rts;
 next_1:
     reg_a3 += 8;
@@ -344,6 +359,9 @@ next_1:
     reg_a1 += reg_d0.h[0];
     reg_d0.w = *(u32 *) reg_a1;
     reg_d1.w = D_00295E28[0];
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) reg_d2.w = 0;
+#endif
     ending_text_lines_place();
     cond_flag = 1;
     ((u16 *) D_00295E28)[0] += 0x400;
@@ -358,6 +376,15 @@ extern u32 D_00295E24[];
 void ending_text_script_event(void) {
     if (reg_d0.h[0] == 0x8000) {
         ((u16 *)D_00295E1E)[0] = *(u16 *)reg_a2;
+#ifdef DDPDOJ_BONUS_FEATURES
+        {
+            extern u8 *ending_mode_doll_a_table_4[];
+            if (g_black_label_active && reg_a0 == ending_mode_doll_a_table_4[0]) {
+                u16 delay = *(u16 *)reg_a2;
+                ((u16 *)D_00295E1E)[0] = delay == 0x4004 ? 0x4002 : (delay & 0xfefe) >> 1;
+            }
+        }
+#endif
         reg_a2 += 2;
         D_00295E1C[0] += 4;
         ending_text_script_step();
@@ -537,7 +564,7 @@ void ending_task(void) {
         reg_d3.h[0] = 0x1CE0;
         reg_d4.h[0] = 1;
         reg_d4.h[0] += D_00295E40[0];
-        sprite_draw_keep();
+        GAME_RULE((void)sprite_draw_keep(), sprite_draw_layer3_keep());
         D_00295E3F[0] -= 1;
         if (0 > (s8) D_00295E3F[0]) {
             D_00295E3F[0] = D_00295E3E[0];

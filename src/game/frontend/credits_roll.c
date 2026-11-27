@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "enemy.h"
 #include "credits_roll.h"
 
@@ -36,6 +37,56 @@ typedef struct {
 s16 g_ending_started __attribute__((aligned(4)));
 CreditsRoll g_credits_roll __attribute__((aligned(4)));
 
+#if defined(DDPDOJ_BONUS_FEATURES) && !defined(DEATH_LABEL)
+extern u8 g_credits_script[];
+static const struct {
+    u16 delay, x, small_font;
+    const char *text;
+} extra_credits[] = {
+    {0x1c0, 0x0100, 1, "   < BLACK LABEL STAFF >    "},
+    {0x100, 0x0c00, 1, "PLANNING"},
+    {0x040, 0x0e00, 1, "Tsuneki Ikeda"},
+    {0x100, 0x0c00, 1, "SYSTEM PROGRAM"},
+    {0x040, 0x0e00, 1, "Takashi Ichimura"},
+    {0x100, 0x0c00, 1, "TITLE ARRANGE"},
+    {0x040, 0x0e00, 1, "Akira Wakabayashi"},
+    {0x100, 0x0c00, 1, "SPECIAL ASSIST"},
+    {0x040, 0x0e00, 1, "Toshiaki Tomizawa"},
+    {0x028, 0x0e00, 1, "Mikio Yamaguchi"},
+    {0x028, 0x0e00, 1, "Satoshi Kouyama"},
+    {0x1c0, 0x0200, 0, " SALE BY AMI  "},
+};
+
+enum { shared_staff_lines = 31, extra_staff_lines = sizeof(extra_credits) / sizeof(extra_credits[0]) };
+static CreditScriptLine black_label_credits[shared_staff_lines + extra_staff_lines + 5];
+
+static void prepare_black_label_credits(void)
+{
+    const CreditScriptLine *original = SCRIPT_LINE(g_credits_script);
+    CreditScriptLine *line = black_label_credits;
+    int i;
+    for (i = 0; i < shared_staff_lines; ++i, ++line, ++original) {
+        *line = *original;
+        switch (original->delay) {
+        case 0x10: line->delay = 0x50; break;
+        case 0x80: line->delay = 0x100; break;
+        case 0x30: line->delay = 0x40; break;
+        case 0x20: line->delay = 0x28; break;
+        }
+    }
+    for (i = 0; i < extra_staff_lines; ++i, ++line) {
+        line->delay = extra_credits[i].delay;
+        line->x = extra_credits[i].x;
+        line->small_font = extra_credits[i].small_font;
+        STORE_ARCADE_ADDRESS_DIRECT(line->text, extra_credits[i].text);
+    }
+    for (i = 0; i < 4; ++i, ++line, ++original) {
+        *line = *original;
+        if (original->delay == 0x30) line->delay = 0x40;
+    }
+    line->delay = 0xffff;
+}
+#endif
 
 void credits_roll_begin(void)
 {
@@ -47,6 +98,9 @@ void credits_roll_begin(void)
         reg_a6 += sizeof(CreditLine);
     } while ((s16)(--reg_d7.h[0]) >= 0);
 
+#if defined(DDPDOJ_BONUS_FEATURES) && !defined(DEATH_LABEL)
+    if (g_black_label_active) prepare_black_label_credits();
+#endif
     g_credits_roll.script_offset = 0;
     g_credits_roll.scroll_speed = 0x20;
     g_credits_roll.wait = 0;
@@ -61,7 +115,7 @@ extern u8 g_credits_small_font[];
 void credits_roll_update(void) {
     u32 tmp;
 
-    reg_a4 = (u8 *)g_credits_script;
+    reg_a4 = GAME_RULE((u8 *)g_credits_script, (u8 *)black_label_credits);
     reg_a4 += g_credits_roll.script_offset;
     reg_d0.h[0] = SCRIPT_LINE(reg_a4)->delay;
     if ((s16) reg_d0.h[0] == -1) goto move_lines;
