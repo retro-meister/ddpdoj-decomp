@@ -103,9 +103,15 @@ typedef struct {
     u32 final_score;
 } RetailReplay;
 
-/* Each final score is also the starting score in the following disc replay. */
-static const RetailReplay stage_three = {2, 13690, 0x16208329};
-static const RetailReplay stage_five = {4, 19759, 0x60589826};
+/* Slots 0–8 finish at the next recording's starting score. Slot 9 is
+ * the final score observed when the retail executable finishes playback. */
+static const RetailReplay super_replays[] = {
+    {0,  8887, 0x03185063}, {1, 10150, 0x10766185},
+    {2, 13690, 0x16208329}, {3, 16260, 0x22076753},
+    {4, 19759, 0x60589826}, {5,  7390, 0x65051637},
+    {6, 10166, 0x69698886}, {7, 13706, 0x75634202},
+    {8, 15755, 0x80419415}, {9, 26612, 0x00439819},
+};
 
 static SDL_GamepadButton replay_menu_button(bool *confirmed, int slot)
 {
@@ -130,8 +136,10 @@ int main(int argc, char **argv)
 #ifndef DEATH_LABEL
     const RetailReplay *replay = NULL;
     if (argc >= 4 && strcmp(argv[3], "--super-replay") == 0) {
-        if (argc == 4 || (argc == 5 && strcmp(argv[4], "2") == 0)) replay = &stage_three;
-        if (argc == 5 && strcmp(argv[4], "4") == 0) replay = &stage_five;
+        if (argc == 4) replay = &super_replays[2];
+        if (argc == 5 && strlen(argv[4]) == 1 && argv[4][0] >= '0' && argv[4][0] <= '9') {
+            replay = &super_replays[argv[4][0] - '0'];
+        }
     }
     require(argc == 3 || replay, "Expected the retail ISO, a test-only memory card directory and optional replay mode");
     s32 replay_inputs = 0;
@@ -232,7 +240,7 @@ int main(int argc, char **argv)
     if (replay) {
         SDL_Log("Super Replay %02d consumed %d inputs and finished with score %x", replay->slot, replay_inputs, g_p1_score);
         require(replay_finished && replay_inputs == replay->inputs, "Finish the retail replay");
-        require(g_p1_score == replay->final_score, "Match the starting score of the next retail stage");
+        require(g_p1_score == replay->final_score, "Match the retail final score");
     } else
 #endif
     {
