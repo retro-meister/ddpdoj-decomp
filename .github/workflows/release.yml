@@ -49,13 +49,13 @@ jobs:
             libwayland-dev wayland-protocols libdecor-0-dev libudev-dev libvulkan-dev
           curl -fsSL --retry 3 -o appimagetool https://github.com/AppImage/appimagetool/releases/download/1.9.1/appimagetool-x86_64.AppImage
           curl -fsSL --retry 3 -o runtime https://github.com/AppImage/type2-runtime/releases/download/20251108/runtime-x86_64
-          echo 'a6d71e2b6cd66f8e8d16c37ad164658985e0cf5fcaa950c90a482890cb9cd660  appimagetool' | sha256sum -c -
+          echo 'ed4ce84f0d9caff66f50bcca6ff6f35aae54ce8135408b3fa33abfc3cb384eb0  appimagetool' | sha256sum -c -
           echo '2fca8b443c92510f1483a883f60061ad09b46b978b2631c807cd873a47ec260d  runtime' | sha256sum -c -
           chmod +x appimagetool
       - name: Build and install
         run: |
           set -eu
-          cmake -S pc -B build/ci -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_STANDARD=11 -DBUILD_TESTING=OFF
+          cmake -S pc -B build/ci -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_STANDARD=11 -DBUILD_TESTING=OFF -DDDPDOJ_BONUS_FEATURES=ON
           cmake --build build/ci --parallel 4 --target ddpdoj_main ddpdoj_death ddpdoj_gallery_host
           cmake --install build/ci --prefix "$PWD/stage"
       - name: Package and test the download
@@ -91,6 +91,8 @@ jobs:
           TAG: ${{ github.ref_name }}
         run: |
           cat > "$RUNNER_TEMP/launch.txt" <<'NOTES'
+          First desktop pre-release with bonus features enabled, including Black Label.
+
           Download the file for your system. On first launch, select your retail DoDonPachi DaiOuJou PS2 ISO (SLPS-252.33).
           * Windows x64 — extract the whole ZIP, then open ddpdoj.exe.
           * macOS Apple Silicon — extract the ZIP, drag DaiOuJou.app to Applications, then open it. This build is ad-hoc signed and is not notarized.
@@ -100,5 +102,5 @@ jobs:
             test "$draft" = true
             gh release upload "$TAG" dist/* --clobber
           else
-            gh release create "$TAG" dist/* --verify-tag --draft --title "DaiOuJou $TAG" --notes-file "$RUNNER_TEMP/launch.txt"
+            gh release create "$TAG" dist/* --verify-tag --draft --prerelease --title "DaiOuJou $TAG" --notes-file "$RUNNER_TEMP/launch.txt"
           fi
