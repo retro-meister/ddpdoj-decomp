@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "fade.h"
 #include "entity.h"
 
@@ -36,6 +37,7 @@ extern u16 g_enemy_signal_9;
 extern u16 g_enemy_signal_8;
 extern u16 g_enemy_signal_7;
 extern u16 g_enemy_signal_6;
+extern u16 g_enemy_signal_5;
 extern u16 g_loop;
 extern s16 g_bullet_limit_raised_1[];
 extern s16 g_bullet_limit_raised_2[];
@@ -84,6 +86,7 @@ void stage4_boss_start(void) {
     reg_a0 = reg_a5;
     g_enemy_signal_8 = 0;
     g_enemy_signal_9 = 0;
+    if (GAME_RULE(0, 1)) g_enemy_signal_5 = 0;
     reg_a0 += 0x16;
     g_boss_hp = (u8 *)(reg_a0);
     stage4_boss_damage_none();

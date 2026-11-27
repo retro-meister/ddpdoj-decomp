@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "simulation.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
@@ -33,6 +34,7 @@ extern u16 g_enemy_signal_c;
 extern u16 g_enemy_signal_9;
 extern u16 g_enemy_signal_8;
 extern u16 g_enemy_signal_7;
+extern u16 g_enemy_signal_5;
 extern u16 g_damage_blink_counter;
 extern u16 g_bomb_entities[24];
 #ifdef DEATH_LABEL
@@ -277,6 +279,7 @@ second_form:
     boss_attack_stop_all();
     boss_phase_stop_all();
     bullet_cancel_on_boss_hit();
+    if (GAME_RULE(0, 1)) g_enemy_signal_5 = 1;
     reg_d0.w = 1;
     boss_phase_start();
     ENTITY(reg_a6)[2].misc.b.draw_layer = 1;
@@ -287,8 +290,13 @@ check_rage:
     if (!((s32)reg_tmp.w < 0xC400)) goto check_time;
     STAGE4_DAMAGE(reg_a6)->rage = 1;
     g_enemy_signal_c = 1;
-    reg_d0.w = 5;
-    boss_phase_stop();
+    if (GAME_RULE(0, 1)) {
+        boss_attack_stop_all();
+        boss_phase_stop_all();
+    } else {
+        reg_d0.w = 5;
+        boss_phase_stop();
+    }
     reg_d0.w = 6;
     boss_phase_start();
     stage4_boss_right_pod_blow_off();

@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "enemy_kinds.h"
@@ -1266,13 +1267,13 @@ void stage4_boss_fire_right_pod(void) {
             reg_d1.b[0] += 0x55;
             bullet_fire256();
         } else {
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             reg_d1.b[0] += 0x40;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             reg_d1.b[0] += 0x40;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             reg_d1.b[0] += 0x40;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
         }
         reg_d2.h[1] = ENTITY(reg_a6)[5].y.h;
         temp_a2 = ENTITY(reg_a6)[5].x.h;
@@ -1290,13 +1291,13 @@ void stage4_boss_fire_right_pod(void) {
             reg_d1.b[0] += 0x55;
             bullet_fire256();
         } else {
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             reg_d1.b[0] += 0x40;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             reg_d1.b[0] += 0x40;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
             reg_d1.b[0] += 0x40;
-            bullet_fire256_fixed();
+            GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
         }
         POD_SPRAY(reg_a4)->direction_a -= 4;
         POD_SPRAY(reg_a4)->direction_b += 4;
@@ -1733,33 +1734,33 @@ next_1:
 }
 
 void stage4_boss_fire_fixed_1(void) {
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
 }
 
 void stage4_boss_fire_fixed_2way(void) {
     reg_d1.b[0] -= 0xA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0x14;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
 }
 
 void stage4_boss_fire_fixed_3way(void) {
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xE;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] -= 0x1C;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
 }
 
 void stage4_boss_fire_fixed_4way(void) {
     reg_d1.b[0] -= 9;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] -= 0x12;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0x24;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0x12;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
 }
 
 
@@ -1859,52 +1860,52 @@ block_3:
 }
 
 void stage4_boss_fire_fixed_fan_a(void) {
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.h[0] = reg_d7.h[0];
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
 }
 
 void stage4_boss_fire_fixed_fan_b(void) {
     reg_d1.b[0] += 3;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 6;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.h[0] = reg_d7.h[0];
     reg_d1.b[0] += 0xFD;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
     reg_d1.b[0] += 0xFA;
-    bullet_fire256_fixed();
+    GAME_RULE(bullet_fire256_fixed, bullet_fire256_fast)();
 }
 
 

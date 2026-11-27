@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 #include "explosion.h"
 #include "enemy.h"
@@ -38,6 +39,7 @@ extern u8 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
 extern u8 g_no_enemy_bullets;
+extern u16 g_enemy_signal_5;
 
 void stage4_boss_missile(void) {
     u16 temp_a0;
@@ -51,6 +53,7 @@ void stage4_boss_missile(void) {
             ENTITY(reg_a6)->flags.b[1] &= reg_d0.b[0];
             ENTITY(reg_a6)->hp.sh = 0x7FFF;
         }
+        if (GAME_RULE(0, g_enemy_signal_5)) goto block_6;
         breakable_bullet_check();
         if (cond_flag == 0) {
             entity_check_bounds();
@@ -222,6 +225,7 @@ extern u16 g_side_scroll_step[];
 extern u16 *reg_a4_as_u16_p;
 
 void stage4_boss_cutter(void) {
+    if (GAME_RULE(0, g_enemy_signal_e == 2 && ENTITY(reg_a6)[1].attr.b.flip == 0xFF)) goto next_5;
     switch (g_enemy_signal_c) { case 0: goto next_10; }
     g_enemy_signal_8 = 0;
     g_enemy_signal_9 = 0;
