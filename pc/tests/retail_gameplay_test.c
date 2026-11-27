@@ -13,6 +13,7 @@
 #endif
 #include "game_loop.h"
 #include "gs.h"
+#include "gs_texture.h"
 #include "presentation.h"
 #include "memory_card.h"
 #include "pc_input.h"
@@ -248,6 +249,7 @@ static bool has_relocated_enemy(void)
 }
 
 typedef struct {
+    PcPlayerState expected[12];
     PcPlayerState players;
     PcCombatPools pools;
     PcTaskState tasks;
@@ -258,8 +260,7 @@ typedef struct {
 static void test_frame_continuation(SDL_Renderer *renderer, GameplaySnapshot *saved)
 {
     enum { frames = 12 };
-    PcPlayerState *expected = SDL_calloc(frames, sizeof(*expected));
-    require(expected != NULL, "Allocate expected frame sequence");
+    PcPlayerState *expected = saved->expected;
     PcPlayerState player;
     for (unsigned pass = 0; pass < 2; ++pass) {
         if (pass) {
@@ -287,7 +288,7 @@ static void test_frame_continuation(SDL_Renderer *renderer, GameplaySnapshot *sa
             }
         }
     }
-    SDL_free(expected);
+
 }
 
 int main(int argc, char **argv)
@@ -353,7 +354,12 @@ int main(int argc, char **argv)
             require(++boot_frames < MAX_FRAMES && pc_gs_ok() && SDL_RenderPresent(renderer),
                     "Boot the fresh process before resuming gameplay");
         }
-        require(saved && size == sizeof(*saved) + pc_frame_regions_size() && pc_combat_restore(&saved->pools) &&
+        size_t fixed = sizeof(*saved) + pc_frame_regions_size();
+        require(saved && size > fixed, "Read gameplay and texture sections");
+        SDL_IOStream *textures = SDL_IOFromConstMem((u8 *)saved + fixed, size - fixed);
+        require(textures && pc_gs_textures_load(textures) && SDL_CloseIO(textures),
+                "Restore the saved GS textures");
+        require(pc_combat_restore(&saved->pools) &&
                 pc_player_state_restore(&saved->players) && pc_tasks_restore(&saved->tasks) &&
                 pc_replay_frame_restore(&saved->replay) &&
                 pc_frame_regions_restore(saved->regions, pc_frame_regions_size()),
@@ -370,6 +376,18 @@ int main(int argc, char **argv)
             pc_pad_capture();
             game_run_frame();
             require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render after cold restore");
+            pc_player_state_capture(&restored);
+            if (memcmp(&restored, &saved->expected[i], sizeof(restored))) {
+                const u8 *wanted = (const u8 *)&saved->expected[i];
+                const u8 *actual = (const u8 *)&restored;
+                for (size_t j = 0; j < sizeof(restored); ++j) {
+                    if (actual[j] != wanted[j]) {
+                        SDL_Log("Cold frame %u offset %#zx expected %u got %u", i + 1, j, wanted[j], actual[j]);
+                        break;
+                    }
+                }
+                require(false, "Repeat the player and weapon trajectory after restart");
+            }
         }
         SDL_free(saved);
         require(SDL_RemovePath(load_pools), "Remove test slot");
@@ -445,9 +463,20 @@ int main(int argc, char **argv)
             pc_replay_frame_capture(&saved->replay);
             require(pc_frame_regions_capture(saved->regions, pc_frame_regions_size()),
                     "Capture stage flow and screen layers");
-            require(pc_state_slot_write(save_pools, pool_mode, 1, saved, size),
-                    "Write pools from live gameplay");
+            if (pressed != SDL_GAMEPAD_BUTTON_INVALID)
+                SDL_SetJoystickVirtualButton(joystick, pressed, false);
+            SDL_SetJoystickVirtualButton(joystick, SDL_GAMEPAD_BUTTON_WEST, false);
+            SDL_UpdateGamepads();
+            SDL_IOStream *textures = SDL_IOFromDynamicMem();
+            require(textures && pc_gs_textures_save(textures), "Capture the GS textures");
+            size_t texture_size = (size_t)SDL_GetIOSize(textures);
+            saved = SDL_realloc(saved, size + texture_size);
+            require(saved && SDL_SeekIO(textures, 0, SDL_IO_SEEK_SET) == 0 &&
+                    SDL_ReadIO(textures, (u8 *)saved + size, texture_size) == texture_size &&
+                    SDL_CloseIO(textures), "Append texture state to the slot");
             test_frame_continuation(renderer, saved);
+            require(pc_state_slot_write(save_pools, pool_mode, 1, saved, size + texture_size),
+                    "Write pools from live gameplay");
             SDL_free(saved);
             goto cleanup;
         }
