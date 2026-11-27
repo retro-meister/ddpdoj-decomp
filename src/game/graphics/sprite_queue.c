@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 
 void sprite_list_emit(void);
@@ -356,7 +357,7 @@ next_50:
             reg_d4.h[0] -= 1;
             if ((s16) reg_d4.h[0] < 0) {
                 reg_d4.w = 0x32;
-                reg_tmp.w = 0xFBFFFC00;
+                reg_tmp.w = GAME_RULE(0xFBFFFC00, 0xFC003800);
                 *(u16 *)reg_a0 = (u16) reg_tmp.h[1];
                 reg_a0 += 2;
                 *(u16 *)reg_a0 = (u16) reg_tmp.h[0];
@@ -370,12 +371,25 @@ next_50:
                 reg_d2.h[0] += 0xC;
                 reg_d4.h[0] -= 1;
             }
-            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
-            reg_a1 += 2;
-            reg_a0 += 2;
-            *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
-            reg_a1 += 2;
-            reg_a0 += 2;
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active) {
+                u32 pos = ((u32)*(u16 *)reg_a1 << 16) | *(u16 *)(reg_a1 + 2);
+                u32 shake = ((u32)(u16)g_boss_shake_y << 16) | (u16)g_boss_shake_x;
+                pos = (pos & 0xF800F800) | (((pos & 0x07FF3FFF) + shake) & 0x07FF3FFF);
+                *(u16 *)reg_a0 = pos >> 16;
+                *(u16 *)(reg_a0 + 2) = pos;
+                reg_a0 += 4;
+                reg_a1 += 4;
+            } else
+#endif
+            {
+                *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
+                reg_a1 += 2;
+                reg_a0 += 2;
+                *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
+                reg_a1 += 2;
+                reg_a0 += 2;
+            }
             *(u16 *)reg_a0 = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             reg_a0 += 2;

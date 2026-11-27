@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
@@ -198,6 +199,14 @@ next_s4rts:
     return;
 next_s3:
     if (FINAL(reg_a4)->step != 3) goto next_s2;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        if (--FINAL(reg_a4)->delay) return;
+        black_label_boss_burst(ENTITY(reg_a6)->y.h, ENTITY(reg_a6)->x.h);
+        goto next_20;
+    }
+#endif
+
     reg_d6.w = 0;
     reg_a1 = (u8 *) stage3_boss_blast_chain;
 loop_10:
@@ -235,11 +244,13 @@ next_s2:
     if (FINAL(reg_a4)->step != 2) goto next_s1;
     boss_flash_running();
     if (cond_flag != 0) goto next_s1;
+    if (GAME_RULE(0, 1)) stage3_boss_final_flash[7] = 3;
     reg_a0 = (u8 *) stage3_boss_final_flash;
     fade_in_and_release();
     boss_part_hide_all();
     FINAL(reg_a4)->rounds_left = 1;
     FINAL(reg_a4)->step = 3;
+    if (GAME_RULE(0, 1)) FINAL(reg_a4)->delay = 8;
     return;
 next_s1:
     if (FINAL(reg_a4)->step != 1) goto next_s0;

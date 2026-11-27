@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
@@ -546,6 +547,15 @@ void stage4_boss_final_explosion_step(arg1)
 
     var_a1 = arg1;
     if (EXPLODING(reg_a4)->step == 4) {
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) {
+            if (--EXPLODING(reg_a4)->wait) return;
+            sfx_explosion_boss();
+            black_label_boss_burst(ENTITY(reg_a6)->y.h, ENTITY(reg_a6)->x.h);
+            goto finish_boss_burst;
+        }
+#endif
+
         reg_d2.h[1] = ENTITY(reg_a6)[1].y.h;
         reg_d2.h[0] = ENTITY(reg_a6)[1].x.h;
         reg_a1 = (u8 *)(stage4_boss_final_blasts);
@@ -577,6 +587,9 @@ void stage4_boss_final_explosion_step(arg1)
         reg_d0.h[0] = 0;
         explosion_burst_small();
         sfx_explosion_boss();
+#ifdef DDPDOJ_BONUS_FEATURES
+finish_boss_burst:
+#endif
         var_a1 = 5;
         EXPLODING(reg_a4)->step = 5U;
         EXPLODING(reg_a4)->wait = 0x80U;
@@ -585,9 +598,11 @@ void stage4_boss_final_explosion_step(arg1)
     if (temp_a0_3 == 3) {
         boss_flash_running();
         if (cond_flag == 0) {
+            if (GAME_RULE(0, 1)) stage4_boss_flash_palettes[7] = 3;
             reg_a0 = (u8 *)stage4_boss_flash_palettes;
             fade_in_and_release();
             EXPLODING(reg_a4)->step = 4U;
+            if (GAME_RULE(0, 1)) EXPLODING(reg_a4)->wait = 8;
         }
     }
     temp_a0_4 = EXPLODING(reg_a4)->step;

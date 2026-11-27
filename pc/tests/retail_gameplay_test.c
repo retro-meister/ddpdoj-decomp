@@ -1,5 +1,8 @@
 #include "cdvd.h"
 #include "black_label.h"
+#ifdef DDPDOJ_BONUS_FEATURES
+#include "explosion.h"
+#endif
 #include "game_loop.h"
 #include "gs.h"
 #include "presentation.h"
@@ -50,6 +53,34 @@ static void require(bool condition, const char *message)
         exit(EXIT_FAILURE);
     }
 }
+
+#ifdef DDPDOJ_BONUS_FEATURES
+static void check_boss_death_effect(void)
+{
+    extern u8 g_explosions[];
+    extern u16 g_stage;
+    Explosion *blasts = EXPLOSION(g_explosions);
+    for (g_stage = 0; g_stage < 5; ++g_stage) {
+        black_label_boss_burst(0x6000, 0x7000);
+        for (unsigned i = 0; i < 39; ++i) {
+            require(blasts[i].kind.h & 0x8000, "Create each explosion in the boss death sequence");
+            require(blasts[i].y == 0x6000 && blasts[i].x == 0x7000, "Center the sequence on the boss");
+            require(blasts[i].follows_scroll == (g_stage == 4 ? 2 : 1), "Use the stage's scroll mode");
+            require(blasts[i].attr.b.flip == (i == 2 ? 0x40 : 0), "Flip the third explosion");
+        }
+        require(blasts[39].kind.h == 0, "Finish the burst after 39 explosions");
+        require(blasts[0].delay == 4 && blasts[38].delay == 6, "Schedule the first and last explosions");
+        require(g_slowdown_boss_allowed == 6, "Start boss slowdown with the burst");
+        for (unsigned frame = 0; frame < 42; ++frame) {
+            black_label_shake_step();
+            if (frame < 3) require(g_boss_shake_y == -24 && g_boss_shake_x == 0, "Start the shake vertically");
+        }
+        require(g_boss_shake_y == 1 && g_boss_shake_x == -1, "Reach the final shake offset");
+        black_label_shake_step();
+        require(!g_boss_shake_y && !g_boss_shake_x && !g_slowdown_boss_allowed, "Settle both layers and end the slowdown");
+    }
+}
+#endif
 
 static SDL_Joystick *attach_controller(void)
 {
@@ -291,6 +322,7 @@ int main(int argc, char **argv)
     }
 #ifdef DDPDOJ_BONUS_FEATURES
     if (g_black_label_active) {
+        check_boss_death_effect();
         require(departure_frames >= 120, "Run the departure animation during round selection");
         require(g_black_label_single_loop == hover_one_round, "Accept the highlighted round count without confirmation");
     }

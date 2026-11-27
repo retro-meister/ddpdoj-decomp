@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "layers.h"
 
 void layer_a_set_type(void);
@@ -112,6 +113,12 @@ void layer_a_apply_scroll(void) {
     reg_d1.w = g_layer_a_position[1];
     reg_d0.w = (u32) reg_d0.w >> 6;
     reg_d1.w = (u32) reg_d1.w >> 6;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        reg_d0.h[0] -= g_boss_shake_y;
+        reg_d1.h[0] -= g_boss_shake_x;
+    }
+#endif
     *(u16 *)reg_a2 = reg_d0.h[0];
     *(u16 *)reg_a1 = reg_d1.h[0];
 }

@@ -46,6 +46,43 @@ extern u16 g_stage_x4;
 extern u16 g_stage_x2;
 extern u16 g_bullets_alive[];
 extern s16 g_bullet_limit_raised_2[];
+
+#ifdef DDPDOJ_BONUS_FEATURES
+s16 g_boss_shake_y, g_boss_shake_x;
+static u16 shake_frame, burst_wait;
+
+void black_label_shake_start(void) {
+    shake_frame = 1;
+    burst_wait = 20;
+    g_boss_shake_y = g_boss_shake_x = 0;
+    g_slowdown_boss_allowed = 6;
+    g_slowdown_off = 0;
+}
+
+void black_label_shake_step(void) {
+    static const s8 offsets[][2] = {
+        { -24, 0 }, { -24, 0 }, { -24, 0 }, { -8, 16 }, { -8, 12 },
+        { -8, 8 }, { 16, 8 }, { 16, 8 }, { 12, 8 }, { 6, 4 },
+        { 6, 4 }, { 6, 4 }, { 6, -8 }, { 6, -8 }, { 6, -8 },
+        { 6, -4 }, { 6, -4 }, { 6, -4 }, { -9, 0 }, { -9, 0 },
+        { -3, 12 }, { -3, 12 }, { 6, 6 }, { 6, 6 }, { 3, 3 },
+        { 3, 3 }, { 3, -6 }, { 3, -6 }, { 3, -3 }, { 3, -3 },
+        { -6, 0 }, { -2, 8 }, { 4, 4 }, { 2, 2 }, { 2, -4 },
+        { 2, -2 }, { -3, 0 }, { -1, 4 }, { 2, 2 }, { 1, 1 },
+        { 1, -2 }, { 1, -1 }, { 0, 0 },
+    };
+    if (!shake_frame) return;
+    g_boss_shake_y = offsets[shake_frame - 1][0];
+    g_boss_shake_x = offsets[shake_frame - 1][1];
+    ++shake_frame;
+    if (!g_boss_shake_y) {
+        shake_frame = 0;
+        g_slowdown_boss_allowed = 0;
+        g_slowdown_off = 1;
+    }
+}
+#endif
+
 void slowdown_update(void) {
     u8 *tbl;
 
@@ -57,10 +94,23 @@ void slowdown_update(void) {
         (*(u16 *)&g_slowdown_forced_frames) -= 1;
         goto next_20;
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && burst_wait) {
+        --burst_wait;
+        g_slowdown_frame_state = burst_wait > 15 ? 3 : 2;
+        return;
+    }
+#endif
     if ((u16)g_slowdown_off != 0) return;
     reg_d0.h[0] = g_bullets_alive[0];
     if (g_enemy_count_second == 0) goto next_5;
     if ((u16)g_slowdown_boss_allowed == 0) return;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_slowdown_boss_allowed >= 5) {
+        g_slowdown_frame_state = g_slowdown_boss_allowed;
+        return;
+    }
+#endif
 next_5:
     reg_d0.h[0] += g_player_shot_count;
     reg_d0.h[0] += g_player_laser_count;
@@ -74,7 +124,7 @@ next_5:
 #endif
     if (GAME_RULE(g_loop == 0, g_loop == 0 && !(g_black_label_single_loop && g_true_last_boss > 1))) goto next_8;
     tbl = (u8 *)slowdown_load_thresholds_loop2;
-    if ((u16)g_slowdown_loop2_allowed == 0) return;
+    if (GAME_RULE((u16)g_slowdown_loop2_allowed == 0, 0)) return;
     reg_d1.h[0] += 0x28;
 next_8:
     reg_d2.h[0] = g_stage_x4;
@@ -132,6 +182,10 @@ extern s16 g_slowdown_boss_allowed;
 extern s16 g_slowdown_forced_frames;
 
 void slowdown_reset(void) {
+#ifdef DDPDOJ_BONUS_FEATURES
+    shake_frame = burst_wait = 0;
+    g_boss_shake_y = g_boss_shake_x = 0;
+#endif
     g_slowdown_forced_frames = 0;
     g_slowdown_budget = 0;
     g_slowdown_boss_allowed = 0;

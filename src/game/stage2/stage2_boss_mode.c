@@ -385,6 +385,14 @@ block_rts:
         return;
     } else {
         if (t7 == 3) {
+#ifdef DDPDOJ_BONUS_FEATURES
+            if (g_black_label_active) {
+                if (--FINAL_EXPLOSION(reg_a4)->delay) return;
+                black_label_boss_burst(ENTITY(reg_a6)->y.h, ENTITY(reg_a6)->x.h);
+                goto finish_boss_burst;
+            }
+#endif
+
             reg_d6.w = 0;
             reg_a1 = (u8 *)(stage2_boss_final_blasts);
 loop_6:
@@ -418,6 +426,9 @@ loop_6:
                 reg_a1 += 2;
                 goto loop_6;
             }
+#ifdef DDPDOJ_BONUS_FEATURES
+finish_boss_burst:
+#endif
             reg_d0.h[0] = 0x1E;
             explosion_spawn();
             EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -436,10 +447,12 @@ loop_6:
         if (t9 == 2) {
             boss_flash_running();
             if (cond_flag == 0) {
+                if (GAME_RULE(0, 1)) stage2_boss_flash_palettes[7] = 3;
                 reg_a0 = (u8 *)stage2_boss_flash_palettes;
                 fade_in_and_release();
                 boss_part_hide_all();
                 FINAL_EXPLOSION(reg_a4)->step = 3U;
+                if (GAME_RULE(0, 1)) FINAL_EXPLOSION(reg_a4)->delay = 8;
                 FINAL_EXPLOSION(reg_a4)->rounds_left = 1U;
             }
         }

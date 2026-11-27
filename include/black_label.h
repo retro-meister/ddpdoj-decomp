@@ -8,6 +8,11 @@ extern unsigned short g_loop2_starting_lives[2];
 void black_label_card_init(void);
 void black_label_menu_init(void);
 void black_label_title_init(void);
+void black_label_boss_burst(unsigned short y, unsigned short x);
+void black_label_shake_start(void);
+void black_label_shake_step(void);
+extern short g_boss_shake_y, g_boss_shake_x;
+extern short g_slowdown_boss_allowed;
 void black_label_round_select(int departure_finished);
 /* These three ring colors share the movement and collision data of bullet 0x1b. */
 static inline unsigned int black_label_ring_frames(unsigned int type)

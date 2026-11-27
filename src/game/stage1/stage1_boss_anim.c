@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "entity.h"
 #include "explosion.h"
 #include "stage1_boss.h"
@@ -756,6 +757,15 @@ void stage1_boss_body_explode(void) {
     }
     temp_a0_2 = EXPLODE(reg_a4)->step;
     if (temp_a0_2 == 5) {
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) {
+            if (--EXPLODE(reg_a4)->delay) return;
+            sfx_explosion_boss();
+            black_label_boss_burst(ENTITY(reg_a6)->y.h, ENTITY(reg_a6)->x.h);
+            goto finish_boss_burst;
+        }
+#endif
+
         sfx_explosion_boss();
         reg_d2.h[1] = ENTITY(reg_a6)->y.h;
         reg_d2.h[0] = ENTITY(reg_a6)->x.h;
@@ -791,6 +801,9 @@ void stage1_boss_body_explode(void) {
         reg_d3.h[0] = 0xC;
         reg_d0.h[0] = 0;
         explosion_burst_large();
+#ifdef DDPDOJ_BONUS_FEATURES
+finish_boss_burst:
+#endif
         var_a1 = (u8 *)((void *)0x80);
         EXPLODE(reg_a4)->delay = 0x80U;
         EXPLODE(reg_a4)->step = 6U;
@@ -800,6 +813,7 @@ void stage1_boss_body_explode(void) {
         boss_flash_running();
         if (cond_flag == 0) {
             g_slowdown_timer = 0xA;
+            if (GAME_RULE(0, 1)) stage1_boss_final_flash[7] = 3;
             reg_a0 = ((u8 *)stage1_boss_final_flash);
             fade_in_and_release();
             reg_d0.w = 2;
@@ -809,6 +823,7 @@ void stage1_boss_body_explode(void) {
             reg_d0.w = 5;
             boss_part_hide();
             EXPLODE(reg_a4)->step = 5U;
+            if (GAME_RULE(0, 1)) EXPLODE(reg_a4)->delay = 8;
         }
     }
     if (EXPLODE(reg_a4)->step == 3) {

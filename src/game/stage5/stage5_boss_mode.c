@@ -508,6 +508,9 @@ void stage5_boss_mode_form1_explosion() {
         wave_cannon_explode();
         ENTITY(reg_a6)->y.h = t1;
         ENTITY(reg_a6)->x.h = t2;
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) black_label_shake_start();
+#endif
         reg_a0 = (u8 *)stage5_boss_flash_palettes_a;
         fade_in_and_release();
         if (g_stage5_boss_all_forms == 0) {
@@ -532,7 +535,10 @@ void stage5_boss_mode_form1_explosion() {
         }
         vibration_start_pad1(0xC8, 0x50);
         vibration_start_pad2(0xC8, 0x50);
-        g_slowdown_timer = 0x50;
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) g_slowdown_boss_allowed = 1;
+#endif
+        g_slowdown_timer = GAME_RULE(0x50, 0);
         sfx_explosion_extra_1();
         reg_d0.h[0] = 0x10;
         reg_d1.h[0] = 0x10;
@@ -593,6 +599,9 @@ extern u8 g_death_boss_form;
 void stage5_boss_mode_form1_to_form2_start(void) {
 #ifdef DEATH_LABEL
     g_death_boss_form = 1;
+#endif
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) g_slowdown_boss_allowed = 0;
 #endif
     MODE(reg_a4)->wait = 1;
     MODE(reg_a4)->second_wait = 0x80;
@@ -655,6 +664,7 @@ void stage5_boss_mode_form1_to_form2() {
             stage5_boss_form2_take_hits();
             stage5_boss_start_damage();
             slowdown_turn_off();
+            if (GAME_RULE(0, 1)) g_true_last_boss = 2;
         }
     } else {
         MODE(reg_a4)->second_wait -= 1;
@@ -682,6 +692,14 @@ void stage5_boss_mode_form2_explosion(void) {
     EXPLODING(reg_a4)->wait -= 1;
     if (EXPLODING(reg_a4)->wait == 0) {
         sfx_explosion_extra_1();
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active) {
+            black_label_boss_burst(ENTITY(reg_a6)->y.h + 0x1400, ENTITY(reg_a6)->x.h);
+            g_slowdown_boss_allowed = 1;
+            goto flash_second_form;
+        }
+#endif
+
         reg_d0.h[0] = 0xD;
         explosion_spawn();
         EXPLOSION(reg_a0)->y = (u16) ENTITY(reg_a6)->y.h;
@@ -781,6 +799,9 @@ void stage5_boss_mode_form2_explosion(void) {
         EXPLOSION(reg_a0)->delay = 8;
         vibration_start_pad1(0xC8, 0x50, 0x460, 0x400);
         vibration_start_pad2(0xC8, 0x50);
+#ifdef DDPDOJ_BONUS_FEATURES
+flash_second_form:
+#endif
         reg_a0 = (u8 *)stage5_boss_flash_palettes_b;
         fade_in_and_release();
         reg_d0.h[0] = 0x200;
@@ -847,6 +868,10 @@ extern u8 g_death_boss_form;
 #endif
 
 void stage5_boss_mode_form2_to_form3_start(void) {
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) g_slowdown_boss_allowed = 0;
+#endif
+
 #ifdef DEATH_LABEL
     g_death_boss_form = 2;
 #endif
@@ -988,6 +1013,14 @@ block_rts_2:
     return;
 block_3:
     if (FINAL_EXPLOSION(reg_a4)->step != 3) goto block_2;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        if (--FINAL_EXPLOSION(reg_a4)->wait) return;
+        black_label_boss_burst(ENTITY(reg_a6)->y.h + 0x1400, ENTITY(reg_a6)->x.h);
+        goto finish_boss_burst;
+    }
+#endif
+
 #ifdef DEATH_LABEL
     y = ENTITY(reg_a6)->x.h;
     x = ENTITY(reg_a6)->y.h;
@@ -1027,6 +1060,9 @@ block_3_end:
         y = ENTITY(reg_a6)[16].x.h;
     }
 #endif
+#ifdef DDPDOJ_BONUS_FEATURES
+finish_boss_burst:
+#endif
     FINAL_EXPLOSION(reg_a4)->wait = 0x80;
     FINAL_EXPLOSION(reg_a4)->step = 4;
     sfx_explosion_boss();
@@ -1040,6 +1076,7 @@ block_2:
     boss_part_hide_all();
     FINAL_EXPLOSION(reg_a4)->rounds = 1;
     FINAL_EXPLOSION(reg_a4)->step = 3;
+    if (GAME_RULE(0, 1)) FINAL_EXPLOSION(reg_a4)->wait = 8;
     return;
 block_1:
     if (FINAL_EXPLOSION(reg_a4)->step != 1) goto block_0;

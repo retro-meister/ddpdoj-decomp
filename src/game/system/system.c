@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #ifdef DDPDOJ_PC
 #include "pc_gs_game.h"
 #include "pc_replay_storage.h"
@@ -218,6 +219,12 @@ void sys_end_frame(void) {
     if (g_stage_jump_state == 1) {
         g_stage_jump_state = 0;
     } else if (g_slowdown_setting != 0) {
+#ifdef DDPDOJ_BONUS_FEATURES
+        if (g_black_label_active && g_slowdown_frame_state > 2) {
+            unsigned int field;
+            for (field = 1; field < g_slowdown_frame_state; ++field) sceGsSyncV(0);
+        } else
+#endif
         if (g_slowdown_frame_state == 2) {
             sceGsSyncV(0);
         } else {

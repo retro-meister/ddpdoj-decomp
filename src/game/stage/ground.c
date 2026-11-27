@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "ground.h"
 #include "sdk/ps2sdk.h"
 
@@ -471,6 +472,9 @@ void ground_step(void) {
         layer_b_scroll();
     }
     scenery_run();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) black_label_shake_step();
+#endif
     ground_step_unused(0, 0, 0);
 }
 
