@@ -106,7 +106,7 @@ cmake --build build/pc --parallel
 
 ## Bonus features
 
-- **Black Label** adds the arcade mode to the main menu with separate rankings and replay slots.
+- **Black Label** mode added with separate rankings and replay slots.
 
 **Native PC port**
 
