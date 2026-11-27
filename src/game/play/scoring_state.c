@@ -80,8 +80,12 @@ s16 g_boss_hit_palette __attribute__((aligned(4)));
 u16 g_boss_hit_bonus_timer;
 s32 g_boss_hit_bonus;
 s32 g_boss_score;
+#ifdef DDPDOJ_PC
+u16 pc_boss_bar_flags;
+#else
 u8 g_boss_bar_flags;
 s8 g_boss_hp_bar_flags __attribute__((aligned(4)));
+#endif
 u16 g_boss_hp_bar_move_count __attribute__((aligned(4)));
 u16 g_lives_display_move_y __attribute__((aligned(4)));
 u16 g_lives_display_move_x;
@@ -156,6 +160,9 @@ s32 g_p2_position_trail[16];
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_boss_hp_bar_flags, pc_boss_bar_flags, 0);
+PC_DATA_ALIAS(g_boss_bar_flags, pc_boss_bar_flags, 1);
 
 PC_DATA_ALIAS(g_death_label_ranking_scores_as_s32_a, g_death_label_ranking_scores, 0x0);
 PC_DATA_ALIAS(g_ranking_score_tops, g_death_label_ranking_scores, 0x18);

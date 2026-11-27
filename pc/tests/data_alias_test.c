@@ -24,6 +24,9 @@ extern u16 D_0024F3D8[];
 extern u16 D_0024F400[];
 extern u16 D_0028C0E0[];
 
+extern s8 g_boss_hp_bar_flags;
+extern u8 g_boss_bar_flags;
+
 static unsigned selected_draw;
 void entity_draw_layer1(void) { selected_draw = 1; }
 void entity_draw_layer2(void) { selected_draw = 2; }
@@ -51,7 +54,8 @@ static int check_enemy_animation(void)
 
 int main(void)
 {
-    return !(same_address(D_00242058, D_00242020 + 0x38 / sizeof(u16), "mounted tank table") &&
+    return !(same_address(&g_boss_bar_flags, (u8 *)&g_boss_hp_bar_flags + 1, "boss HUD transition flags") &&
+             same_address(D_00242058, D_00242020 + 0x38 / sizeof(u16), "mounted tank table") &&
              same_address(D_0024EBC0,
                           bullet_move_routines + MAIN_OR_DEATH_LABEL(0x90, 0xa0) / sizeof(u16),
                           "bullet move table") &&
