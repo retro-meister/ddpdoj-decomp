@@ -1,6 +1,7 @@
 #include "cdvd.h"
 #include "enemy.h"
 #include "fade.h"
+#include "shot_placement.h"
 #include "combat_state.h"
 #include "pc_player_state.h"
 #include "pc_task_state.h"
@@ -66,6 +67,8 @@ static void require(bool condition, const char *message)
     }
 }
 
+_Static_assert(sizeof(ShotPlacement) == 8, "shot placement size");
+_Static_assert(offsetof(ShotPlacement, frames) == 4, "shot frame address offset");
 _Static_assert(sizeof(PackedGameAddress) == 4, "packed address size");
 _Static_assert(sizeof(BattleshipStartData) == 16, "battleship startup size");
 _Static_assert(offsetof(BattleshipStartData, shot_routines) == 8, "battleship routine offset");
@@ -87,6 +90,16 @@ static void check_startup_addresses(void)
     extern u16 startup_fade_colors[];
     extern void ground_shot_random_a(void), ground_shot_random_b(void);
 
+    extern u16 option_shot_list_3_00_00_00_01_01[];
+    extern u16 option_shot_list_3_02_04_00_16_01[];
+    extern u16 player_shot_8_flight_088_01[];
+    extern u16 replay_targets_shot_lists_292[];
+
+    require(relocated_address(wide_option_placements_3_1[0].frames) == (uintptr_t)option_shot_list_3_00_00_00_01_01 &&
+            relocated_address(wide_option_placements_4_5[16].frames) == (uintptr_t)option_shot_list_3_02_04_00_16_01 &&
+            relocated_address(shot8_placements_4[16].frames) == (uintptr_t)player_shot_8_flight_088_01 &&
+            relocated_address(wide_option_placements_8[16].frames) == (uintptr_t)replay_targets_shot_lists_292,
+            "Relocate the shot placement frame lists");
     require(relocated_address(player_shield_sprite_tables[0]) == (uintptr_t)player_shield_sprites_00 &&
             relocated_address(player_shield_sprite_tables[1]) == (uintptr_t)player_shield_sprites_01,
             "Relocate both shield sprite tables");
