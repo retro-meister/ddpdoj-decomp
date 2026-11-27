@@ -3,6 +3,7 @@
 
 static const PcFrameRegion *const groups[] = {
     pc_system_regions, pc_game_flow_regions, pc_layer_regions, pc_screen_regions,
+    pc_stage_sprites_regions, pc_graphics_regions, pc_stage_maps_regions,
 };
 
 size_t pc_frame_regions_size(void)

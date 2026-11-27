@@ -1794,3 +1794,24 @@ RenderTarget g_render_target;
 
 PC_DATA_ALIAS(g_quad_queue_as_GlyphQuad_a, g_quad_queue, 0);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_graphics_regions[] = {
+    PC_FRAME_REGION(g_stage_map_alpha),
+    PC_FRAME_REGION(g_stage_map_marker_level),
+    PC_FRAME_REGION(g_stage_map_marker_step),
+    PC_FRAME_REGION(g_stage_map_state),
+    PC_FRAME_REGION(g_screen_width),
+    PC_FRAME_REGION(g_screen_margin),
+    PC_FRAME_REGION(g_label_timer),
+    PC_FRAME_REGION(g_label_fade),
+    PC_FRAME_REGION(g_bg_tile_offsets),
+    PC_FRAME_REGION(g_clut_buf),
+    PC_FRAME_REGION(g_sprite_clut_buf),
+    PC_FRAME_REGION(g_bg_clut_buf),
+    PC_FRAME_REGION(g_render_target),
+    { NULL, 0 },
+};
+#endif

@@ -7,6 +7,7 @@
 #include "pc_sound.h"
 #include "pc_task_state.h"
 #include "sfx.h"
+#include "sdk/libcdvd.h"
 
 typedef struct {
     PcPlayerState players;
@@ -20,6 +21,7 @@ typedef struct {
 
 static SDL_IOStream *capture(void)
 {
+    sceCdSync(0);
     size_t regions = pc_frame_regions_size();
     size_t bytes = sizeof(GameSnapshot) + regions;
     GameSnapshot *state = SDL_calloc(1, bytes);

@@ -1066,3 +1066,13 @@ BootScratch g_boot_scratch __attribute__((aligned(64)));
 
 PC_DATA_ALIAS(g_gs_load_image_as_u8_a, g_gs_load_image, 0);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_stage_maps_regions[] = {
+    PC_FRAME_REGION(g_stage_map_file_buf),
+    PC_FRAME_REGION(g_bg_tile_pixels),
+    { NULL, 0 },
+};
+#endif

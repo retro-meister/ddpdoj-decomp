@@ -174,6 +174,10 @@ u16 g_explosion_uv_12ba[54][2] = {
 extern u8 g_noise_file_buf[];
 #endif
 
+#ifdef DDPDOJ_PC
+_Alignas(64) static u8 stage_buffer[0x885800];
+#endif
+
 void arcade_sprite_init(void) {
     u8 *buffer;
 
@@ -181,7 +185,6 @@ void arcade_sprite_init(void) {
     _Alignas(64) static u8 upload_buffer[0x80000];
     _Alignas(64) static SpriteImage image_buffer[0x10000 / sizeof(SpriteImage)];
     _Alignas(64) static u8 pixel_buffer[0xC20000];
-    _Alignas(64) static u8 stage_buffer[0x885800];
     _Alignas(64) static u8 frame_buffer[0x10800];
     buffer = upload_buffer;
 #else
@@ -587,3 +590,12 @@ s32 g_unpack_step;
 u8 *g_unpack_src_start;
 u8 *g_unpack_dst;
 u8 *g_unpack_src;
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_stage_sprites_regions[] = {
+    PC_FRAME_REGION(stage_buffer),
+    { NULL, 0 },
+};
+#endif
