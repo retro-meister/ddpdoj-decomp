@@ -328,4 +328,12 @@ typedef struct {
 #define BOTH_SIDES(pointer) ((BothSides *)(pointer))
 #define RAGE_WINGS(pointer) ((RageWings *)(pointer))
 
+typedef struct {
+    u16 attack_slots[2];
+    u16 target_y;
+    u16 target_x;
+} Stage4VolleyData;
+
+extern Stage4VolleyData stage4_form2_volley[];
+
 #endif

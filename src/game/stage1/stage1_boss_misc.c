@@ -13,10 +13,9 @@ s32 enemy_init_entities();
 extern u16 D_0024EBC0[];
 extern u16 D_0024EC80[];
 extern u16 D_0024EEF0[];
-extern u16 stage1_boss_breakable_bullet_start_table[];
 
 void stage1_boss_breakable_bullet_start(void) {
-    reg_a0 = (u8 *)(stage1_boss_breakable_bullet_start_table);
+    reg_a0 = (u8 *)stage1_entrance_data.bullet.entity_words;
     enemy_init_entities();
     ENTITY(reg_a6)->y.h = (u16) BREAKABLE_BULLET(reg_a5)->at_start.y;
     ENTITY(reg_a6)->x.h = (u16) BREAKABLE_BULLET(reg_a5)->at_start.x;
@@ -535,10 +534,7 @@ block_13:
     sprite_draw_layer1();
 }
 
-u16 stage1_boss_breakable_bullet_start_table[16] = {
-    0xA201, 0xFE00, 0xFE00, 0x0000, 0x0000, 0x0210, 0x0080, 0x0080,
-    0x0080, 0x0080, 0x0008, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+
 
 u8 stage1_boss_breakable_bullet_b_start_table[64] = {
     0x01, 0x80, 0x00, 0xFC, 0x00, 0xFE, 0x00, 0x00, 0x00, 0x00, 0x10, 0x04, 0x80, 0x00, 0x80, 0x00,

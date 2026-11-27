@@ -96,7 +96,6 @@ s32 boss_attack_start();
 s32 boss_attack_running();
 s32 stage4_boss_right_spinner_turn();
 s32 stage4_boss_left_spinner_turn_back();
-extern u8 stage4_boss_mode_attack_a_table[];
 
 void stage4_boss_mode_attack_a() {
     u16 temp_a0;
@@ -142,7 +141,7 @@ void stage4_boss_mode_attack_a() {
                     ATTACK_A(reg_a4)->wait = 0x60U;
                 }
             }
-            reg_a0 = stage4_boss_mode_attack_a_table;
+            reg_a0 = (u8 *)stage4_form2_volley;
             reg_a0 += ATTACK_A(reg_a4)->side;
             reg_d7.h[0] = *(u16 *)(reg_a0 + 2);
             reg_d0.h[0] = *(u16 *)reg_a0;
@@ -774,10 +773,11 @@ u8 stage4_boss_mode_attack_b_table[32] = {
     0x02, 0x08, 0x00, 0x02, 0x10, 0x00, 0x02, 0x04, 0x00, 0x03, 0x20, 0x00, 0x02, 0x40, 0x00, 0x00,
 };
 
-u8 stage4_boss_mode_attack_a_table[] = {
-    0x01, 0x00, 0x02, 0x00,
+/* Each volley takes two adjacent words. The second uses target_y for d7. */
+Stage4VolleyData stage4_form2_volley[1] = { { { 1, 2 }, 0x6000, 0x1C00 } };
+
 #ifdef DDPDOJ_PC
-    /* The second volley reads the first word of stage4_boss_move_to_form2_b_table on PS2. */
-    0x00, 0x60,
+#include <stddef.h>
+_Static_assert(offsetof(Stage4VolleyData, target_y) == 4, "second volley parameter offset");
+_Static_assert(sizeof(Stage4VolleyData) == 8, "volley and target size");
 #endif
-};

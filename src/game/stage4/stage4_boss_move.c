@@ -371,11 +371,10 @@ void stage4_boss_move_to_form2_b_start(void) {
 }
 
 s32 boss_movement_stop();
-extern u8 stage4_boss_move_to_form2_b_table[];
 
 void stage4_boss_move_to_form2_b(void) {
     s32 direction_between();
-    reg_a0 = stage4_boss_move_to_form2_b_table;
+    reg_a0 = (u8 *)&stage4_form2_volley[0].target_y;
     reg_d2.h[0] = *(u16 *)reg_a0;
     reg_d3.h[0] = *(u16 *)(reg_a0 + 2);
     reg_d3.h[0] -= g_side_scroll_x[0];
@@ -383,7 +382,7 @@ void stage4_boss_move_to_form2_b(void) {
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     direction_between();
     ENTITY(reg_a6)->move.b.dir = (u8) reg_d1.b[0];
-    reg_a0 = stage4_boss_move_to_form2_b_table;
+    reg_a0 = (u8 *)&stage4_form2_volley[0].target_y;
     reg_d0.h[0] = ENTITY(reg_a6)->y.h;
     reg_d1.h[0] = ENTITY(reg_a6)->x.h;
     reg_d2.h[0] = *(u16 *)reg_a0;
@@ -596,7 +595,3 @@ void stage4_boss_move_rage(void) {
     STAGE4_EXTRA(reg_a6)->bay_x_offset += reg_d3.h[0];
     stage4_boss_parts_follow();
 }
-
-u8 stage4_boss_move_to_form2_b_table[4] = {
-    0x00, 0x60, 0x00, 0x1C,
-};

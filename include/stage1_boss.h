@@ -275,4 +275,24 @@ typedef struct {
 #define GATLING_C(pointer) ((GatlingVolley *)(pointer))
 #define SIDE_SPREAD(pointer) ((SideSpread *)(pointer))
 
+typedef struct {
+    u16 sprite_hi;
+    u16 sprite_lo;
+    u16 offset_y;
+    u16 offset_x;
+    u16 attributes;
+    /* 0x0A */ u16 unused_0A[3];
+} BossEntranceFrame;
+
+typedef struct {
+    BossEntranceFrame frames[24];
+    /* The entrance timer reaches the first ten bytes of the bullet setup. */
+    union {
+        u16 entity_words[16];
+        BossEntranceFrame frames[2];
+    } bullet;
+} BossEntranceData;
+
+extern BossEntranceData stage1_entrance_data;
+
 #endif
