@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #include "black_label.h"
 #include "player_slot.h"
 #ifdef DDPDOJ_PC
@@ -316,7 +317,7 @@ void player_slot_next_ship(void) {
     var_a0 = g_simulation_active;
     if ((var_a0 == 1) && ((s16) *(u16 *)reg_a0 < 0)) {
         var_a0 = D_006E5C06[0];
-        if (var_a0 == 0x14) {
+        if (var_a0 == SIM_SHIP_STOCK_FREE) {
             *(u16 *)reg_a0 = 0U;
         }
     }
@@ -559,7 +560,7 @@ void player_slot_start(void) {
         *(u16 *)reg_a0 = GAME_RULE(0U, g_loop2_starting_lives[PLAYER_SLOT(reg_a6)->player]);
     }
     if (g_simulation_active == 1) {
-        if (D_006E5C06[0] == 0x14) {
+        if (D_006E5C06[0] == SIM_SHIP_STOCK_FREE) {
             *(u16 *)reg_a0 = 0U;
         } else {
             *(u16 *)reg_a0 = (u16) D_006E5C06[0];

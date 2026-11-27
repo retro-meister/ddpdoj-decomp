@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #include "task.h"
 #include "black_label.h"
 #include "sdk/ps2sdk.h"
@@ -651,28 +652,6 @@ extern u8 attract_step_game_start_table[];
 extern u8 g_game_mode;
 extern s8 g_menu_pad;
 extern u8 g_replay_mode;
-extern u8 g_sim_rules_page_a[];
-extern s16 D_0068DECA[];
-extern s16 D_0068DECC[];
-extern s16 D_0068DECE[];
-extern s16 D_0068DED0[];
-extern s16 D_0068DED2[];
-extern u8 g_sim_rules_page_b[];
-extern s16 D_0068DEDA[];
-extern s16 g_sim_rules_loaded_kind[];
-extern s16 D_0068DEDE[];
-extern s16 D_0068DEE0[];
-extern u8 D_0068DEF0[];
-extern s16 D_0068DEF2[];
-extern s16 D_0068DEF4[];
-extern s16 D_0068DEF6[];
-extern s16 D_0068DEF8[];
-extern s16 D_0068DEFA[];
-extern s16 D_0068DEFC[];
-extern s16 D_0068DEFE[];
-extern s16 D_0068DF00[];
-extern s16 D_0068DF02[];
-extern s16 D_0068DF04[];
 extern s16 D_006E5BE2[];
 extern s16 D_006E5BE4[];
 extern s16 D_006E5BE6[];
@@ -714,8 +693,8 @@ void attract_step_game_start(void) {
     reg_a0 = (u8 *)g_default_text_palette;
     text_palette_load();
     replay_header_clear();
-    a = D_0068DEDA[0];
-    b = g_sim_rules_loaded_kind[0];
+    a = g_sim_menu_options.editing.ship.ship_type;
+    b = g_sim_menu_options.editing.ship.doll_type;
     if (g_menu_pad == 0) {
         D_006E5BE2[0] = D_0028DE40[a];
         D_006E5BE4[0] = D_0028DE44[b];
@@ -724,27 +703,27 @@ void attract_step_game_start(void) {
         D_006E5BE8[0] = D_0028DE44[b];
     }
     D_006E5C04_as_s16_a[0] = 0;
-    D_006E5BEA_as_s16_a[0] = ((s16 *)g_sim_rules_page_b)[0];
-    D_006E5BEC_as_s16_a[0] = D_0068DF02[0] / 5;
-    D_006E5BFE_as_s16_a[0] = D_0068DF00[0];
-    ((s16 *)D_006E5BFC)[0] = D_0068DEFE[0];
-    ((s16 *)D_006E5BF4)[0] = D_0068DEF6[0];
-    ((s16 *)D_006E5BF6)[0] = D_0068DEF8[0];
-    D_006E5BF8_as_s16_a[0] = ((s16 *)D_0068DEF0)[0];
-    D_006E5BFA_as_s16_a[0] = D_0068DEF2[0];
-    D_006E5C00_as_s16_a[0] = D_0068DEF4[0];
-    ((s16 *)D_006E5C02)[0] = D_0068DF04[0];
-    ((s16 *)D_006E5C06)[0] = D_0068DEDE[0];
-    ((s16 *)D_006E5C08)[0] = D_0068DEE0[0];
-    D_006E5C0A_as_s16_a[0] = D_0068DEFA[0];
-    D_006E5C0C_as_s16_a[0] = D_0068DEFC[0];
-    ((s16 *)D_006E5C0E)[0] = ((s16 *)g_sim_rules_page_a)[0];
-    ((s16 *)D_006E5C10)[0] = D_0068DECA[0];
-    ((s16 *)D_006E5C12)[0] = D_0068DECC[0];
-    D_006E5BEE_as_s16_a[0] = D_0068DF02[0] % 5;
-    ((s16 *)D_006E5BF0)[0] = attract_step_game_start_table[D_0068DECE[0]];
-    ((s16 *)D_006E5BF2)[0] = attract_step_game_start_table[D_0068DED0[0]];
-    ((s16 *)D_006E5C14)[0] = D_0068DED2[0];
+    D_006E5BEA_as_s16_a[0] = g_sim_menu_options.editing.ship.difficulty;
+    D_006E5BEC_as_s16_a[0] = g_sim_menu_options.editing.start.stage_selection / 5;
+    D_006E5BFE_as_s16_a[0] = g_sim_menu_options.editing.start.hyper_gauge;
+    ((s16 *)D_006E5BFC)[0] = g_sim_menu_options.editing.start.hyper_stock;
+    ((s16 *)D_006E5BF4)[0] = g_sim_menu_options.editing.start.bomb_capacity;
+    ((s16 *)D_006E5BF6)[0] = g_sim_menu_options.editing.start.bomb_stock;
+    D_006E5BF8_as_s16_a[0] = g_sim_menu_options.editing.start.start_point;
+    D_006E5BFA_as_s16_a[0] = g_sim_menu_options.editing.start.keep_power_on_death;
+    D_006E5C00_as_s16_a[0] = g_sim_menu_options.editing.start.rank;
+    ((s16 *)D_006E5C02)[0] = g_sim_menu_options.editing.start.custom_rank;
+    ((s16 *)D_006E5C06)[0] = g_sim_menu_options.editing.ship.ship_stock;
+    ((s16 *)D_006E5C08)[0] = g_sim_menu_options.editing.ship.extend;
+    D_006E5C0A_as_s16_a[0] = g_sim_menu_options.editing.start.hyper_active;
+    D_006E5C0C_as_s16_a[0] = g_sim_menu_options.editing.start.hyper_time;
+    ((s16 *)D_006E5C0E)[0] = g_sim_menu_options.editing.power.maximum_level;
+    ((s16 *)D_006E5C10)[0] = g_sim_menu_options.editing.power.maximum_multiplier;
+    ((s16 *)D_006E5C12)[0] = g_sim_menu_options.editing.power.hyper_uses;
+    D_006E5BEE_as_s16_a[0] = g_sim_menu_options.editing.start.stage_selection % 5;
+    ((s16 *)D_006E5BF0)[0] = attract_step_game_start_table[g_sim_menu_options.editing.power.laser_level];
+    ((s16 *)D_006E5BF2)[0] = attract_step_game_start_table[g_sim_menu_options.editing.power.shot_level];
+    ((s16 *)D_006E5C14)[0] = g_sim_menu_options.editing.power.dropped_powerups;
     reg_d0.h[0] = TASK_REPLAY;
     task_start();
     if (g_replay_mode == 2) {

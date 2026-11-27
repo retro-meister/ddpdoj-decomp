@@ -2,6 +2,7 @@
 #include "enemy.h"
 #include "fade.h"
 #include "shot_placement.h"
+#include "simulation.h"
 #include "combat_state.h"
 #include "pc_player_state.h"
 #include "pc_task_state.h"
@@ -76,6 +77,27 @@ _Static_assert(sizeof(FadePaletteRun) == 14, "palette fade run size");
 _Static_assert(offsetof(TwoPaletteFade, runs[0].palette) == 8, "first fade palette offset");
 _Static_assert(offsetof(TwoPaletteFade, runs[1].palette) == 22, "second fade palette offset");
 _Static_assert(sizeof(TwoPaletteFade) == 32, "two palette fade size");
+
+static void check_simulation_defaults(void)
+{
+    extern void sim_rules_set_defaults(void);
+    SimulationMenuOptions before = g_sim_menu_options;
+    SimEditingOptions *editing = &g_sim_menu_options.editing;
+    SimStoredOptions *stored = &g_sim_menu_options.stored;
+
+    memset(&g_sim_menu_options, 0xff, sizeof(g_sim_menu_options));
+    sim_rules_set_defaults();
+    require(editing->ship.difficulty == 1 && editing->ship.ship_stock == SIM_SHIP_STOCK_FREE &&
+            editing->start.bomb_capacity == 6 && editing->start.bomb_stock == 8 &&
+            editing->start.hyper_time == 100 && editing->start.custom_rank == 0 &&
+            editing->power.dropped_powerups == 0, "Initialize simulation options from the retail menu defaults");
+    require(memcmp(&editing->ship, &stored->ship, sizeof(stored->ship)) == 0 &&
+            memcmp(&editing->power, &stored->power, sizeof(stored->power)) == 0 &&
+            memcmp(&editing->start, &stored->start, sizeof(stored->start)) == 0 &&
+            editing->unused_0C[0] == 0xff && stored->unused_36[0] == 0xff,
+            "Copy the three simulation pages at their original lengths");
+    g_sim_menu_options = before;
+}
 
 static uintptr_t relocated_address(const PackedGameAddress words)
 {
@@ -392,6 +414,7 @@ int main(int argc, char **argv)
     SDL_Joystick *second = two_player ? attach_controller() : NULL;
 
     pc_gs_bind_game(renderer);
+    check_simulation_defaults();
     game_boot_begin();
     check_startup_addresses();
 #ifdef DDPDOJ_BONUS_FEATURES

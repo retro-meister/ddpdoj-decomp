@@ -1,4 +1,5 @@
 #include "common.h"
+#include "simulation.h"
 #include "score_cell.h"
 #include "black_label.h"
 #include "score_tables.h"
@@ -1078,7 +1079,7 @@ void score_pending_apply_side(void) {
 no_extend:
 #endif
             reg_d0.w = *(u32 *)reg_a2;
-            if (((g_simulation_active == 0) || (D_006E5C06[0] != 0x14)) && (g_setting_start_round == 0) && (reg_d0.w != -1U) && ((u32) *(u32 *)reg_a0 >= (u32) reg_d0.w)) {
+            if (((g_simulation_active == 0) || (D_006E5C06[0] != SIM_SHIP_STOCK_FREE)) && (g_setting_start_round == 0) && (reg_d0.w != -1U) && ((u32) *(u32 *)reg_a0 >= (u32) reg_d0.w)) {
                 t2 = (u16) *(s16 *)reg_a3;
                 if (t2 != 0x14) {
                     *(s16 *)reg_a3 = t2 + 1;

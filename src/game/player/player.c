@@ -15,6 +15,7 @@ s32 p2_maximum_level_show();
 #include "entity.h"
 #include "player.h"
 #include "player_tables.h"
+#include "simulation.h"
 
 extern BombDisplayTable bomb_display_data PS2_SMALL_DATA;
 
@@ -2504,8 +2505,6 @@ extern u16 g_p2_continued;
 extern u16 g_p1_continued;
 #ifdef DEATH_LABEL
 extern u16 D_006E5C14[];
-#else
-extern s16 D_0068DEDE[];
 #endif
 
 void player_destroyed_begin(void) {
@@ -2588,45 +2587,45 @@ void player_destroyed_begin(void) {
         reg_a1 = (u8 *) &g_p2_continued;
         reg_a3 = (u8 *) &g_p2_death_count;
     }
-    if (g_simulation_active != 0) goto next_1;
+    if (g_simulation_active != 0) goto choose_simulation_drops;
     reg_d0.w = 4;
     reg_d7.w = 0;
-    if (reg_d1.h[0] == 0) goto loop_1;
+    if (reg_d1.h[0] == 0) goto spawn_powerup;
     reg_d0.w = 0;
     reg_d7.w = 2;
-    if (*(u16 *) reg_a1 != 0) goto loop_1;
-    goto next_3;
-next_1:
+    if (*(u16 *) reg_a1 != 0) goto spawn_powerup;
+    goto read_death_count;
+choose_simulation_drops:
 #ifdef DEATH_LABEL
     reg_d7.w = 2;
     reg_d0.w = 0;
     if (D_006E5C14[0] != 0) {
         reg_d7.w = D_006E5C14[0];
         reg_d7.w -= 2;
-        if ((s32) reg_d7.w < 0) goto next_4;
-        goto loop_1;
+        if ((s32) reg_d7.w < 0) goto start_ship_explosion;
+        goto spawn_powerup;
     }
 #else
     reg_d0.w = 4;
     reg_d7.w = 0;
-    if (reg_d1.h[0] != 0) goto next_2;
-    if (D_0068DEDE[0] != 0x14) goto loop_1;
-next_2:
+    if (reg_d1.h[0] != 0) goto use_death_count;
+    if (g_sim_menu_options.editing.ship.ship_stock != SIM_SHIP_STOCK_FREE) goto spawn_powerup;
+use_death_count:
     reg_d0.w = 0;
     reg_d7.w = 2;
 #endif
-next_3:
+read_death_count:
     reg_d7.h[0] = *(u16 *) reg_a3;
     *(u16 *) reg_a3 += 1;
     reg_tmp7.h[0] = reg_d7.h[0];
     reg_d7.h[0] -= 1;
-    if (reg_tmp7.h[0] == 0) goto next_4;
-loop_1:
+    if (reg_tmp7.h[0] == 0) goto start_ship_explosion;
+spawn_powerup:
     item_spawn();
     tmp = reg_d7.h[0] - 1;
     reg_d7.h[0] = tmp;
-    if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto loop_1;
-next_4:
+    if (((s64) ((s64) (tmp & 0xFFFF) << 0x30) >> 0x30) >= 0) goto spawn_powerup;
+start_ship_explosion:
     PLAYER(reg_a6)->flags.h &= 0x2000;
     PLAYER(reg_a6)->flags.b[1] |= 1;
     reg_tmp.w = ARCADE_ADDRESS_ENCODE(D_00255EE0);

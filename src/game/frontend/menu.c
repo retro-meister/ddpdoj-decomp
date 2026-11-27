@@ -150,9 +150,6 @@ extern u8 g_menu_wallpapers_3[];
 extern u8 g_menu_wallpapers_5[];
 extern u8 g_menu_wallpapers_7[];
 extern u8 g_menu_wallpapers_9[];
-extern s32 D_00270810[6];
-extern s16 D_00270828[5];
-extern s16 D_00270838[6];
 extern char *g_menu_simulation_items[6];
 extern char *g_menu_simulation_help[6];
 extern char *g_menu_sim_setting_items[6];
@@ -335,17 +332,11 @@ extern char *g_replay_slot_ship_names[2];
 extern char *g_replay_slot_shot_names[4];
 extern char *g_replay_slot_difficulty_names[4];
 
-s32 D_00270810[6] = {
-    0, 0x60000, 8, 0x64, 0, 0,
-};
+SimStartOptions sim_default_start = { { 0, 0, 0, 6, 8, 0, 100, 0, 0, 0, 0, } };
 
-s16 D_00270828[5] = {
-    1, 0, 0, 0x14, 0,
-};
+SimShipOptions sim_default_ship = { { 1, 0, 0, SIM_SHIP_STOCK_FREE, 0 } };
 
-s16 D_00270838[6] = {
-    0, 0, 0, 0, 0, 0,
-};
+SimPowerOptions sim_default_power = { { 0, 0, 0, 0, 0, 0, } };
 
 char *g_menu_simulation_items[6] = {
     "SIMULATION MODE",
@@ -2482,20 +2473,14 @@ void menu_exit_when_faded() {
     }
 }
 
-extern s32 D_0068DE90[];
-extern s32 D_0068DEA0[];
-extern s32 D_0068DEB0[];
-extern u8 g_sim_rules_page_a[];
-extern u8 g_sim_rules_page_b[];
-extern u8 D_0068DEF0[];
 
 void sim_rules_set_defaults(void) {
-    memcpy(((s32 *)D_0068DEF0), D_00270810, 0x16);
-    memcpy(((s32 *)g_sim_rules_page_b), D_00270828, 0xA);
-    memcpy(((s32 *)g_sim_rules_page_a), D_00270838, 0xC);
-    memcpy(D_0068DEB0, D_00270810, 0x16);
-    memcpy(D_0068DE90, D_00270828, 0xA);
-    memcpy(D_0068DEA0, D_00270838, 0xC);
+    memcpy(&g_sim_menu_options.editing.start, &sim_default_start, sizeof(SimStartOptions));
+    memcpy(&g_sim_menu_options.editing.ship, &sim_default_ship, sizeof(SimShipOptions));
+    memcpy(&g_sim_menu_options.editing.power, &sim_default_power, sizeof(SimPowerOptions));
+    memcpy(&g_sim_menu_options.stored.start, &sim_default_start, sizeof(SimStartOptions));
+    memcpy(&g_sim_menu_options.stored.ship, &sim_default_ship, sizeof(SimShipOptions));
+    memcpy(&g_sim_menu_options.stored.power, &sim_default_power, sizeof(SimPowerOptions));
 }
 
 extern s8 g_menu_main_step;
@@ -4973,7 +4958,6 @@ void menu_alpha_b_update(void) {
     }
 }
 
-extern s16 D_0068DEFA[];
 
 s32 menu_cursor_input(s32 page) {
     extern void sfx_menu_move(void);
@@ -5002,7 +4986,7 @@ s32 menu_cursor_input(s32 page) {
         if (g_menu_page == MENU_PAGE_SYSTEM_OPTION && g_menu_cursor == 8) {
             g_menu_cursor--;
         }
-        if (page == 18 && D_0068DEFA[0] == 0 && g_menu_cursor == 7) {
+        if (page == 18 && g_sim_menu_options.editing.start.hyper_active == 0 && g_menu_cursor == 7) {
             g_menu_cursor = 6;
         }
         if (g_menu_cursor <= 0) {
@@ -5016,7 +5000,7 @@ s32 menu_cursor_input(s32 page) {
         if (g_menu_page == MENU_PAGE_SYSTEM_OPTION && g_menu_cursor == 8) {
             g_menu_cursor++;
         }
-        if (page == 18 && D_0068DEFA[0] == 0 && g_menu_cursor == 7) {
+        if (page == 18 && g_sim_menu_options.editing.start.hyper_active == 0 && g_menu_cursor == 7) {
             g_menu_cursor = 8;
         }
         if (g_menu_cursor >= count) {
@@ -8258,40 +8242,37 @@ s32 replay_slots_draw(void) {
 
 s32 fade_start_in();
 extern s8 g_menu_page;
-extern u8 g_sim_rules_page_a[];
-extern u8 g_sim_rules_page_b[];
-extern u8 D_0068DEF0[];
 void menu_reset_keep_sim_rules(void) {
-    u8 sp10[0x16];
-    u8 sp30[0xA];
-    u8 sp40[0xC];
+    SimStartOptions start;
+    SimShipOptions ship;
+    SimPowerOptions power;
 
-    memcpy(sp10, D_0068DEF0, 0x16);
-    memcpy(sp30, g_sim_rules_page_b, 0xA);
-    memcpy(sp40, g_sim_rules_page_a, 0xC);
+    memcpy(&start, &g_sim_menu_options.editing.start, sizeof(SimStartOptions));
+    memcpy(&ship, &g_sim_menu_options.editing.ship, sizeof(SimShipOptions));
+    memcpy(&power, &g_sim_menu_options.editing.power, sizeof(SimPowerOptions));
     menu_reset();
     menu_settings_restore();
-    memcpy(D_0068DEF0, sp10, 0x16);
-    memcpy(g_sim_rules_page_b, sp30, 0xA);
-    memcpy(g_sim_rules_page_a, sp40, 0xC);
+    memcpy(&g_sim_menu_options.editing.start, &start, sizeof(SimStartOptions));
+    memcpy(&g_sim_menu_options.editing.ship, &ship, sizeof(SimShipOptions));
+    memcpy(&g_sim_menu_options.editing.power, &power, sizeof(SimPowerOptions));
     g_menu_stage_select.step = 0;
     g_menu_page = MENU_PAGE_STAGE_SELECT;
     fade_start_in();
 }
 extern u8 g_replay_slots_from_disc;
 void menu_reset_keep_sim_rules_and_page(void) {
-    u8 sp10[0x16];
-    u8 sp30[0xA];
-    u8 sp40[0xC];
+    SimStartOptions start;
+    SimShipOptions ship;
+    SimPowerOptions power;
 
-    memcpy(sp10, D_0068DEF0, 0x16);
-    memcpy(sp30, g_sim_rules_page_b, 0xA);
-    memcpy(sp40, g_sim_rules_page_a, 0xC);
+    memcpy(&start, &g_sim_menu_options.editing.start, sizeof(SimStartOptions));
+    memcpy(&ship, &g_sim_menu_options.editing.ship, sizeof(SimShipOptions));
+    memcpy(&power, &g_sim_menu_options.editing.power, sizeof(SimPowerOptions));
     menu_reset();
     menu_settings_restore();
-    memcpy(D_0068DEF0, sp10, 0x16);
-    memcpy(g_sim_rules_page_b, sp30, 0xA);
-    memcpy(g_sim_rules_page_a, sp40, 0xC);
+    memcpy(&g_sim_menu_options.editing.start, &start, sizeof(SimStartOptions));
+    memcpy(&g_sim_menu_options.editing.ship, &ship, sizeof(SimShipOptions));
+    memcpy(&g_sim_menu_options.editing.power, &power, sizeof(SimPowerOptions));
     if (g_replay_slots_from_disc == 0) {
         g_menu_file_select.step = 0;
         g_menu_page = MENU_PAGE_REPLAY;
@@ -8330,33 +8311,10 @@ extern s8 g_menu_main_step;
 extern s8 g_menu_pad;
 extern s32 g_autosave_step;
 s32 autosave_update();
-extern s16 D_0068DF02[];
-extern s16 D_00270822[];
 extern s8 D_002714FA[];
 extern u8 g_stage_select_unlocked;
 extern u8 g_stage_select_choice;
 extern s8 g_menu_replay_chosen;
-extern s16 D_00270828[];
-extern s16 D_00270838[];
-extern s16 D_0068DECA[];
-extern s16 D_0068DECC[];
-extern s16 D_0068DECE[];
-extern s16 D_0068DED0[];
-extern s16 D_0068DED2[];
-extern s16 D_0068DEDA[];
-extern s16 g_sim_rules_loaded_kind[];
-extern s16 D_0068DEDE[];
-extern s16 D_0068DEE0[];
-extern s16 D_0068DEF0_as_s16_a[];
-extern s16 D_0068DEF2[];
-extern s16 D_0068DEF4[];
-extern s16 D_0068DEF6[];
-extern s16 D_0068DEF8[];
-extern s16 D_0068DEFA[];
-extern s16 D_0068DEFC[];
-extern s16 D_0068DEFE[];
-extern s16 D_0068DF00[];
-extern s16 D_0068DF04[];
 #ifndef DDPDOJ_PC
 extern u16 D_006C58A2[];
 extern u16 g_replay_file_kind[];
@@ -8625,7 +8583,7 @@ void menu_stage_select_step1(void) {
 
 void menu_stage_select_step2(void) {
     if (menu_page_advance(&g_menu_stage_select, 0xA) != 0) {
-        g_menu_cursor = D_0068DF02[0] + 1;
+        g_menu_cursor = g_sim_menu_options.editing.start.stage_selection + 1;
     }
 }
 
@@ -8661,7 +8619,7 @@ void menu_stage_select_step3(void) {
 #endif
             sfx_menu_confirm();
             g_menu_stage_select.step += 1;
-            D_0068DF02[0] = g_menu_stage_select.cursor - 1;
+            g_sim_menu_options.editing.start.stage_selection = g_menu_stage_select.cursor - 1;
             menu_close_begin();
         } else {
             sfx_menu_confirm();
@@ -8670,7 +8628,7 @@ void menu_stage_select_step3(void) {
             g_menu_page = MENU_PAGE_SIMULATION;
             g_menu_stage_select.alpha = 0;
             g_menu_simulation.step = 0;
-            D_0068DF02[0] = D_00270822[0];
+            g_sim_menu_options.editing.start.stage_selection = sim_default_start.stage_selection;
         }
     }
 }
@@ -8893,115 +8851,115 @@ void menu_settings_load_step2(void) {
 }
 
 void menu_settings_load_apply(void) {
-    memcpy(D_0068DEF0_as_s16_a, ((s16 *)D_00270810), 0x16);
-    memcpy(((s16 *)g_sim_rules_page_b), D_00270828, 0xA);
-    memcpy(((s16 *)g_sim_rules_page_a), D_00270838, 0xC);
-    ((s16 *)g_sim_rules_page_b)[0] = D_006C58AA[0];
-    D_0068DEDE[0] = D_006C58C6[0];
-    D_0068DEE0[0] = D_006C58C8[0];
+    memcpy(&g_sim_menu_options.editing.start, &sim_default_start, sizeof(SimStartOptions));
+    memcpy(&g_sim_menu_options.editing.ship, &sim_default_ship, sizeof(SimShipOptions));
+    memcpy(&g_sim_menu_options.editing.power, &sim_default_power, sizeof(SimPowerOptions));
+    g_sim_menu_options.editing.ship.difficulty = D_006C58AA[0];
+    g_sim_menu_options.editing.ship.ship_stock = D_006C58C6[0];
+    g_sim_menu_options.editing.ship.extend = D_006C58C8[0];
     if (D_006C58A2[0] == 0xFF) {
         if (D_006C58A6[0] == 0) {
-            D_0068DEDA[0] = 0;
+            g_sim_menu_options.editing.ship.ship_type = 0;
         } else {
-            D_0068DEDA[0] = 1;
+            g_sim_menu_options.editing.ship.ship_type = 1;
         }
         if (D_006C58A8[0] == 2) {
-            g_sim_rules_loaded_kind[0] = 0;
+            g_sim_menu_options.editing.ship.doll_type = 0;
         } else if (D_006C58A8[0] == 4) {
-            g_sim_rules_loaded_kind[0] = 1;
+            g_sim_menu_options.editing.ship.doll_type = 1;
         } else {
-            g_sim_rules_loaded_kind[0] = 2;
+            g_sim_menu_options.editing.ship.doll_type = 2;
         }
     } else {
         if (D_006C58A2[0] == 0) {
-            D_0068DEDA[0] = 0;
+            g_sim_menu_options.editing.ship.ship_type = 0;
         } else {
-            D_0068DEDA[0] = 1;
+            g_sim_menu_options.editing.ship.ship_type = 1;
         }
         if (g_replay_file_kind[0] == 2) {
-            g_sim_rules_loaded_kind[0] = 0;
+            g_sim_menu_options.editing.ship.doll_type = 0;
         } else if (g_replay_file_kind[0] == 4) {
-            g_sim_rules_loaded_kind[0] = 1;
+            g_sim_menu_options.editing.ship.doll_type = 1;
         } else {
-            g_sim_rules_loaded_kind[0] = 2;
+            g_sim_menu_options.editing.ship.doll_type = 2;
         }
     }
-    D_0068DEF0_as_s16_a[0] = D_006C58B8[0];
-    D_0068DEF2[0] = D_006C58BA[0];
-    D_0068DEF4[0] = D_006C58C0[0];
-    D_0068DF04[0] = D_006C58C2[0];
-    D_0068DEF6[0] = D_006C58B4[0];
-    D_0068DEF8[0] = D_006C58B6[0];
-    D_0068DEFA[0] = D_006C58CA[0];
-    D_0068DEFE[0] = D_006C58BC[0];
-    D_0068DF00[0] = D_006C58BE[0];
-    D_0068DEFC[0] = D_006C58CC[0];
-    ((s16 *)g_sim_rules_page_a)[0] = D_006C58CE[0];
-    D_0068DECA[0] = D_006C58D0[0];
-    D_0068DECC[0] = D_006C58D2[0];
-    D_0068DECE[0] = D_006C58B0[0];
-    D_0068DED0[0] = D_006C58B2[0];
-    D_0068DED2[0] = D_006C58D4[0];
-    if (((s16 *)g_sim_rules_page_b)[0] > 3) {
-        ((s16 *)g_sim_rules_page_b)[0] = 1;
+    g_sim_menu_options.editing.start.start_point = D_006C58B8[0];
+    g_sim_menu_options.editing.start.keep_power_on_death = D_006C58BA[0];
+    g_sim_menu_options.editing.start.rank = D_006C58C0[0];
+    g_sim_menu_options.editing.start.custom_rank = D_006C58C2[0];
+    g_sim_menu_options.editing.start.bomb_capacity = D_006C58B4[0];
+    g_sim_menu_options.editing.start.bomb_stock = D_006C58B6[0];
+    g_sim_menu_options.editing.start.hyper_active = D_006C58CA[0];
+    g_sim_menu_options.editing.start.hyper_stock = D_006C58BC[0];
+    g_sim_menu_options.editing.start.hyper_gauge = D_006C58BE[0];
+    g_sim_menu_options.editing.start.hyper_time = D_006C58CC[0];
+    g_sim_menu_options.editing.power.maximum_level = D_006C58CE[0];
+    g_sim_menu_options.editing.power.maximum_multiplier = D_006C58D0[0];
+    g_sim_menu_options.editing.power.hyper_uses = D_006C58D2[0];
+    g_sim_menu_options.editing.power.laser_level = D_006C58B0[0];
+    g_sim_menu_options.editing.power.shot_level = D_006C58B2[0];
+    g_sim_menu_options.editing.power.dropped_powerups = D_006C58D4[0];
+    if (g_sim_menu_options.editing.ship.difficulty > 3) {
+        g_sim_menu_options.editing.ship.difficulty = 1;
     }
-    if (D_0068DEDE[0] > 19) {
-        D_0068DEDE[0] = 20;
+    if (g_sim_menu_options.editing.ship.ship_stock > SIM_SHIP_STOCK_FREE - 1) {
+        g_sim_menu_options.editing.ship.ship_stock = SIM_SHIP_STOCK_FREE;
     }
-    if (D_0068DEE0[0] > 3) {
-        D_0068DEE0[0] = 0;
+    if (g_sim_menu_options.editing.ship.extend > 3) {
+        g_sim_menu_options.editing.ship.extend = 0;
     }
-    if (D_0068DEF0_as_s16_a[0] > 1) {
-        D_0068DEF0_as_s16_a[0] = 0;
+    if (g_sim_menu_options.editing.start.start_point > 1) {
+        g_sim_menu_options.editing.start.start_point = 0;
     }
-    if (D_0068DEF2[0] > 1) {
-        D_0068DEF2[0] = 0;
+    if (g_sim_menu_options.editing.start.keep_power_on_death > 1) {
+        g_sim_menu_options.editing.start.keep_power_on_death = 0;
     }
-    if (D_0068DEF4[0] > 255) {
-        D_0068DEF4[0] = 0;
+    if (g_sim_menu_options.editing.start.rank > 255) {
+        g_sim_menu_options.editing.start.rank = 0;
     }
-    if (D_0068DF04[0] > 1) {
-        D_0068DF04[0] = 0;
+    if (g_sim_menu_options.editing.start.custom_rank > 1) {
+        g_sim_menu_options.editing.start.custom_rank = 0;
     }
-    if (D_0068DEF6[0] > 5) {
-        D_0068DEF6[0] = 6;
+    if (g_sim_menu_options.editing.start.bomb_capacity > 5) {
+        g_sim_menu_options.editing.start.bomb_capacity = 6;
     }
-    if (D_0068DEF8[0] > 7) {
-        D_0068DEF8[0] = 8;
+    if (g_sim_menu_options.editing.start.bomb_stock > 7) {
+        g_sim_menu_options.editing.start.bomb_stock = 8;
     }
-    if (D_0068DEFA[0] > 1) {
-        D_0068DEFA[0] = 0;
+    if (g_sim_menu_options.editing.start.hyper_active > 1) {
+        g_sim_menu_options.editing.start.hyper_active = 0;
     }
-    if (D_0068DEFE[0] > 5) {
-        D_0068DEFE[0] = 0;
+    if (g_sim_menu_options.editing.start.hyper_stock > 5) {
+        g_sim_menu_options.editing.start.hyper_stock = 0;
     }
-    if (D_0068DF00[0] > 500) {
-        D_0068DF00[0] = 0;
+    if (g_sim_menu_options.editing.start.hyper_gauge > 500) {
+        g_sim_menu_options.editing.start.hyper_gauge = 0;
     }
-    if (D_0068DEFC[0] > 100) {
-        D_0068DEFC[0] = 0;
+    if (g_sim_menu_options.editing.start.hyper_time > 100) {
+        g_sim_menu_options.editing.start.hyper_time = 0;
     }
-    if (((s16 *)g_sim_rules_page_a)[0] > 2) {
-        ((s16 *)g_sim_rules_page_a)[0] = 0;
+    if (g_sim_menu_options.editing.power.maximum_level > 2) {
+        g_sim_menu_options.editing.power.maximum_level = 0;
     }
-    if (D_0068DECA[0] > 9) {
-        D_0068DECA[0] = 0;
+    if (g_sim_menu_options.editing.power.maximum_multiplier > 9) {
+        g_sim_menu_options.editing.power.maximum_multiplier = 0;
     }
-    if (D_0068DECC[0] > 15) {
-        D_0068DECC[0] = 0;
+    if (g_sim_menu_options.editing.power.hyper_uses > 15) {
+        g_sim_menu_options.editing.power.hyper_uses = 0;
     }
-    if (D_0068DECE[0] > 4) {
-        D_0068DECE[0] = 0;
+    if (g_sim_menu_options.editing.power.laser_level > 4) {
+        g_sim_menu_options.editing.power.laser_level = 0;
     }
-    if (D_0068DED0[0] > 4) {
-        D_0068DED0[0] = 0;
+    if (g_sim_menu_options.editing.power.shot_level > 4) {
+        g_sim_menu_options.editing.power.shot_level = 0;
     }
-    if (D_0068DED2[0] > 10) {
-        D_0068DED2[0] = 0;
+    if (g_sim_menu_options.editing.power.dropped_powerups > 10) {
+        g_sim_menu_options.editing.power.dropped_powerups = 0;
     }
-    memcpy(((s16 *)D_0068DEB0), D_0068DEF0_as_s16_a, 0x16);
-    memcpy(((s16 *)D_0068DE90), ((s16 *)g_sim_rules_page_b), 0xA);
-    memcpy(((s16 *)D_0068DEA0), ((s16 *)g_sim_rules_page_a), 0xC);
+    memcpy(&g_sim_menu_options.stored.start, &g_sim_menu_options.editing.start, sizeof(SimStartOptions));
+    memcpy(&g_sim_menu_options.stored.ship, &g_sim_menu_options.editing.ship, sizeof(SimShipOptions));
+    memcpy(&g_sim_menu_options.stored.power, &g_sim_menu_options.editing.power, sizeof(SimPowerOptions));
 }
 
 void menu_sim_setting_step0(void)
@@ -9197,7 +9155,7 @@ void menu_sim_player_step2(void) {
         switch (g_menu_cursor) {
         case 6:
             sfx_menu_confirm();
-            memcpy(((s16 *)g_sim_rules_page_b), D_00270828, 10);
+            memcpy(&g_sim_menu_options.editing.ship, &sim_default_ship, sizeof(SimShipOptions));
             break;
         case 7:
             sfx_menu_confirm();
@@ -9214,12 +9172,12 @@ void menu_sim_player_step2(void) {
     } else if (dir != 0) {
         item = g_menu_sim_player_value_tables[g_menu_cursor];
         if (!(0 > item)) {
-            value = &((s16 *)g_sim_rules_page_b)[item];
+            value = &((s16 *)&g_sim_menu_options.editing.ship.values)[item];
             count = g_menu_sim_player_value_counts[item];
             sfx_menu_tick();
             if (item == 2) {
-                D_0068DEF6[0] = 6;
-                D_0068DEF8[0] = 8;
+                g_sim_menu_options.editing.start.bomb_capacity = 6;
+                g_sim_menu_options.editing.start.bomb_stock = 8;
             }
             if (dir == -1) {
                 (*value)--;
@@ -9288,7 +9246,7 @@ void menu_sim_player_draw(void) {
             continue;
         }
         entries = (u8 **)g_menu_sim_player_values[index];
-        value = ((s16 *)g_sim_rules_page_b)[index];
+        value = ((s16 *)&g_sim_menu_options.editing.ship.values)[index];
         reg_a0 = entries[value];
         if (reg_a0 == 0) {
             continue;
@@ -9379,12 +9337,12 @@ void menu_sim_rules_step2(void) {
         switch (sel) {
         case 3:
             sfx_menu_confirm();
-            D_0068DEF0_as_s16_a[10] += 1;
-            D_0068DEF0_as_s16_a[10] &= 1;
+            g_sim_menu_options.editing.start.custom_rank += 1;
+            g_sim_menu_options.editing.start.custom_rank &= 1;
             break;
         case 10:
             sfx_menu_confirm();
-            memcpy(D_0068DEF0_as_s16_a, ((s16 *)D_00270810), 0x16);
+            memcpy(&g_sim_menu_options.editing.start, &sim_default_start, sizeof(SimStartOptions));
             break;
         case 11:
             sfx_menu_confirm();
@@ -9400,11 +9358,11 @@ void menu_sim_rules_step2(void) {
         }
     } else if (dir != 0) {
         idx = g_menu_sim_rules_value_tables[sel];
-        if (sel == 3 && D_0068DEF0_as_s16_a[10] == 0) {
+        if (sel == 3 && g_sim_menu_options.editing.start.custom_rank == 0) {
             idx = -1;
         }
         if (!(0 > idx)) {
-        value = &D_0068DEF0_as_s16_a[idx];
+        value = &((s16 *)&g_sim_menu_options.editing.start.values)[idx];
         count = g_menu_sim_rules_value_counts[idx];
         if (sel == 3 || sel == 9 || sel == 7) {
             pad = g_pad_fast_repeat_timer[g_menu_pad];
@@ -9417,49 +9375,49 @@ void menu_sim_rules_step2(void) {
             sfx_menu_tick();
         }
         if (idx == 5) {
-            if (D_0068DEF0_as_s16_a[5] == 0 && D_0068DEF0_as_s16_a[7] == 0) {
-                D_0068DEF0_as_s16_a[7] = 1;
+            if (g_sim_menu_options.editing.start.hyper_active == 0 && g_sim_menu_options.editing.start.hyper_stock == 0) {
+                g_sim_menu_options.editing.start.hyper_stock = 1;
             }
-            if (D_0068DEF0_as_s16_a[5] != 0) {
-                D_0068DEF0_as_s16_a[7] = 0;
-                D_0068DEF0_as_s16_a[8] = 0;
+            if (g_sim_menu_options.editing.start.hyper_active != 0) {
+                g_sim_menu_options.editing.start.hyper_stock = 0;
+                g_sim_menu_options.editing.start.hyper_gauge = 0;
             }
         }
         if (idx == 3) {
-            D_0068DEF0_as_s16_a[4] = 8;
+            g_sim_menu_options.editing.start.bomb_stock = 8;
         }
-        limit = D_0068DEF0_as_s16_a[3] + 1;
+        limit = g_sim_menu_options.editing.start.bomb_capacity + 1;
         if (limit == 7) {
-            if (g_sim_rules_loaded_kind[0] == 0) {
+            if (g_sim_menu_options.editing.ship.doll_type == 0) {
                 limit = 3;
             }
-            if (g_sim_rules_loaded_kind[0] == 1) {
+            if (g_sim_menu_options.editing.ship.doll_type == 1) {
                 limit = 2;
             }
-            if (g_sim_rules_loaded_kind[0] == 2) {
+            if (g_sim_menu_options.editing.ship.doll_type == 2) {
                 limit = 1;
             }
         }
         if (dir == -1) {
             (*value)--;
             if (idx == 3) {
-                if (g_sim_rules_loaded_kind[0] == 0 && *value == 1) {
+                if (g_sim_menu_options.editing.ship.doll_type == 0 && *value == 1) {
                     *value = 6;
                 }
-                if (g_sim_rules_loaded_kind[0] == 1 && *value == 5) {
+                if (g_sim_menu_options.editing.ship.doll_type == 1 && *value == 5) {
                     *value = 3;
                 }
-                if (g_sim_rules_loaded_kind[0] == 1 && *value == 0) {
+                if (g_sim_menu_options.editing.ship.doll_type == 1 && *value == 0) {
                     *value = 6;
                 }
-                if (g_sim_rules_loaded_kind[0] == 2 && *value == 5) {
+                if (g_sim_menu_options.editing.ship.doll_type == 2 && *value == 5) {
                     *value = 1;
                 }
             }
             if (idx == 4 && *value == 6) {
                 *value = limit;
             }
-            if (idx == 7 && D_0068DEF0_as_s16_a[5] == 1 && *value == 0) {
+            if (idx == 7 && g_sim_menu_options.editing.start.hyper_active == 1 && *value == 0) {
                 *value = 5;
             }
             if (g_menu_cursor == 3 || g_menu_cursor == 9 || g_menu_cursor == 7) {
@@ -9474,23 +9432,23 @@ void menu_sim_rules_step2(void) {
         } else {
             (*value)++;
             if (idx == 3) {
-                if (g_sim_rules_loaded_kind[0] == 0 && *value == 7) {
+                if (g_sim_menu_options.editing.ship.doll_type == 0 && *value == 7) {
                     *value = 2;
                 }
-                if (g_sim_rules_loaded_kind[0] == 1 && *value == 4) {
+                if (g_sim_menu_options.editing.ship.doll_type == 1 && *value == 4) {
                     *value = 6;
                 }
-                if (g_sim_rules_loaded_kind[0] == 1 && *value == 7) {
+                if (g_sim_menu_options.editing.ship.doll_type == 1 && *value == 7) {
                     *value = 1;
                 }
-                if (g_sim_rules_loaded_kind[0] == 2 && *value == 2) {
+                if (g_sim_menu_options.editing.ship.doll_type == 2 && *value == 2) {
                     *value = 6;
                 }
             }
             if (idx == 4 && *value < 7 && limit < *value) {
                 *value = 7;
             }
-            if (idx == 7 && D_0068DEF0_as_s16_a[5] == 1 && *value == 6) {
+            if (idx == 7 && g_sim_menu_options.editing.start.hyper_active == 1 && *value == 6) {
                 *value = 1;
             }
             if (g_menu_cursor == 3 || g_menu_cursor == 9 || g_menu_cursor == 7) {
@@ -9503,22 +9461,22 @@ void menu_sim_rules_step2(void) {
                 }
             }
 #ifdef DEATH_LABEL
-            if (D_0068DEF0_as_s16_a[5] == 0) {
-                base = D_0068DEF0_as_s16_a[8];
+            if (g_sim_menu_options.editing.start.hyper_active == 0) {
+                base = g_sim_menu_options.editing.start.hyper_gauge;
                 total = 0;
                 if (base != 0) {
                     total = (s16)base / 100;
                 }
-                extra = D_0068DEF0_as_s16_a[7];
+                extra = g_sim_menu_options.editing.start.hyper_stock;
                 total += extra;
                 if (total > 5) {
                     if (idx == 7) {
                         if ((s16)base >= 100) {
-                            D_0068DEF0_as_s16_a[8] -= 100;
+                            g_sim_menu_options.editing.start.hyper_gauge -= 100;
                         }
                     } else if (idx == 8) {
                         if (extra > 0) {
-                            D_0068DEF0_as_s16_a[7] = extra - 1;
+                            g_sim_menu_options.editing.start.hyper_stock = extra - 1;
                         }
                     }
                 }
@@ -9526,19 +9484,19 @@ void menu_sim_rules_step2(void) {
 #endif
         }
 #ifndef DEATH_LABEL
-        if (D_0068DEF0_as_s16_a[5] == 0) {
-            base = D_0068DEF0_as_s16_a[8];
+        if (g_sim_menu_options.editing.start.hyper_active == 0) {
+            base = g_sim_menu_options.editing.start.hyper_gauge;
             total = 0;
             if (base != 0) {
                 total = (s16)base / 100;
             }
-            extra = D_0068DEF0_as_s16_a[7];
+            extra = g_sim_menu_options.editing.start.hyper_stock;
             total += extra;
             if (total > 5) {
                 if (idx == 7) {
-                    D_0068DEF0_as_s16_a[8] = (5 - extra) * 100 + 99;
+                    g_sim_menu_options.editing.start.hyper_gauge = (5 - extra) * 100 + 99;
                 } else if (idx == 8) {
-                    D_0068DEF0_as_s16_a[7] = (500 - (s16)base) / 100;
+                    g_sim_menu_options.editing.start.hyper_stock = (500 - (s16)base) / 100;
                 }
             }
         }
@@ -9590,7 +9548,7 @@ void menu_sim_rules_draw(void) {
         y = item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].y;
         z = item[MENU_PAGE_SIM_RULES * MENU_ITEMS_PER_PAGE].z;
         bright = 0x80;
-        if (D_0068DEFA[0] == 0 && i == 7) {
+        if (g_sim_menu_options.editing.start.hyper_active == 0 && i == 7) {
             bright = 0x40;
         }
         reg_a0 = (u8 *)g_menu_sim_rules_items[i];
@@ -9606,14 +9564,14 @@ void menu_sim_rules_draw(void) {
         } else if (i == 9 || i == 7) {
             reg_a0 = (u8 *)g_menu_blank_text_a;
         } else {
-            reg_a0 = (u8 *)g_menu_sim_rules_values[index][D_0068DEF0_as_s16_a[index]];
+            reg_a0 = (u8 *)g_menu_sim_rules_values[index][((s16 *)&g_sim_menu_options.editing.start.values)[index]];
         }
         if (reg_a0 == 0) {
             continue;
         }
         flag = 1;
         if (i == 3) {
-            if (D_0068DF04[0] == 1) {
+            if (g_sim_menu_options.editing.start.custom_rank == 1) {
                 menu_sim_rule_gauge_draw(x, y, g_menu_sim_rules.alpha, bright, 2);
             } else {
                 glyph_queue_add(x, y, z, 0, bright, g_menu_sim_rules.alpha, flag);
@@ -9639,7 +9597,7 @@ void menu_sim_rule_gauge_draw(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
     s32 h;
 
     saved = reg_a0;
-    level = D_0068DEF0_as_s16_a[kind];
+    level = ((s16 *)&g_sim_menu_options.editing.start.values)[kind];
     if (kind == 2) {
         h = level * 60000 / 255000;
     } else if (kind == 8) {
@@ -9745,7 +9703,7 @@ void menu_sim_param_step2(void) {
         switch (g_menu_cursor) {
         case 7:
             sfx_menu_confirm();
-            memcpy(((s16 *)g_sim_rules_page_a), D_00270838, 12);
+            memcpy(&g_sim_menu_options.editing.power, &sim_default_power, sizeof(SimPowerOptions));
             break;
         case 8:
             sfx_menu_confirm();
@@ -9762,7 +9720,7 @@ void menu_sim_param_step2(void) {
     } else if (dir != 0) {
         item = g_menu_sim_param_value_tables[g_menu_cursor];
         if (!(0 > item)) {
-            value = &((s16 *)g_sim_rules_page_a)[item];
+            value = &((s16 *)&g_sim_menu_options.editing.power.values)[item];
             count = g_menu_sim_param_value_counts[item];
             sfx_menu_tick();
             if (dir == -1) {
@@ -9828,7 +9786,7 @@ void menu_sim_param_draw(void) {
         if (index == -1) {
             continue;
         }
-        reg_a0 = (u8 *)g_menu_sim_param_values[index][((s16 *)g_sim_rules_page_a)[index]];
+        reg_a0 = (u8 *)g_menu_sim_param_values[index][((s16 *)&g_sim_menu_options.editing.power.values)[index]];
         if (reg_a0 == 0) {
             continue;
         }
@@ -11065,16 +11023,7 @@ void simulation_ships_start() {
 
 /* .bss (the compiler lays these out in reverse) */
 u8 g_replay_file_headers[672];
-#ifdef DDPDOJ_PC
-/* Two Simulation Mode records span the three adjacent PS2 blocks below. */
-s32 D_0068DEB0[24];
-#else
-s16 D_0068DF00[8];
-s16 D_0068DEE0[16];
-s32 D_0068DEB0[12];
-#endif
-s32 D_0068DEA0[4];
-s32 D_0068DE90[4];
+SimulationMenuOptions g_sim_menu_options;
 #ifdef DDPDOJ_PC
 s8 g_menu_item_indices[40 * MENU_ITEMS_PER_PAGE];
 extern s8 menu_game_option_adjust_buffer[16];
@@ -11119,7 +11068,6 @@ PC_DATA_ALIAS(g_menu_value_p2_btn_d, g_menu_item_indices, 0x100);
 PC_DATA_ALIAS(menu_death_option_adjust_buffer, g_menu_item_indices, 0x170);
 #endif
 
-PC_DATA_ALIAS(D_00270822, D_00270810, 0x12);
 
 PC_DATA_ALIAS(D_002714F1, g_menu_page_item_counts, 0x1);
 PC_DATA_ALIAS(D_002714F2, g_menu_page_item_counts, 0x2);
@@ -11154,32 +11102,6 @@ PC_DATA_ALIAS(g_menu_value_p2_btn_a, D_0068DD00, 0xd);
 PC_DATA_ALIAS(g_menu_value_p2_btn_b, D_0068DD00, 0xe);
 PC_DATA_ALIAS(g_menu_value_p2_btn_c, D_0068DD00, 0xf);
 
-PC_DATA_ALIAS(g_sim_rules_page_a, D_0068DEB0, 0x18);
-PC_DATA_ALIAS(D_0068DECA, D_0068DEB0, 0x1a);
-PC_DATA_ALIAS(D_0068DECC, D_0068DEB0, 0x1c);
-PC_DATA_ALIAS(D_0068DECE, D_0068DEB0, 0x1e);
-PC_DATA_ALIAS(D_0068DED0, D_0068DEB0, 0x20);
-PC_DATA_ALIAS(D_0068DED2, D_0068DEB0, 0x22);
-PC_DATA_ALIAS(g_sim_rules_page_b, D_0068DEB0, 0x28);
-PC_DATA_ALIAS(D_0068DEDA, D_0068DEB0, 0x2a);
-PC_DATA_ALIAS(g_sim_rules_loaded_kind, D_0068DEB0, 0x2c);
-PC_DATA_ALIAS(D_0068DEDE, D_0068DEB0, 0x2e);
-
-PC_DATA_ALIAS(D_0068DEE0, D_0068DEB0, 0x30);
-PC_DATA_ALIAS(D_0068DEF0, D_0068DEB0, 0x40);
-PC_DATA_ALIAS(D_0068DEF0_as_s16_a, D_0068DEB0, 0x40);
-PC_DATA_ALIAS(D_0068DEF2, D_0068DEB0, 0x42);
-PC_DATA_ALIAS(D_0068DEF4, D_0068DEB0, 0x44);
-PC_DATA_ALIAS(D_0068DEF6, D_0068DEB0, 0x46);
-PC_DATA_ALIAS(D_0068DEF8, D_0068DEB0, 0x48);
-PC_DATA_ALIAS(D_0068DEFA, D_0068DEB0, 0x4a);
-PC_DATA_ALIAS(D_0068DEFC, D_0068DEB0, 0x4c);
-PC_DATA_ALIAS(D_0068DEFE, D_0068DEB0, 0x4e);
-
-PC_DATA_ALIAS(D_0068DF00, D_0068DEB0, 0x50);
-PC_DATA_ALIAS(D_0068DF02, D_0068DEB0, 0x52);
-PC_DATA_ALIAS(D_0068DF04, D_0068DEB0, 0x54);
-
 #ifdef DEATH_LABEL
 PC_DATA_ALIAS(death_D_00262EC7, g_menu_page_item_counts, 0x17);
 #endif
@@ -11207,6 +11129,15 @@ PC_DATA_ALIAS(death_D_00628DC6, menu_debug_option_adjust_buffer, 0x6);
 
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
+
+_Static_assert(sizeof(SimPowerOptions) == 12, "simulation power settings copy size");
+_Static_assert(sizeof(SimShipOptions) == 10, "simulation ship settings copy size");
+_Static_assert(sizeof(SimStartOptions) == 22, "simulation start settings copy size");
+_Static_assert(offsetof(SimulationMenuOptions, stored.start) == 0x20, "stored start settings offset");
+_Static_assert(offsetof(SimulationMenuOptions, editing.power) == 0x38, "power settings offset");
+_Static_assert(offsetof(SimulationMenuOptions, editing.ship) == 0x48, "ship settings offset");
+_Static_assert(offsetof(SimulationMenuOptions, editing.start) == 0x60, "start settings offset");
+_Static_assert(sizeof(SimulationMenuOptions) == 0x80, "simulation menu settings size");
 
 const PcFrameRegion pc_menu_regions[] = {
     PC_FRAME_REGION(g_menu_item_indices),
