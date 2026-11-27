@@ -538,7 +538,7 @@ block_3:
             *(u16 *)(reg_a6 + 6) = 4;
         }
     } else {
-        p = (u8 *)(u32)(&PLAYER(g_player1)->bombs.b.count);
+        p = &PLAYER(g_player1)->bombs.b.count;
         if (*p == 0) {
             goto block_1;
         }
@@ -663,7 +663,7 @@ block_3:
         *(u16 *)(reg_a6 + 8) = 4;
         return;
     }
-    p = (u8 *)(u32)(&PLAYER(g_player2)->bombs.b.count);
+    p = &PLAYER(g_player2)->bombs.b.count;
     if (*p == 0) {
         goto block_1;
     }

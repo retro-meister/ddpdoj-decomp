@@ -447,7 +447,11 @@ void boss_hit_state_clear(void)
     lowHalfword = (u16)(reg_d0.w = 0);
     g_boss_explosion_flash = 0;
     g_boss_near_death = 0;
+#ifdef DDPDOJ_PC
+    g_boss_hp = NULL;
+#else
     (*(s32 *)&g_boss_hp) = lowHalfword;
+#endif
     g_boss_hp_unit = lowHalfword;
     g_lives_display_move_x = 0;
     g_lives_display_move_y = 0;
@@ -854,7 +858,12 @@ void scores_reset(void) {
     g_lives_display_move_x = 0;
     g_lives_display_move_y = 0;
     g_boss_explosion_flash = 0;
+#ifdef DDPDOJ_PC
+    g_boss_hp = NULL;
+    g_boss_hp_unit = g_boss_near_death = 0;
+#else
     g_boss_hp_unit = (*(s32 *)&g_boss_hp) = (g_boss_near_death = 0);
+#endif
     g_p2_shot_hyper_timer = 0;
     g_p1_shot_hyper_timer = 0;
     g_p2_laser_hyper_timer = 0;

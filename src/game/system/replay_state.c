@@ -1439,6 +1439,28 @@ extern u16 D_006C58D2[];
 extern u16 D_006C58D4[];
 extern u16 D_006C58D6[];
 #endif
+#ifdef DDPDOJ_PC
+/* The replay stores the original address of the HP field in an enemy slot. */
+static const u32 replay_boss_hp_base = MAIN_OR_DEATH_LABEL(0x2be0c0u, 0x690c30u);
+
+static bool replay_boss_hp_offset_valid(uintptr_t offset)
+{
+    return offset < sizeof(g_enemy_slots) && offset % sizeof(EnemyState) == offsetof(EnemyState, own);
+}
+
+static u32 replay_boss_hp_save(void)
+{
+    uintptr_t offset = (uintptr_t)g_boss_hp - (uintptr_t)&g_enemy_slots;
+    return replay_boss_hp_offset_valid(offset) ? replay_boss_hp_base + (u32)offset : 0;
+}
+
+static u8 *replay_boss_hp_load(u32 address)
+{
+    u32 offset = address - replay_boss_hp_base;
+    return replay_boss_hp_offset_valid(offset) ? (u8 *)&g_enemy_slots + offset : NULL;
+}
+#endif
+
 void replay_snapshot_save(Buf *buf) {
     s32 i;
     s32 v;
@@ -1688,7 +1710,11 @@ void replay_snapshot_save(Buf *buf) {
     *(u16 *)(p + 0x3418) = g_lives_display_move_y;
     *(u16 *)(p + 0x341A) = g_lives_display_move_x;
     *(s32 *)(p + 0x341C) = g_boss_hp_unit;
+#ifdef DDPDOJ_PC
+    *(u32 *)(p + 0x3420) = replay_boss_hp_save();
+#else
     *(s32 *)(p + 0x3420) = (*(s32 *)&g_boss_hp);
+#endif
     *(u16 *)(p + 0x3424) = g_boss_near_death;
     *(u16 *)(p + 0x3426) = g_boss_explosion_flash;
     *(u16 *)(p + 0x3428) = g_p1_max_hits;
@@ -2191,7 +2217,11 @@ void replay_snapshot_load(u8 *p) {
     g_lives_display_move_y = *(u16 *)(p + 0x3418);
     g_lives_display_move_x = *(u16 *)(p + 0x341A);
     g_boss_hp_unit = *(s32 *)(p + 0x341C);
+#ifdef DDPDOJ_PC
+    g_boss_hp = replay_boss_hp_load(*(u32 *)(p + 0x3420));
+#else
     (*(s32 *)&g_boss_hp) = *(s32 *)(p + 0x3420);
+#endif
     g_boss_near_death = *(u16 *)(p + 0x3424);
     g_boss_explosion_flash = *(u16 *)(p + 0x3426);
     g_p1_max_hits = *(u16 *)(p + 0x3428);

@@ -984,7 +984,11 @@ extern u32 D_0028DA14;
 
 void stage5_boss_fire_loop1_form1_rage_start(void) {
     (*(u16 **)&reg_a0) = D_00264800;
+#ifdef DDPDOJ_PC
+    reg_a1 = reg_a4 + 2;
+#else
     (*(u16 **)&reg_a1) = (u16 *)((*(s32 *)&reg_a4) + 2);
+#endif
     reg_d0.w = ((u32) D_0028DA14 >> 1) - 1;
     do {
         *(*(u16 **)&reg_a1) = *((u16 *)reg_a0);
