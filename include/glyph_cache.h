@@ -8,15 +8,34 @@
  * 0x401 cells) and a smaller one (15 cells per row, 0xE1 cells). The two entries in front of each list
  * are its head (-2) and tail (-1).
  */
-extern GlyphCacheEntry g_glyph_cache_storage[0x403];
-#ifdef DDPDOJ_PC
-#define GLYPH_CACHE_SUB_STORAGE_COUNT 0xE4
-#else
-#define GLYPH_CACHE_SUB_STORAGE_COUNT 0xE3
-#endif
-extern GlyphCacheEntry g_glyph_cache_sub_storage[GLYPH_CACHE_SUB_STORAGE_COUNT];
-#define g_glyph_cache (&g_glyph_cache_storage[2])
-#define g_glyph_cache_sub (&g_glyph_cache_sub_storage[2])
+typedef union {
+    struct {
+        GlyphCacheEntry head;
+        GlyphCacheEntry tail;
+        GlyphCacheEntry cells[0x400];
+        /* free_range also examines the entry immediately following the linked cells. */
+        GlyphCacheEntry end_probe;
+    } list;
+    GlyphCacheEntry nodes[0x403];
+} GlyphCacheStorage;
+
+typedef union {
+    struct {
+        GlyphCacheEntry head;
+        GlyphCacheEntry tail;
+        GlyphCacheEntry cells[0xe1];
+        /* free_range also examines the entry immediately following the linked cells. */
+        GlyphCacheEntry end_probe;
+    } list;
+    GlyphCacheEntry nodes[0xe4];
+} SmallGlyphCacheStorage;
+
+extern GlyphCacheStorage g_glyph_cache_storage;
+extern SmallGlyphCacheStorage g_glyph_cache_sub_storage;
+
+/* Link indices include -2 (head) and -1 (tail). */
+#define g_glyph_cache (&g_glyph_cache_storage.nodes[2])
+#define g_glyph_cache_sub (&g_glyph_cache_sub_storage.nodes[2])
 
 void glyph_cache_init(void);
 s32 glyph_cache_lookup(u16 key);

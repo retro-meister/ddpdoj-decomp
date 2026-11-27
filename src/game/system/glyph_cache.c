@@ -134,26 +134,34 @@ void glyph_cache_init(void) {
 
     glyph_cache_clear_maps();
     for (i = 2; i < 0x402; i++) {
-        g_glyph_cache_storage[i].next = g_glyph_cache_storage[i].previous = i - 2;
+        g_glyph_cache_storage.nodes[i].next = g_glyph_cache_storage.nodes[i].previous = i - 2;
     }
-    g_glyph_cache_storage[0].next = -1;
-    g_glyph_cache_storage[1].previous = -2;
+    g_glyph_cache_storage.list.head.next = -1;
+    g_glyph_cache_storage.list.tail.previous = -2;
     glyph_cache_free_range(0, 0x400, g_glyph_cache);
     for (i = 2; i < 0xE3; i++) {
-        g_glyph_cache_sub_storage[i].next = g_glyph_cache_sub_storage[i].previous = i - 2;
+        g_glyph_cache_sub_storage.nodes[i].next = g_glyph_cache_sub_storage.nodes[i].previous = i - 2;
     }
-    g_glyph_cache_sub_storage[0].next = -1;
-    g_glyph_cache_sub_storage[1].previous = -2;
+    g_glyph_cache_sub_storage.list.head.next = -1;
+    g_glyph_cache_sub_storage.list.tail.previous = -2;
     glyph_cache_free_range(0, 0xE1, g_glyph_cache_sub);
 }
 
-GlyphCacheEntry g_glyph_cache_storage[0x403] __attribute__((aligned(16)));
+GlyphCacheStorage g_glyph_cache_storage __attribute__((aligned(16)));
 s16 g_glyph_cache_map[0x22C4] __attribute__((aligned(16)));
-GlyphCacheEntry g_glyph_cache_sub_storage[GLYPH_CACHE_SUB_STORAGE_COUNT] __attribute__((aligned(16)));
+SmallGlyphCacheStorage g_glyph_cache_sub_storage __attribute__((aligned(16)));
 s16 g_glyph_cache_sub_map[0x1000] __attribute__((aligned(16)));
 
 #ifdef DDPDOJ_PC
 #include "pc_frame_regions.h"
+
+_Static_assert(sizeof(GlyphCacheEntry) == 12, "glyph cache entry stride");
+_Static_assert(offsetof(GlyphCacheStorage, list.cells) == 24, "links before main cells");
+_Static_assert(offsetof(SmallGlyphCacheStorage, list.cells) == 24, "links before small cells");
+_Static_assert(offsetof(GlyphCacheStorage, list.end_probe) == 0x402 * 12, "main free range end");
+_Static_assert(offsetof(SmallGlyphCacheStorage, list.end_probe) == 0xe3 * 12, "small free range end");
+_Static_assert(sizeof(GlyphCacheStorage) == 0x403 * 12, "main cache save size");
+_Static_assert(sizeof(SmallGlyphCacheStorage) == 0xe4 * 12, "small cache save size");
 
 const PcFrameRegion pc_glyph_cache_regions[] = {
     PC_FRAME_REGION(g_glyph_cache_storage),
