@@ -404,3 +404,14 @@ u8 stage_doors_open_update_table_3[8] = {
 s16 D_0028E7A0 __attribute__((aligned(4)));
 s16 D_0028E79C __attribute__((aligned(4)));
 s16 D_0028E798 __attribute__((aligned(4)));
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_clear_door_regions[] = {
+    PC_FRAME_REGION(D_0028E7A0),
+    PC_FRAME_REGION(D_0028E79C),
+    PC_FRAME_REGION(D_0028E798),
+    { NULL, 0 },
+};
+#endif

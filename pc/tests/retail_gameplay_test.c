@@ -1,4 +1,11 @@
 #include "cdvd.h"
+#include "combat_state.h"
+#include "pc_player_state.h"
+#include "pc_task_state.h"
+#include "pc_replay_frame.h"
+#include "pc_frame_regions.h"
+#include "state_slot.h"
+#include "pc_arcade_address.h"
 #include "black_label.h"
 #ifdef DDPDOJ_BONUS_FEATURES
 #include "explosion.h"
@@ -6,6 +13,7 @@
 #endif
 #include "game_loop.h"
 #include "gs.h"
+#include "game_snapshot.h"
 #include "presentation.h"
 #include "memory_card.h"
 #include "pc_input.h"
@@ -25,6 +33,7 @@ extern u32 g_p2_score;
 extern u16 g_game_frame, g_player_shot_count, g_player_laser_count, g_scroll_line;
 extern u16 g_bomb_entities[];
 extern u8 g_game_frame_ran;
+extern s32 g_replay_position;
 
 enum {
     ATTRACT_ARCADE = 14,
@@ -222,11 +231,82 @@ static SDL_GamepadButton replay_menu_button(bool *confirmed, int slot)
 }
 #endif
 
+static bool has_relocated_enemy(void)
+{
+    const uintptr_t first = (uintptr_t)g_enemy_entities;
+    for (size_t i = 0; i < SDL_arraysize(g_enemy_slots.slot.others); ++i) {
+        const EnemyState *enemy = &g_enemy_slots.slot.others[i];
+        if (!enemy->state.h) continue;
+        u32 slot = ((u32)enemy->entities[0] << 16) | enemy->entities[1];
+        uintptr_t p = pc_arcade_address_decode(slot);
+        if (p - first >= sizeof(g_enemy_entities) || (p - first) % sizeof(Entity)) continue;
+        EnemyRoutines *table = enemy->kind < 128 ? g_enemy_routines : g_enemy_routines_high;
+        u32 callback = ((u32)enemy->routine[0] << 16) | enemy->routine[1];
+        if (((Entity *)p)->flags.h && callback &&
+            pc_arcade_address_decode(callback) == (uintptr_t)table[enemy->kind % 128].run) return true;
+    }
+    return false;
+}
+
+typedef struct {
+    PcPlayerState at_save;
+    PcPlayerState next[120];
+    Uint32 combat[120], image[4];
+} ExpectedTrajectory;
+
+static void run_trajectory(SDL_Renderer *renderer, ExpectedTrajectory *states, bool compare)
+{
+    PcCombatPools *combat = SDL_calloc(1, sizeof(*combat));
+    require(combat != NULL, "Allocate combat comparison buffer");
+    for (unsigned i = 0; i < SDL_arraysize(states->next); ++i) {
+        pc_pad_capture();
+        game_run_frame();
+        if (i % 30 == 0) {
+            SDL_Surface *pixels = SDL_RenderReadPixels(renderer, NULL);
+            require(pixels != NULL, "Read rendered gameplay");
+            Uint32 hash = 0;
+            for (int y = 0; y < pixels->h; ++y) {
+                const u8 *row = (u8 *)pixels->pixels + (size_t)y * pixels->pitch;
+                hash = SDL_crc32(hash, row, (size_t)pixels->w * SDL_BYTESPERPIXEL(pixels->format));
+            }
+            SDL_DestroySurface(pixels);
+            if (compare && hash != states->image[i / 30])
+                SDL_Log("Image differs on frame %u (%08x vs %08x)", i, hash, states->image[i / 30]);
+            if (compare) require(hash == states->image[i / 30], "Reproduce the rendered frame");
+            else states->image[i / 30] = hash;
+        }
+        require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render after restoring gameplay");
+        pc_combat_capture(combat);
+        Uint32 hash = SDL_crc32(0, combat, sizeof(*combat));
+        if (compare) require(hash == states->combat[i], "Reproduce the combat trajectory");
+        else states->combat[i] = hash;
+        PcPlayerState player;
+        pc_player_state_capture(&player);
+        if (compare) {
+            require(!memcmp(&player, &states->next[i], sizeof(player)),
+                    "Reproduce player and weapon state on each subsequent frame");
+        } else states->next[i] = player;
+    }
+    SDL_free(combat);
+}
+
 int main(int argc, char **argv)
 {
+    bool black_slot = argc == 6 && !strcmp(argv[5], "--black-label");
+    bool later_stage = argc == 6 && !strcmp(argv[5], "--later-stage");
+    bool boss_slot = argc == 6 && !strcmp(argv[5], "--boss");
+    if (black_slot || later_stage || boss_slot) --argc;
+    const char *save_pools = argc == 5 && !strcmp(argv[3], "--save-pools") ? argv[4] : NULL;
+    const char *load_pools = argc == 5 && !strcmp(argv[3], "--load-pools") ? argv[4] : NULL;
+    if (save_pools || load_pools) argc = 3;
+#ifdef DEATH_LABEL
+    const GameMode pool_mode = GAME_MODE_DEATH_LABEL;
+#else
+    const GameMode pool_mode = black_slot ? GAME_MODE_BLACK_LABEL : GAME_MODE_MAIN;
+#endif
 #ifndef DEATH_LABEL
     const bool two_player = argc == 4 && strcmp(argv[3], "--two-player") == 0;
-    const RetailReplay *replay = NULL;
+    const RetailReplay *replay = later_stage ? &super_replays[4] : boss_slot ? &super_replays[0] : NULL;
     if (argc >= 4 && strcmp(argv[3], "--super-replay") == 0) {
         if (argc == 4) replay = &super_replays[2];
         if (argc == 5 && strlen(argv[4]) == 1 && argv[4][0] >= '0' && argv[4][0] <= '9') {
@@ -235,7 +315,7 @@ int main(int argc, char **argv)
     }
 #ifdef DDPDOJ_BONUS_FEATURES
     extern u8 g_ship_select_state[];
-    const bool hover_one_round = argc == 4 && strcmp(argv[3], "--black-label") == 0;
+    const bool hover_one_round = black_slot || (argc == 4 && strcmp(argv[3], "--black-label") == 0);
     const bool leave_default = argc == 4 && strcmp(argv[3], "--black-label-default") == 0;
     const bool demos = argc == 4 && strcmp(argv[3], "--black-label-demos") == 0;
     unsigned departure_frames = 0;
@@ -269,6 +349,29 @@ int main(int argc, char **argv)
         goto cleanup;
     }
 #endif
+    if (load_pools) {
+        unsigned boot_frames = 0;
+        while (!game_boot_frame()) {
+            require(++boot_frames < MAX_FRAMES && pc_gs_ok() && SDL_RenderPresent(renderer),
+                    "Boot the fresh process before resuming gameplay");
+        }
+        require(pc_game_load(load_pools, pool_mode, 1), "Load gameplay in a fresh process");
+        require(later_stage || boss_slot || has_relocated_enemy(), "Resolve the saved entity and callback in this process");
+        char *oracle = NULL;
+        require(SDL_asprintf(&oracle, "%s.expected", load_pools) >= 0, "Resolve oracle file");
+        size_t size;
+        ExpectedTrajectory *expected = SDL_LoadFile(oracle, &size);
+        require(expected && size == sizeof(*expected), "Read expected gameplay trajectory");
+        PcPlayerState restored;
+        pc_player_state_capture(&restored);
+        require(!memcmp(&restored, &expected->at_save, sizeof(restored)), "Restore the saved frame");
+        run_trajectory(renderer, expected, true);
+        SDL_free(expected);
+        require(SDL_RemovePath(oracle), "Remove test oracle");
+        SDL_free(oracle);
+        require(SDL_RemovePath(load_pools), "Remove test slot");
+        goto cleanup;
+    }
     bool loaded = false, confirmed = false, bomb_finished = false;
     SDL_GamepadButton pressed = SDL_GAMEPAD_BUTTON_INVALID;
     unsigned played = 0, inputs = 0, shot_frames = 0, laser_frames = 0, bomb_frames = 0;
@@ -329,6 +432,33 @@ int main(int argc, char **argv)
         }
         require(pc_gs_ok() && SDL_RenderPresent(renderer), "Render game frame");
         require(game_take_mode_request() == GAME_MODE_NONE, "Keep running the selected mode");
+        bool snapshot_frame = played >= 300 && has_relocated_enemy();
+#ifndef DEATH_LABEL
+        extern u8 g_boss_present;
+        if (boss_slot) snapshot_frame = g_replay_mode_begun == REPLAY_PLAYBACK &&
+                                        g_replay_position >= 6800 && g_boss_present;
+        if (later_stage) snapshot_frame = g_replay_mode_begun == REPLAY_PLAYBACK &&
+                                          g_replay_position >= 900;
+#endif
+        if (save_pools && snapshot_frame) {
+            ExpectedTrajectory *expected = SDL_calloc(1, sizeof(*expected));
+            require(expected != NULL, "Allocate expected gameplay trajectory");
+            pc_player_state_capture(&expected->at_save);
+            require(pc_game_save(save_pools, pool_mode, 1), "Save live gameplay");
+            if (pressed != SDL_GAMEPAD_BUTTON_INVALID)
+                SDL_SetJoystickVirtualButton(joystick, pressed, false);
+            SDL_SetJoystickVirtualButton(joystick, SDL_GAMEPAD_BUTTON_WEST, false);
+            SDL_UpdateGamepads();
+            run_trajectory(renderer, expected, false);
+            require(pc_game_load(save_pools, pool_mode, 1), "Restore in the running process");
+            run_trajectory(renderer, expected, true);
+            char *oracle = NULL;
+            require(SDL_asprintf(&oracle, "%s.expected", save_pools) >= 0 &&
+                    SDL_SaveFile(oracle, expected, sizeof(*expected)), "Save reference trajectory");
+            SDL_free(oracle);
+            SDL_free(expected);
+            goto cleanup;
+        }
 
 #ifndef DEATH_LABEL
         if (replay) {
@@ -375,13 +505,12 @@ int main(int argc, char **argv)
         require(g_black_label_single_loop == hover_one_round, "Accept the highlighted round count without confirmation");
     }
 #endif
+    require(!save_pools, "Reach a live enemy for the combat snapshot");
     if (second) {
         require(together > 100 && g_p2_score != 0, "Both ships play and player two scores");
         SDL_CloseJoystick(second);
     }
-#ifdef DDPDOJ_BONUS_FEATURES
 cleanup:
-#endif
     pc_bgm_close();
     pc_mc_close_storage();
     pc_sfx_shutdown();

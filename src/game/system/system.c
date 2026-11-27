@@ -1066,3 +1066,33 @@ BootScratch g_boot_scratch __attribute__((aligned(64)));
 
 PC_DATA_ALIAS(g_gs_load_image_as_u8_a, g_gs_load_image, 0);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_stage_maps_regions[] = {
+    PC_FRAME_REGION(g_frame_counter),
+    PC_FRAME_REGION(g_display_reset_pending),
+    PC_FRAME_REGION(g_fade_state),
+    PC_FRAME_REGION(g_fade_step),
+    PC_FRAME_REGION(g_fade_alpha),
+    PC_FRAME_REGION(g_stage_map_progress),
+    PC_FRAME_REGION(g_pads),
+    PC_FRAME_REGION(g_pad_held),
+    PC_FRAME_REGION(g_pad_trigger),
+    PC_FRAME_REGION(g_pad_repeat),
+    PC_FRAME_REGION(g_pad_fast_repeat),
+    PC_FRAME_REGION(g_pad_prev_held),
+    PC_FRAME_REGION(g_pad_repeat_timer),
+    PC_FRAME_REGION(g_pad_fast_repeat_timer),
+    PC_FRAME_REGION(g_glyph_upload_buf),
+    PC_FRAME_REGION(g_splash_file_buf),
+#ifdef DEATH_LABEL
+    PC_FRAME_REGION(g_fade_white),
+    PC_FRAME_REGION(g_noise_file_buf),
+#endif
+    PC_FRAME_REGION(g_stage_map_file_buf),
+    PC_FRAME_REGION(g_bg_tile_pixels),
+    { NULL, 0 },
+};
+#endif

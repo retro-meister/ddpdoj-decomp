@@ -195,6 +195,12 @@ static void check_texture_draws(SDL_Renderer *renderer)
     upload(BASE, SCE_GS_PSMT8, 0, 0, 4, 2, pixels);
     require(SDL_SetRenderDrawColor(renderer, 20, 30, 40, 255) && SDL_RenderClear(renderer),
             "Clear the textured Gallery target");
+    SDL_IOStream *saved = SDL_IOFromDynamicMem();
+    require(saved && pc_gs_textures_save(saved), "Capture the uploaded texels and palette");
+    pc_gs_textures_reset();
+    require(SDL_SeekIO(saved, 0, SDL_IO_SEEK_SET) == 0 && pc_gs_textures_load(saved),
+            "Restore the image planes with empty SDL texture caches");
+    SDL_CloseIO(saved);
     draw_texture(tex0, 8, 8);
 
     /* Update one texel and draw again before SDL has presented the old texture. */

@@ -53,8 +53,10 @@ static void fill_track(Track *track)
 
     Uint8 raw[PCM_BLOCK * READ_BLOCKS];
     Sint16 pcm[sizeof(raw) / sizeof(Sint16)];
-    Uint32 bytes = SDL_min(track->length - track->cursor, (Uint32)sizeof(raw));
-    Uint64 offset = track->offset + track->cursor;
+    Uint32 skip = track->cursor % PCM_BLOCK;
+    Uint32 block_start = track->cursor - skip;
+    Uint32 bytes = SDL_min(track->length - block_start, (Uint32)sizeof(raw));
+    Uint64 offset = track->offset + block_start;
     unsigned generation = track->generation;
     SDL_UnlockMutex(music.mutex);
     bool ok = disc_image_read(music.disc, offset, raw, bytes);
@@ -62,11 +64,11 @@ static void fill_track(Track *track)
     SDL_LockMutex(music.mutex);
 
     if (track->generation != generation) return;
-    if (!ok || !SDL_PutAudioStreamData(track->audio, pcm, (int)bytes)) {
+    if (!ok || !SDL_PutAudioStreamData(track->audio, (Uint8 *)pcm + skip, (int)(bytes - skip))) {
         track->failed = true;
         return;
     }
-    track->cursor += bytes;
+    track->cursor += bytes - skip;
 }
 
 static int SDLCALL bgm_worker(void *unused)
@@ -139,6 +141,70 @@ static void unload(Track *track)
     track->loaded = false;
     track->playing = false;
     track->failed = false;
+}
+
+bool pc_bgm_capture(PcMusicState *state)
+{
+    if (!music.worker) return false;
+    SDL_LockMutex(music.mutex);
+    bool ok = true;
+    for (size_t i = 0; i < SDL_arraysize(music.tracks); ++i) {
+        Track *track = &music.tracks[i];
+        int queued = SDL_GetAudioStreamQueued(track->audio);
+        if (queued < 0) {
+            ok = false;
+            break;
+        }
+        Uint32 position = 0;
+        if (track->loaded) {
+            /* The cursor marks the next read. Queued stereo PCM can straddle
+             * the loop boundary, including several repeats of a short track. */
+            Uint32 pending = (Uint32)queued;
+            if (pending <= track->cursor) position = track->cursor - pending;
+            else if (track->loop) position = (track->length -
+                    (pending - track->cursor) % track->length) % track->length;
+        }
+        state->tracks[i] = (PcMusicTrackState){
+            .offset = track->offset, .length = track->length, .position = position,
+            .volume = track->volume, .master = track->master, .loaded = track->loaded,
+            .playing = track->playing, .loop = track->loop, .failed = track->failed,
+        };
+    }
+    SDL_UnlockMutex(music.mutex);
+    return ok;
+}
+
+bool pc_bgm_restore(const PcMusicState *state)
+{
+    if (!music.worker) return false;
+    for (size_t i = 0; i < SDL_arraysize(state->tracks); ++i) {
+        const PcMusicTrackState *s = &state->tracks[i];
+        if (s->loaded > 1 || s->playing > s->loaded || s->loop > 1 || s->failed > 1 ||
+            !(s->volume >= 0 && s->volume <= 1 && s->master >= 0 && s->master <= 1) ||
+            s->offset % DISC_SECTOR_SIZE || s->offset > UINT64_MAX - s->length ||
+            s->length % PCM_BLOCK || (s->loaded && !s->length) ||
+            s->position > s->length || s->position % 4) return false;
+    }
+    SDL_LockMutex(music.mutex);
+    bool ok = true;
+    for (size_t i = 0; i < SDL_arraysize(music.tracks); ++i) {
+        Track *track = &music.tracks[i];
+        const PcMusicTrackState *s = &state->tracks[i];
+        unload(track); /* Invalidates a disc read in flight. */
+        track->offset = s->offset;
+        track->length = s->length;
+        track->cursor = s->position;
+        track->volume = s->volume;
+        track->master = s->master;
+        track->loaded = s->loaded;
+        track->playing = s->playing;
+        track->loop = s->loop;
+        track->failed = s->failed;
+        if (!SDL_SetAudioStreamGain(track->audio, s->volume * s->master) ||
+            (s->playing && !SDL_ResumeAudioStreamDevice(track->audio))) ok = false;
+    }
+    SDL_UnlockMutex(music.mutex);
+    return ok;
 }
 
 static s32 music_command(Track *track, unsigned command, s32 first, s32 second)

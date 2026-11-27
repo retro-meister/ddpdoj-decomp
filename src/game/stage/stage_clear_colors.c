@@ -251,3 +251,20 @@ PC_DATA_ALIAS(D_002BB45E, D_002BB430, 0x2e);
 
 PC_DATA_ALIAS(D_0028E784_as_u16, D_0028E784, 0x0);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_clear_color_regions[] = {
+    PC_FRAME_REGION(D_0028E794),
+    PC_FRAME_REGION(stage_clear_colors_update_state),
+    PC_FRAME_REGION(D_0028E790),
+    PC_FRAME_REGION(D_0028E78C),
+    PC_FRAME_REGION(D_0028E788),
+    PC_FRAME_REGION(D_0028E784),
+    PC_FRAME_REGION(D_002BB470),
+    PC_FRAME_REGION(stage_doors_clear_buffer),
+    PC_FRAME_REGION(D_002BB430),
+    { NULL, 0 },
+};
+#endif

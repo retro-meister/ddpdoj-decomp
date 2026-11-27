@@ -4,6 +4,6 @@
 #include "game_loop.h"
 #include <SDL3/SDL.h>
 
-typedef bool PcRunMode(SDL_Renderer *renderer, const char *iso, GameMode mode, GameMode *next_mode);
+typedef bool PcRunMode(SDL_Renderer *renderer, const char *iso, const char *module_path, const char *slot_path, GameMode mode, GameMode *next_mode);
 
 #endif

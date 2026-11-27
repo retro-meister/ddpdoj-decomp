@@ -251,6 +251,15 @@ static int SDLCALL card_worker(void *unused)
     return 0;
 }
 
+bool pc_mc_idle(void)
+{
+    if (!card.worker) return true;
+    SDL_LockMutex(card.mutex);
+    bool idle = !card.busy && !card.file;
+    SDL_UnlockMutex(card.mutex);
+    return idle;
+}
+
 void pc_mc_close_storage(void)
 {
     if (card.worker) {

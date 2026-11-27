@@ -255,3 +255,24 @@ PC_DATA_ALIAS(D_0028E5DD, g_p1_hyper_combo_decay, 1);
 PC_DATA_ALIAS(D_0028E61D, g_boss_near_death, 1);
 PC_DATA_ALIAS(D_0028E705, g_hyper_text_anim_delay, 1);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_score_cells_regions[] = {
+    PC_FRAME_REGION(g_p1_score_cells),
+    PC_FRAME_REGION(g_p1_score_extra_cell),
+    PC_FRAME_REGION(p1_rank_entry_insert_buffer),
+    PC_FRAME_REGION(p2_rank_entry_insert_buffer),
+    PC_FRAME_REGION(g_ranking_scores),
+    PC_FRAME_REGION(g_ranking_names),
+    PC_FRAME_REGION(g_stored_ranking_scores),
+    PC_FRAME_REGION(g_stored_ranking_names),
+    PC_FRAME_REGION(g_death_label_ranking_scores),
+    PC_FRAME_REGION(g_death_label_ranking_names),
+    PC_FRAME_REGION(g_stored_ranking_texts),
+    PC_FRAME_REGION(g_death_label_ranking_texts),
+    PC_FRAME_REGION(scores_reset_buffer),
+    { NULL, 0 },
+};
+#endif

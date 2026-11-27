@@ -83,6 +83,70 @@ void pc_gs_textures_reset(void)
     cache_clock = 0;
 }
 
+/* The hardware image planes survive a reload. SDL textures are derived from
+ * them and are recreated on the next draw, including paletted sprites. */
+bool pc_gs_textures_save(SDL_IOStream *stream)
+{
+    for (unsigned base = 0; base < GS_BLOCKS; ++base) {
+        const Image *image = &images[base];
+        if (!image->pixels) continue;
+        size_t bytes = (size_t)image->width * image->height * image->bytes_per_pixel;
+        if (!SDL_WriteU16LE(stream, base) || !SDL_WriteU16LE(stream, image->format) ||
+            !SDL_WriteU16LE(stream, image->width) || !SDL_WriteU16LE(stream, image->height) ||
+            !SDL_WriteU16LE(stream, image->upload.x) || !SDL_WriteU16LE(stream, image->upload.y) ||
+            !SDL_WriteU16LE(stream, image->upload.w) || !SDL_WriteU16LE(stream, image->upload.h) ||
+            !SDL_WriteU32LE(stream, image->upload_hash) ||
+            SDL_WriteIO(stream, image->pixels, bytes) != bytes) return false;
+    }
+    return SDL_WriteU16LE(stream, GS_BLOCKS);
+}
+
+static bool read_image(SDL_IOStream *stream, Image *image)
+{
+    Uint16 format, width, height, x, y, w, h;
+    if (!SDL_ReadU16LE(stream, &format) || !SDL_ReadU16LE(stream, &width) ||
+        !SDL_ReadU16LE(stream, &height) || !SDL_ReadU16LE(stream, &x) ||
+        !SDL_ReadU16LE(stream, &y) || !SDL_ReadU16LE(stream, &w) ||
+        !SDL_ReadU16LE(stream, &h) || !SDL_ReadU32LE(stream, &image->upload_hash)) return false;
+    unsigned bpp = pixel_bytes(format);
+    if (!bpp || !w || !h || x + w > width || y + h > height ||
+        width > MAX_TEXTURE_SIDE || height > MAX_TEXTURE_SIDE ||
+        (width & (width - 1)) || (height & (height - 1))) return false;
+    size_t bytes = (size_t)width * height * bpp;
+    image->pixels = SDL_malloc(bytes);
+    if (!image->pixels || SDL_ReadIO(stream, image->pixels, bytes) != bytes) return false;
+    image->width = width;
+    image->height = height;
+    image->format = format;
+    image->bytes_per_pixel = bpp;
+    image->upload = (SDL_Rect){x, y, w, h};
+    return true;
+}
+
+bool pc_gs_textures_load(SDL_IOStream *stream)
+{
+    Image *restored = SDL_calloc(GS_BLOCKS, sizeof(*restored));
+    if (!restored) return false;
+    Uint16 base;
+    bool ok = false;
+    while (SDL_ReadU16LE(stream, &base)) {
+        if (base == GS_BLOCKS) {
+            pc_gs_textures_reset();
+            SDL_memcpy(images, restored, sizeof(images));
+            ok = true;
+            break;
+        }
+        if (base > GS_BLOCKS || restored[base].pixels || !read_image(stream, &restored[base])) break;
+        restored[base].revision = 1;
+    }
+    if (ok) cache_clock = 1;
+    else {
+        for (unsigned i = 0; i < GS_BLOCKS; ++i) SDL_free(restored[i].pixels);
+    }
+    SDL_free(restored);
+    return ok;
+}
+
 static unsigned plane_size(unsigned extent)
 {
     unsigned size = 1;

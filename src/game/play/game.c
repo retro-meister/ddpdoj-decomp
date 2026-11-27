@@ -1574,3 +1574,12 @@ u8 g_enemy_anims[384];
 PC_DATA_ALIAS(g_enemy_anim_count, g_enemy_anims, 0x17c);
 PC_DATA_ALIAS(g_enemy_anim_count_as_u8_a, g_enemy_anims, 0x17c);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_enemy_anim_regions[] = {
+    PC_FRAME_REGION(g_enemy_anims),
+    { NULL, 0 },
+};
+#endif

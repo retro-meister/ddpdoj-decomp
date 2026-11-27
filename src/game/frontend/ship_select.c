@@ -810,3 +810,28 @@ u8 D_0028DF0C __attribute__((aligned(4)));
 u8 g_ship_select_state[224];
 u16 D_0029BDC0[32];
 u16 ship_select_palette_pulse_buffer[32];
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_ship_select_regions[] = {
+    PC_FRAME_REGION(g_ship_select_state),
+    PC_FRAME_REGION(D_0029BDC0),
+    PC_FRAME_REGION(ship_select_palette_pulse_buffer),
+    PC_FRAME_REGION(D_0028DF18),
+    PC_FRAME_REGION(D_0028DF14),
+    PC_FRAME_REGION(ship_select_palette_pulse_state),
+    PC_FRAME_REGION(D_0028DF0C),
+#ifdef DDPDOJ_BONUS_FEATURES
+    PC_FRAME_REGION(g_black_label_single_loop),
+    PC_FRAME_REGION(round_select_delay),
+    PC_FRAME_REGION(round_select_blink),
+    PC_FRAME_REGION(round_select_done),
+    PC_FRAME_REGION(single_loop_highlighted),
+#endif
+#ifdef DEATH_LABEL
+    PC_FRAME_REGION(death_D_0029048C),
+#endif
+    { NULL, 0 },
+};
+#endif

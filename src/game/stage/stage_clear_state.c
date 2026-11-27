@@ -24,3 +24,21 @@ u16 D_002BF400[8];
 
 PC_DATA_ALIAS(D_0028E961, D_0028E960, 1);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_stage_clear_regions[] = {
+    PC_FRAME_REGION(D_0028E960),
+    PC_FRAME_REGION(D_0028E95C),
+    PC_FRAME_REGION(D_0028E958),
+    PC_FRAME_REGION(D_0028E954),
+    PC_FRAME_REGION(D_0028E950),
+    PC_FRAME_REGION(stage_clear_state_clear_state),
+    PC_FRAME_REGION(g_game_task_handle),
+    PC_FRAME_REGION(D_002BF490),
+    PC_FRAME_REGION(D_002BF450),
+    PC_FRAME_REGION(D_002BF410),
+    { NULL, 0 },
+};
+#endif

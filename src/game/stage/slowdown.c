@@ -211,3 +211,17 @@ u16 D_002693C0[16] = {
     0x0002, 0x0000, 0x0000, 0x0000, 0x0004, 0x0005, 0x001F, 0x0003,
     0x0000, 0x0008, 0x0000, 0x000B, 0x000C, 0x001F, 0x0003, 0x0000,
 };
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_slowdown_regions[] = {
+#ifdef DDPDOJ_BONUS_FEATURES
+    PC_FRAME_REGION(shake_frame),
+    PC_FRAME_REGION(burst_wait),
+    PC_FRAME_REGION(g_boss_shake_y),
+    PC_FRAME_REGION(g_boss_shake_x),
+#endif
+    { NULL, 0 },
+};
+#endif

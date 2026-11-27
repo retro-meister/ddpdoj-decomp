@@ -189,13 +189,14 @@ target_link_libraries(ddpdoj_main_system PRIVATE ddpdoj_memory_card)
 target_link_libraries(ddpdoj_death_system PRIVATE ddpdoj_memory_card)
 target_link_libraries(ddpdoj_gallery PRIVATE ddpdoj_cdvd ddpdoj_gs ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
+set(snapshot_sources game_snapshot.c combat_state.c frame_regions.c state_slot.c)
 foreach(mode IN ITEMS main death)
     # The original core groups call into one another. Let CMake rescan the
     # archive group when the platform linker resolves static inputs in order.
     target_link_libraries(ddpdoj_${mode}_system PRIVATE ddpdoj_${mode}_frontend ddpdoj_mode)
     target_link_libraries(ddpdoj_${mode}_frontend PRIVATE ddpdoj_${mode}_gameplay)
     target_link_libraries(ddpdoj_${mode}_gameplay PRIVATE ddpdoj_${mode}_system)
-    add_library(${mode}-mode MODULE mode_runtime.c)
+    add_library(${mode}-mode MODULE mode_runtime.c ${snapshot_sources})
     target_link_libraries(${mode}-mode PRIVATE
         ddpdoj_${mode}_system
         ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
@@ -262,6 +263,14 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 endif()
 
 if(BUILD_TESTING)
+    add_executable(ddpdoj_state_slot_test tests/state_slot_test.c state_slot.c)
+    target_include_directories(ddpdoj_state_slot_test PRIVATE . ../include)
+    target_link_libraries(ddpdoj_state_slot_test PRIVATE SDL3::SDL3)
+    add_test(NAME state_slot_save COMMAND ddpdoj_state_slot_test save test-save-slot.bin)
+    add_test(NAME state_slot_load COMMAND ddpdoj_state_slot_test load test-save-slot.bin)
+    set_tests_properties(state_slot_save PROPERTIES FIXTURES_SETUP state_slot)
+    set_tests_properties(state_slot_load PROPERTIES FIXTURES_REQUIRED state_slot)
+
     add_executable(ddpdoj_memory_card_test tests/memory_card_test.c)
     target_link_libraries(ddpdoj_memory_card_test PRIVATE ddpdoj_memory_card SDL3::SDL3)
     add_test(NAME memory_card COMMAND ddpdoj_memory_card_test)
@@ -296,14 +305,19 @@ if(BUILD_TESTING)
         ddpdoj_gallery ddpdoj_gs ddpdoj_cdvd ddpdoj_mode ddpdoj_pad ddpdoj_sfx)
 
     add_executable(ddpdoj_task_test
-        tests/task_test.c
+        tests/task_test.c state_slot.c
         ../src/game/system/task.c
         ../src/game/system/system_state.c
     )
     target_compile_features(ddpdoj_task_test PRIVATE c_std_11)
     target_compile_definitions(ddpdoj_task_test PRIVATE DDPDOJ_PC)
-    target_include_directories(ddpdoj_task_test PRIVATE ../include)
+    target_include_directories(ddpdoj_task_test PRIVATE . ../include)
+    target_link_libraries(ddpdoj_task_test PRIVATE SDL3::SDL3)
     add_test(NAME task_scheduler COMMAND ddpdoj_task_test)
+    add_test(NAME task_state_save COMMAND ddpdoj_task_test save test-task-slot.bin)
+    add_test(NAME task_state_load COMMAND ddpdoj_task_test load test-task-slot.bin)
+    set_tests_properties(task_state_save PROPERTIES FIXTURES_SETUP task_state)
+    set_tests_properties(task_state_load PROPERTIES FIXTURES_REQUIRED task_state)
 
     add_executable(ddpdoj_game_loop_test tests/game_loop_test.c)
     target_link_libraries(ddpdoj_game_loop_test PRIVATE ddpdoj_game_loop ddpdoj_mode ddpdoj_replay_storage)
@@ -351,13 +365,33 @@ if(BUILD_TESTING)
 
         foreach(mode IN ITEMS main death)
             set(target ddpdoj_${mode}_retail_gameplay_test)
-            add_executable(${target} tests/retail_gameplay_test.c)
+            add_executable(${target} tests/retail_gameplay_test.c ${snapshot_sources})
             target_link_libraries(${target} PRIVATE ddpdoj_${mode}_system
                 ddpdoj_sound ddpdoj_sfx ddpdoj_mode ddpdoj_cdvd ddpdoj_pad ddpdoj_memory_card ddpdoj_gs)
+            set(pool_slot "${CMAKE_CURRENT_BINARY_DIR}/test-${mode}-combat.bin")
+            add_test(NAME ${mode}_combat_save COMMAND ${target} "${DDPDOJ_TEST_ISO}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}" --save-pools "${pool_slot}")
+            add_test(NAME ${mode}_combat_load COMMAND ${target} "${DDPDOJ_TEST_ISO}"
+                "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}" --load-pools "${pool_slot}")
+            set_tests_properties(${mode}_combat_save PROPERTIES FIXTURES_SETUP ${mode}_combat
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+            set_tests_properties(${mode}_combat_load PROPERTIES FIXTURES_REQUIRED ${mode}_combat
+                ENVIRONMENT "SDL_AUDIODRIVER=dummy" TIMEOUT 180)
             add_test(NAME retail_${mode}_gameplay COMMAND ${target} "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${mode}")
             set_tests_properties(retail_${mode}_gameplay PROPERTIES
                 ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+        endforeach()
+        foreach(scene IN ITEMS later-stage boss)
+            foreach(action IN ITEMS save load)
+                add_test(NAME ${scene}_savestate_${action} COMMAND ddpdoj_main_retail_gameplay_test
+                    "${DDPDOJ_TEST_ISO}" "${CMAKE_CURRENT_BINARY_DIR}/test-cards-${scene}"
+                    --${action}-pools "${CMAKE_CURRENT_BINARY_DIR}/test-${scene}-state.bin" --${scene})
+                set_tests_properties(${scene}_savestate_${action} PROPERTIES
+                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+            endforeach()
+            set_tests_properties(${scene}_savestate_save PROPERTIES FIXTURES_SETUP ${scene}_state)
+            set_tests_properties(${scene}_savestate_load PROPERTIES FIXTURES_REQUIRED ${scene}_state)
         endforeach()
         add_executable(ddpdoj_retail_card_test tests/retail_card_test.c)
         target_link_libraries(ddpdoj_retail_card_test PRIVATE ddpdoj_main_system
@@ -367,6 +401,15 @@ if(BUILD_TESTING)
             target_compile_definitions(ddpdoj_main_retail_gameplay_test PRIVATE DDPDOJ_BONUS_FEATURES)
             add_test(NAME black_label_card_save_load COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load" --black-label)
+            foreach(action IN ITEMS save load)
+                add_test(NAME black_label_combat_${action} COMMAND ddpdoj_main_retail_gameplay_test
+                    "${DDPDOJ_TEST_ISO}" "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label"
+                    --${action}-pools "${CMAKE_CURRENT_BINARY_DIR}/test-black-label-combat.bin" --black-label)
+                set_tests_properties(black_label_combat_${action} PROPERTIES
+                    ENVIRONMENT "SDL_AUDIODRIVER=dummy" RUN_SERIAL TRUE TIMEOUT 180)
+            endforeach()
+            set_tests_properties(black_label_combat_save PROPERTIES FIXTURES_SETUP black_combat)
+            set_tests_properties(black_label_combat_load PROPERTIES FIXTURES_REQUIRED black_combat)
             add_test(NAME black_label_gameplay COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
                 "${CMAKE_CURRENT_BINARY_DIR}/test-cards-black-label" --black-label)
             add_test(NAME black_label_default_rounds COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"

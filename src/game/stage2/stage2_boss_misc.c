@@ -350,3 +350,12 @@ u8 stage2_boss_cannon_shell_table[8] = {
 
 /* .sbss (the compiler lays these out in reverse) */
 u16 stage2_boss_shoulder_bullet_buffer[2];
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_shoulder_regions[] = {
+    PC_FRAME_REGION(stage2_boss_shoulder_bullet_buffer),
+    { NULL, 0 },
+};
+#endif

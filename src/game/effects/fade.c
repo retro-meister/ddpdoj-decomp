@@ -969,3 +969,20 @@ s32 D_0028DF20;
 /* .bss (the compiler lays these out in reverse) */
 u8 D_0029C150[2240];
 u8 D_0029C0C0[144];
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_fade_regions[] = {
+    PC_FRAME_REGION(fades_reset_state),
+    PC_FRAME_REGION(g_fade_step_red),
+    PC_FRAME_REGION(g_fade_step_green),
+    PC_FRAME_REGION(g_fade_step_blue),
+    PC_FRAME_REGION(D_0028DF28),
+    PC_FRAME_REGION(D_0028DF24),
+    PC_FRAME_REGION(D_0028DF20),
+    PC_FRAME_REGION(D_0029C150),
+    PC_FRAME_REGION(D_0029C0C0),
+    { NULL, 0 },
+};
+#endif

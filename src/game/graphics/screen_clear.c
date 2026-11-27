@@ -165,3 +165,17 @@ PC_DATA_ALIAS(D_002B6E0C, g_bg_layer, 0xbc);
 
 PC_DATA_ALIAS(g_arcade_sprites_as_s32_a, g_arcade_sprites, 0x0);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_screen_regions[] = {
+    PC_FRAME_REGION(g_bg_layer),
+    PC_FRAME_REGION(g_text_layer),
+    PC_FRAME_REGION(g_arcade_sprites),
+    PC_FRAME_REGION(g_sprite_palette),
+    PC_FRAME_REGION(g_bg_palette),
+    PC_FRAME_REGION(g_text_palette),
+    { NULL, 0 },
+};
+#endif

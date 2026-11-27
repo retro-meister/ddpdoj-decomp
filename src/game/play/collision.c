@@ -1462,3 +1462,17 @@ u16 D_0028E098 __attribute__((aligned(4)));
 u16 g_player_was_hit __attribute__((aligned(4)));
 u16 collision_reset_state_2 __attribute__((aligned(4)));
 u16 collision_reset_state __attribute__((aligned(4)));
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_collision_regions[] = {
+    PC_FRAME_REGION(g_collision_hit_bits),
+    PC_FRAME_REGION(g_collision_bounds),
+    PC_FRAME_REGION(D_0028E098),
+    PC_FRAME_REGION(g_player_was_hit),
+    PC_FRAME_REGION(collision_reset_state_2),
+    PC_FRAME_REGION(collision_reset_state),
+    { NULL, 0 },
+};
+#endif

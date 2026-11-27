@@ -151,3 +151,15 @@ GlyphCacheEntry g_glyph_cache_storage[0x403] __attribute__((aligned(16)));
 s16 g_glyph_cache_map[0x22C4] __attribute__((aligned(16)));
 GlyphCacheEntry g_glyph_cache_sub_storage[0xE3] __attribute__((aligned(16)));
 s16 g_glyph_cache_sub_map[0x1000] __attribute__((aligned(16)));
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_glyph_cache_regions[] = {
+    PC_FRAME_REGION(g_glyph_cache_storage),
+    PC_FRAME_REGION(g_glyph_cache_map),
+    PC_FRAME_REGION(g_glyph_cache_sub_storage),
+    PC_FRAME_REGION(g_glyph_cache_sub_map),
+    { NULL, 0 },
+};
+#endif

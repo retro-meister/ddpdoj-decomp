@@ -925,3 +925,22 @@ PC_DATA_ALIAS(D_002962DA, boss_phase_storage, 0xCA);
 PC_DATA_ALIAS(D_002962DC, boss_phase_storage, 0xCC);
 PC_DATA_ALIAS(D_002962DE, boss_phase_storage, 0xCE);
 #endif
+
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_boss_regions[] = {
+    PC_FRAME_POINTER(boss_move_table),
+    PC_FRAME_POINTER(boss_attack_table),
+    PC_FRAME_POINTER(boss_animation_table),
+    PC_FRAME_POINTER(boss_phase_table),
+    PC_FRAME_REGION(boss_has_parts),
+    PC_FRAME_REGION(boss_animation_storage),
+    PC_FRAME_REGION(boss_phase_storage),
+    PC_FRAME_REGION(D_00295E50),
+    PC_FRAME_REGION(D_00295EA0),
+    PC_FRAME_REGION(D_002960B0),
+    PC_FRAME_REGION(boss_attack_start_buffer),
+    { NULL, 0 },
+};
+#endif
