@@ -1,4 +1,16 @@
 #include "common.h"
+#ifndef DDPDOJ_PC
+s32 enemies_resume();
+s32 enemies_stop();
+s32 game_screen_teardown();
+s32 music_play_bgm2();
+s32 stage_doors_clear();
+s32 stage_doors_open_request();
+s32 stage_doors_open_requested_check();
+s32 stage_doors_update();
+s32 text_layer_clear();
+s32 text_palette_load();
+#endif
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -300,10 +312,6 @@ extern u8 text_palette_0[];
 extern s8 D_0028DF84;
 
 void replay_exit_begin(void) {
-#ifndef DDPDOJ_PC
-    s32 text_layer_clear();
-    s32 text_palette_load();
-#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -479,9 +487,6 @@ extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 
 void replay_start_result() {
-#ifndef DDPDOJ_PC
-    s32 game_screen_teardown();
-#endif
     u32 temp_s0;
     u8 *temp_s1;
     s32 var_s2;
@@ -507,9 +512,6 @@ void replay_start_result() {
     reg_a0 = temp_s1;
 }
 
-#ifndef DDPDOJ_PC
-s32 game_screen_teardown();                            /* extern */
-#endif
 s32 replay_scores_snapshot();                            /* extern */
 
 void replay_start_run_end(void) {
@@ -527,13 +529,7 @@ void replay_start_run_end(void) {
     reg_a0 = temp_s1;
 }
 
-#ifndef DDPDOJ_PC
-s32 text_layer_clear();                            /* extern */
-#endif
 s32 fade_in();                            /* extern */
-#ifndef DDPDOJ_PC
-s32 text_palette_load();                            /* extern */
-#endif
 s32 result_menu_reset();                            /* extern */
 extern u8 D_0026B580[];
 extern u32 g_replay_fade_id;
@@ -948,14 +944,6 @@ extern u8 replay_playback_start_buffer_3[];
 #endif
 
 void replay_playback_start(void) {
-#ifndef DDPDOJ_PC
-    s32 enemies_stop();
-    s32 enemies_resume();
-    s32 stage_doors_open_request();
-    s32 stage_doors_open_requested_check();
-    s32 stage_doors_update();
-    s32 music_play_bgm2();
-#endif
     s32 base;
     u32 save_d0;
     u32 save_d1;
@@ -1147,9 +1135,6 @@ extern s8 g_bomb_panel_seen;
 
 void replay_run_begin(void) {
 #ifndef DDPDOJ_PC
-    s32 text_layer_clear();
-    s32 stage_doors_clear();
-    s32 text_palette_load();
     s32 replay_header_save();
 #endif
     u32 save_d0;

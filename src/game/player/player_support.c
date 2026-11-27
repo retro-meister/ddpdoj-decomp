@@ -1,6 +1,10 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
+#else
+s32 deferred_text_put();
+void p1_maximum_level_show();
+void p2_maximum_level_show();
 #endif
 #include "player.h"
 #include "entity.h"
@@ -48,10 +52,6 @@ void hyper_stock_draw_trail(void);
 void position_trail_fill();
 void power_up_refused(void);
 void power_max_refused(void);
-#ifndef DDPDOJ_PC
-void p1_maximum_level_show();
-void p2_maximum_level_show();
-#endif
 void bomb_stock_draw(void);
 void p1_bomb_slot_fill(void);
 void p2_bomb_slot_fill(void);
@@ -1074,9 +1074,6 @@ void bomb_stock_draw_for_task(void) {
     bomb_stock_draw();
 }
 
-#ifndef DDPDOJ_PC
-s32 deferred_text_put();
-#endif
 s32 deferred_text_put_sheet();
 
 void bomb_stock_draw(void) {

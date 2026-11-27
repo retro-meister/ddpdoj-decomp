@@ -2,6 +2,12 @@
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
 s32 bcd_add_registers(u32 *left, u32 *right);
+#else
+s32 bcd_add_registers(Reg32 *, Reg32 *);
+s32 deferred_text_clear();
+s32 deferred_text_put();
+void p1_boss_hits_score();
+void p2_boss_hits_score();
 #endif
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
@@ -23,17 +29,11 @@ void p1_boss_hit_late_phase(void);
 void p1_boss_hits_restart(void);
 void p1_boss_hits_continue(void);
 void p1_boss_hits_add(void);
-#ifndef DDPDOJ_PC
-void p1_boss_hits_score();
-#endif
 void p2_boss_hit(void);
 void p2_boss_hit_late_phase(void);
 void p2_boss_hits_restart(void);
 void p2_boss_hits_continue(void);
 void p2_boss_hits_add(void);
-#ifndef DDPDOJ_PC
-void p2_boss_hits_score();
-#endif
 void extend_score_set(void);
 void p1_hyper_gauge_check_full(void);
 void p2_hyper_gauge_check_full(void);
@@ -42,9 +42,6 @@ void hud_p2_caption_put(void);
 
 
 void bcd_word_increment(void) {
-#ifndef DDPDOJ_PC
-    s32 bcd_add_registers(Reg32 *, Reg32 *);
-#endif
     reg_d0.w = 1;
     reg_d2.w = (u32) *((u16 *)reg_a0);
 #ifdef DDPDOJ_PC
@@ -1065,9 +1062,6 @@ extern s8 g_boss_hp_bar_flags;
 extern u8 g_boss_bar_flags;
 
 void hud_p1_hyper_count_put(void) {
-#ifndef DDPDOJ_PC
-    s32 deferred_text_put();
-#endif
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x200;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
@@ -1096,9 +1090,6 @@ block_4:
 }
 
 void hud_p2_hyper_count_put(void) {
-#ifndef DDPDOJ_PC
-    s32 deferred_text_put();
-#endif
     reg_d0.h[0] = 0xC8;
     reg_d1.h[0] = 0x1400;
     if ((g_boss_present & 1) && (g_boss_hp_bar_flags >= 0)) {
@@ -1164,9 +1155,6 @@ void extend_score_set(void)
 
 
 void extend_score_advance(void) {
-#ifndef DDPDOJ_PC
-    s32 bcd_add_registers(Reg32 *, Reg32 *);
-#endif
     u8 *a5 = reg_a5;
 
     reg_d0.h[0] = *(u16 *) reg_a4;
@@ -2094,10 +2082,6 @@ extern u16 g_p1_lives;
 extern u16 g_p1_ship_type;
 
 void hud_p1_lives_put(void) {
-#ifndef DDPDOJ_PC
-    s32 deferred_text_put();
-    s32 deferred_text_clear();
-#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -2173,10 +2157,6 @@ extern u16 g_p2_lives;
 extern u16 g_p2_ship_type;
 
 void hud_p2_lives_put(void) {
-#ifndef DDPDOJ_PC
-    s32 deferred_text_put();
-    s32 deferred_text_clear();
-#endif
     u32 save_d0;
     u32 save_d1;
     u32 save_d2;
@@ -2369,9 +2349,6 @@ void hud_p1_caption_clear_shifted(void)
 }
 
 void hud_p2_caption_clear_shifted(void) {
-#ifndef DDPDOJ_PC
-    s32 deferred_text_clear();
-#endif
     reg_d0.h[0] = 0xD4;
     reg_d1.h[0] = 0x1400;
     reg_d2.h[0] = 7;

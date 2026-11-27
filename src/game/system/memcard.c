@@ -1,4 +1,8 @@
 #include "common.h"
+#ifndef DDPDOJ_PC
+s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
+s32 sprintf(char *buf, const char *format, ...);
+#endif
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
 #endif
@@ -763,9 +767,6 @@ extern s32 g_mc_poll_retries;
 
 void mc_card_present_poll(s32 arg0) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
-#ifndef DDPDOJ_PC
-    s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
-#endif
     s32 result;
     s32 error;
 
@@ -3725,7 +3726,6 @@ s32 sceMcFormat(s32 arg0, s32 arg1);
 void mc_task_format(void) {
     s32 sceMcSync(s32 arg0, s32 arg1, s32 *arg2);
 #ifndef DDPDOJ_PC
-    s32 sceMcGetInfo(s32 arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
     extern void mc_message_draw(s32, char *, s32, s32, s32, u16, s32);
 #endif
     s32 result;
@@ -4533,9 +4533,6 @@ void mc_text_draw_vertical(s16 x, s16 y, char *text, u16 page, u16 w, u16 h, u16
     overlay_queue_sjis_vertical(0x1C0 - y, x, text, page, w, h, alpha, depth);
 }
 
-#ifndef DDPDOJ_PC
-extern s32 sprintf(char *buf, const char *format, ...);
-#endif
 extern char *g_pad_dma_buf;
 
 void mc_choice_draw(void) {
@@ -4680,9 +4677,6 @@ void mc_save_to_card_ask_message_draw(s32 index) {
     mc_message_draw(0xC8, g_mc_msg_save_to_card_ask[index], 0, 0x14, 0xE, (*(u16 *)&g_mc_message_alpha), 0x64);
 }
 
-#ifndef DDPDOJ_PC
-s32 sprintf(char *buf, const char *format, ...);
-#endif
 
 void mc_no_space_message_draw(s32 arg0) {
 #ifndef DDPDOJ_PC

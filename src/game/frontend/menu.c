@@ -11,6 +11,21 @@
 
 #ifdef DDPDOJ_PC
 #include "arcade_frontend.h"
+#else
+s32 fade_start_out();
+void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
+void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
+void glyph_queue_clear(void);
+void glyph_queue_flush(void);
+s32 music_stop();
+s32 sfx_menu_move();
+void sfx_menu_tick(void);
+s32 sprintf(char *buf, const char *format, ...);
+s32 start_buttons_take_credits();
+void text_flush(void);
+void text_queue_clear(void);
+void text_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
+void wallpaper_load(s32 a, s32 b);
 #endif
 
 /* One line of a menu screen: where it is drawn, and the slide that brings it there. Positions of the
@@ -2546,15 +2561,11 @@ extern u8 g_no_enemy_bullets;
 extern u8 g_setting_start_round;
 extern s32 g_ranking_entry_index;
 extern s8 g_menu_exit_code;
-#ifndef DDPDOJ_PC
-s32 start_buttons_take_credits();
-#endif
 #endif
 
 void menu_main_step2(void) {
 #ifndef DDPDOJ_PC
     s32 sfx_menu_confirm();
-    s32 fade_start_out();
 #endif
     s32 var_a1;
 
@@ -2859,9 +2870,6 @@ extern u8 g_pad_vib_state_p1;
 extern s8 menu_game_option_adjust_buffer[];
 
 void menu_game_option_adjust(void) {
-#ifndef DDPDOJ_PC
-    extern void sfx_menu_tick(void);
-#endif
     s32 sel;
     s32 cur;
     s32 max;
@@ -3147,9 +3155,6 @@ void menu_save_load_step2() {
 extern s8 menu_save_load_adjust_buffer[];
 
 void menu_save_load_adjust(void) {
-#ifndef DDPDOJ_PC
-    void sfx_menu_tick(void);
-#endif
     s32 value;
 
     if (g_menu_cursor == 3) {
@@ -3282,9 +3287,6 @@ extern u16 g_unlocked_options;
 extern s8 menu_debug_option_adjust_buffer[];
 
 void menu_debug_option_adjust(void) {
-#ifndef DDPDOJ_PC
-    extern void sfx_menu_tick(void);
-#endif
     s32 count;
     s32 value;
 
@@ -3506,9 +3508,6 @@ void menu_arcade_step4(void) {
 extern s8 menu_arcade_adjust_buffer[];
 
 void menu_arcade_adjust(void) {
-#ifndef DDPDOJ_PC
-    void sfx_menu_tick(void);
-#endif
     s32 value;
 
     if (g_menu_cursor == 4) {
@@ -3689,9 +3688,6 @@ void menu_system_option_step3()
 extern s8 D_0068DD00[];
 
 void menu_system_option_adjust(void) {
-#ifndef DDPDOJ_PC
-    extern void sfx_menu_tick(void);
-#endif
     s32 sel;
     s32 cur;
     s32 max;
@@ -3873,8 +3869,6 @@ extern s8 g_pause_item_shrink;
 void menu_launch_step2() {
 #ifndef DDPDOJ_PC
     s32 sfx_menu_confirm();
-    s32 sfx_menu_move();
-    s32 fade_start_out();
 #endif
     s32 selected;
     s32 choice;
@@ -4043,9 +4037,6 @@ void menu_death_option_step2(void) {
 }
 
 void menu_death_option_adjust(void) {
-#ifndef DDPDOJ_PC
-    void sfx_menu_tick(void);
-#endif
     s32 sel;
     s32 cur;
     s32 max;
@@ -4200,11 +4191,6 @@ void menu_ranking_step2() {
 #endif
 
 void menu_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-    extern void glyph_queue_clear(void);
-    extern void glyph_queue_flush(void);
-#endif
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -4333,17 +4319,10 @@ void menu_main_draw(void) {
     }
 }
 
-#ifndef DDPDOJ_PC
-extern void text_queue_clear(void);
-extern void text_flush(void);
-#endif
 extern s8 D_002714F1[];
 extern s8 g_menu_item_indices[];
 
 void menu_game_option_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 i;
     s32 x;
     s32 z;
@@ -4435,9 +4414,6 @@ void menu_game_option_draw(void) {
 extern s8 D_002714F2[];
 
 void menu_save_load_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 i;
     s32 x;
     s32 z;
@@ -4499,9 +4475,6 @@ extern s8 D_002714F3[];
 #endif
 
 void menu_debug_option_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 i;
     s32 x;
     s32 z;
@@ -4612,9 +4585,6 @@ void menu_debug_option_draw(void) {
 extern s8 D_002714FE[];
 
 void menu_arcade_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 i;
     s32 x;
     s32 z;
@@ -4673,15 +4643,10 @@ void menu_arcade_draw(void) {
 
 #pragma push
 #pragma opt_dead_assignments off
-#ifndef DDPDOJ_PC
-void text_queue_clear(void);
-void text_flush(void);
-#endif
 extern s8 D_002714FF[];
 
 void menu_system_option_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
     void text_queue_glyph(s16 x, s16 y, u16 glyph, s32 w, s32 a4, s32 h, u16 attr, u16 z);
 #endif
     s32 i;
@@ -4826,9 +4791,6 @@ void menu_alpha_a_update(void) {
 extern s8 death_D_00262EC7[];
 
 void menu_death_option_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 i;
     s32 x;
     s32 z;
@@ -4979,9 +4941,6 @@ s32 menu_cursor_input(s32 page) {
     return 0;
 }
 
-#ifndef DDPDOJ_PC
-s32 sfx_menu_move();                            /* extern */
-#endif
 
 s32 menu_ranking_cursor_move() {
     if (g_pad_repeat[2] & 0x1000) {
@@ -5358,7 +5317,6 @@ extern u8 g_death_label_ranking_texts[272];
 
 void menu_notice_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     extern s32 glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
 #endif
     char buf[2];
@@ -5728,9 +5686,6 @@ void text_queue_ascii(s16 x, s16 y, u8 *text, s32 a3, s32 w, s32 h, u16 attr, s3
 extern u16 g_game_frame;
 
 void menu_message_draw(s32 x, s32 y) {
-#ifndef DDPDOJ_PC
-    void text_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
-#endif
     u8 buf[4];
     s32 n;
     s32 single;
@@ -5805,9 +5760,6 @@ void menu_message_draw(s32 x, s32 y) {
 }
 
 void menu_text_queue(s32 x, s32 y, s32 attr) {
-#ifndef DDPDOJ_PC
-    void text_queue_glyph(s16 x, s16 y, s32 glyph, s32 w, s32 a4, s32 h, u16 attr, s32 z);
-#endif
     u8 buf[4];
     s32 n;
     s32 single;
@@ -6100,9 +6052,6 @@ s32 replay_start_result();
 extern u8 g_replay_mode;
 extern u8 g_simulation_active;
 extern s16 D_00271C8C[];
-#ifndef DDPDOJ_PC
-extern s32 sprintf(char *buf, const char *format, ...);
-#endif
 extern void text_queue_sjis_vertical(s16 x, s16 y, const char *text, u16 texturePage, u16 glyphWidth, u16 glyphHeight, u16 alpha, u16 depth);
 extern char *g_pad_dma_buf;
 extern u8 *D_00271BC8[];
@@ -6113,10 +6062,6 @@ extern u8 *D_00271BD4[];
 void pause_menu_update(void) {
 #ifndef DDPDOJ_PC
     extern void sfx_menu_confirm(void);
-    extern void sfx_menu_tick(void);
-#endif
-#ifndef DDPDOJ_PC
-    extern void wallpaper_load(s32 a, s32 b);
 #endif
     u32 pad;
 
@@ -6272,7 +6217,6 @@ void pause_end(void) {
 void pause_menu_confirm(void) {
 #ifndef DDPDOJ_PC
     extern void sfx_menu_confirm(void);
-    extern void sfx_menu_tick(void);
 #endif
     u32 buttons;
 
@@ -6315,9 +6259,6 @@ void pause_menu_confirm(void) {
 }
 
 s32 pause_menu_cursor_move(void) {
-#ifndef DDPDOJ_PC
-    s32 sfx_menu_move();
-#endif
     s32 temp_s0;
     s32 temp_v1;
     s32 temp_v1_2;
@@ -6560,10 +6501,7 @@ void menu_help_item_draw(s32 x, s32 y) {
 
 void pause_menu_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-    extern void glyph_queue_clear(void);
     extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-    extern void glyph_queue_flush(void);
 #endif
     u8 *save_a0;
     u8 *save_a1;
@@ -6704,9 +6642,6 @@ s32 bg_layer_clear();
 s32 layers_clear_all();
 s32 fades_reset();
 s32 sound_stop_effects();
-#ifndef DDPDOJ_PC
-s32 music_stop();
-#endif
 s32 stage_map_reset();
 s32 replay_header_clear();
 extern u8 D_0028E1DA[];
@@ -6972,10 +6907,7 @@ extern u8 g_gif_buf[2][0x10000];
 
 void menu_screen_adjust_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-    extern void glyph_queue_clear(void);
     extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-    extern void glyph_queue_flush(void);
 #endif
     char buf[16];
 
@@ -7077,10 +7009,7 @@ extern s8 disc_notice_draw_state_2;
 
 void disc_notice_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-    extern void glyph_queue_clear(void);
     extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-    extern void glyph_queue_flush(void);
 #endif
     u8 *save_a0;
     u8 *save_a1;
@@ -7283,7 +7212,6 @@ extern s8 g_result_menu_cursor;
 void result_menu_input(void) {
 #ifndef DDPDOJ_PC
     s32 sfx_menu_confirm();
-    s32 sfx_menu_move();
 #endif
     s32 temp_a0;
     s32 temp_a0_2;
@@ -7386,9 +7314,6 @@ s8 result_menu_update(void) {
 
 
 void result_menu_box_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-#endif
     s32 x;
 
     switch (g_result_menu_box_fade_state) {
@@ -7417,10 +7342,7 @@ void result_menu_box_draw(void) {
 
 void result_menu_items_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-    extern void glyph_queue_clear(void);
     extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
-    extern void glyph_queue_flush(void);
 #endif
     u8 *save_a0;
     u8 *save_a1;
@@ -7491,9 +7413,6 @@ void result_menu_items_draw(void) {
 
 
 void result_menu_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-#endif
     s32 alpha;
 
     switch (g_menu_fade_state) {
@@ -7828,7 +7747,6 @@ void replay_slots_card_ready(void) {
 
 #ifndef DDPDOJ_PC
 s32 sfx_menu_confirm();
-s32 sfx_menu_move();
 #endif
 s32 memcard_watch_update();
 extern u8 g_replay_slots_pad;
@@ -8048,9 +7966,6 @@ void replay_slots_disc_ready(void) {
     g_replay_slots_state = 4;
 }
 
-#ifndef DDPDOJ_PC
-s32 sfx_menu_move();
-#endif
 extern u8 g_replay_slots_pad;
 extern s8 g_replay_slots_cursor;
 extern u8 g_replay_slot_infos[];
@@ -8137,22 +8052,12 @@ s32 replay_slots_disc_load(void) {
 
 
 #ifndef DDPDOJ_PC
-extern s32 sprintf(char *buf, const char *format, ...);
-#endif
-#ifndef DDPDOJ_PC
 extern char *strcpy(char *dst, const char *src);
 #endif
 extern void frame_draw_column(s32 x, s32 y, s32 alpha);
-#ifndef DDPDOJ_PC
-extern void glyph_queue_clear(void);
-extern void glyph_queue_flush(void);
-#endif
 
 void replay_slot_draw(s32 slot, s32 x, s32 y, s32 alpha, s32 selected, SaveInfo *info) {
 #ifndef DDPDOJ_PC
-    extern void text_queue_clear(void);
-    extern void text_flush(void);
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
     extern void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 alpha, s32 attr, s32 wide);
 #endif
     u8 *save_a0;
@@ -8346,9 +8251,6 @@ void menu_reset_keep_sim_rules_and_page(void) {
     fade_start_in();
 }
 
-#ifndef DDPDOJ_PC
-s32 fade_start_out();                            /* extern */
-#endif
 extern s8 g_result_menu_cursor;
 extern s8 g_menu_exit_code;
 extern s8 g_menu_box_fade_state;
@@ -8500,9 +8402,6 @@ static void menu_page_fade(MenuPage *fade) {
 }
 
 void menu_simulation_items_draw(MenuPage *arg0, u8 **arg1, s32 arg2) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 count;
     s32 i;
     s32 offset;
@@ -8740,9 +8639,6 @@ void menu_stage_select_page(void) {
 }
 
 void menu_stage_select_draw(void) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 count;
     s32 last;
     s32 i;
@@ -9160,9 +9056,6 @@ void menu_sim_setting_page(void) {
 }
 
 void menu_sim_setting_draw(void) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 count;
     s32 i;
     s32 offset;
@@ -9304,9 +9197,6 @@ void menu_sim_player_page(void) {
 }
 
 void menu_sim_player_draw(void) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 dbl;
     s32 x;
     s32 y;
@@ -9618,9 +9508,6 @@ void menu_sim_rules_page(void) {
 }
 
 void menu_sim_rules_draw(void) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 x;
     s32 y;
     s32 z;
@@ -9690,10 +9577,6 @@ void menu_sim_rules_draw(void) {
 }
 
 void menu_sim_rule_gauge_draw(s32 x, s32 y, s32 alpha, s32 mode, s32 kind) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-#endif
     u8 *saved;
     s32 c;
     s32 level;
@@ -9858,9 +9741,6 @@ void menu_sim_param_page(void) {
 }
 
 void menu_sim_param_draw(void) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-#endif
     s32 x;
     s32 y;
     s32 z;
@@ -9978,11 +9858,6 @@ void menu_practice_ranking_page(void) {
 }
 
 void menu_practice_ranking_draw(void) {
-#ifndef DDPDOJ_PC
-    void glyph_queue_add(s32 x, s32 y, s32 z, s32 page, s32 bright, s32 alpha, s32 flag);
-    extern void text_queue_clear(void);
-    extern void text_flush(void);
-#endif
     s32 i;
     s32 x;
     s32 y;
@@ -10166,8 +10041,6 @@ extern u16 D_006C58AE[];
 
 void menu_ranking_draw(void) {
 #ifndef DDPDOJ_PC
-    extern void text_queue_clear(void);
-    extern void text_flush(void);
     extern void glyph_queue_add(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6);
 #endif
     s32 count;
@@ -10594,9 +10467,6 @@ void delta_decode(s32 arg0) {
 extern u8 g_replay_mode;
 
 void replay_save_prompt_draw(void) {
-#ifndef DDPDOJ_PC
-    extern void gfx_draw_color_box(s32 x, s32 y, s32 w, s32 h, s32 depth, s32 alpha, s32 r, s32 g, s32 b);
-#endif
     u8 *save_a0;
     u8 *save_a1;
     u8 *save_a2;
@@ -10746,9 +10616,6 @@ s32 replay_disc_headers_load(void) {
     return 1;
 }
 
-#ifndef DDPDOJ_PC
-s32 music_stop();
-#endif
 extern s8 g_cd_async_state;
 extern s8 g_cd_async_busy;
 extern u8 *g_replay_disc_load_buf;

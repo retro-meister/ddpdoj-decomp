@@ -1,6 +1,11 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
+#else
+s32 entity_draw_with_players();
+s32 entity_velocity();
+s32 p1_maximum_level_show();
+s32 p2_maximum_level_show();
 #endif
 #ifdef DDPDOJ_PC
 #include "pc_replay_storage.h"
@@ -1660,9 +1665,6 @@ s32 binary_to_bcd();
 s32 bullet_cancel_by_player1();
 s32 bullet_cancel_by_player2();
 s32 bullet_cancel_begin();
-#ifndef DDPDOJ_PC
-s32 entity_velocity();
-#endif
 extern u8 player_update_table[];
 extern u16 player_update_table_3[];
 extern u16 player_update_table_4[];
@@ -2476,10 +2478,6 @@ extern s16 D_0068DEDE[];
 #endif
 
 void player_destroyed_begin(void) {
-#ifndef DDPDOJ_PC
-    s32 p1_maximum_level_show();
-    s32 p2_maximum_level_show();
-#endif
     u32 tmp;
     u16 t1;
     u16 t2;
@@ -2920,9 +2918,6 @@ extern u16 D_0028C880[];
 extern u8 g_setting_hitbox_display;
 
 void player_draw(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_draw_with_players();
-#endif
     if (g_players_hidden != 0) return;
     if ((s8)reg_d0.b[0] < 0) goto next_30;
     if (PLAYER(reg_a6)->state.b.invincible == 0) goto next_100;
@@ -3038,9 +3033,6 @@ next_210:
 extern u16 g_frame_mod4;
 
 void player_draw_plain(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_draw_with_players();
-#endif
     u16 save_a;
     u16 save_c;
 

@@ -1,6 +1,12 @@
 #include "common.h"
 #ifdef DDPDOJ_PC
 #include "arcade_gameplay.h"
+#else
+void bullet_fire256_direct(void);
+s32 entity_draw_with_special_items();
+s32 rng_next_bit();
+s32 sprite_draw_with_special_items();
+s32 velocity_from_direction();
 #endif
 #include "layers.h"
 #include "entity.h"
@@ -31,9 +37,6 @@ void bullet_spawn(void);
 void bullet_position_offset_add(void);
 void bullet_fire256_loop2_double();
 void bullet_fire256_loop2_3way();
-#ifndef DDPDOJ_PC
-void bullet_fire256_direct(void);
-#endif
 void bullet_spawn256(void);
 void bullet_type_setup_32(void);
 void bullet_type_setup_31(void);
@@ -61,9 +64,6 @@ void pickup_draw_alternating(u16 arg0) {
 
 
 void pickup_draw_when_crowded(void) {
-#ifndef DDPDOJ_PC
-    s32 entity_draw_with_special_items();
-#endif
     u16 t;
 
     if (g_bullet_count < 35) goto call;
@@ -183,9 +183,6 @@ void p2_stage_stars_small_add(void) {
 extern u16 g_frame_mod8;
 
 void pickup_accelerate(void) {
-#ifndef DDPDOJ_PC
-    s32 velocity_from_direction();
-#endif
     if (g_frame_mod8 == 0) {
         if (g_enemies_stopped == 0) {
             ENTITY(reg_a6)->move.b.speed += 1;
@@ -521,7 +518,6 @@ extern u8 *reg_call_target_as_u8_p;
 
 void score_pickup_bee(void) {
 #ifndef DDPDOJ_PC
-    s32 entity_draw_with_special_items();
     s32 bullet_release();
 #endif
     u32 t;
@@ -1136,14 +1132,8 @@ void pickup_init_jitter_small(void) {
     pickup_init_jitter();
 }
 
-#ifndef DDPDOJ_PC
-s32 rng_next_bit();
-#endif
 
 void pickup_init_jitter(void) {
-#ifndef DDPDOJ_PC
-    s32 velocity_from_direction();
-#endif
     u32 save_d0;
     u32 save_d2;
     u32 save_d3;
@@ -1692,9 +1682,6 @@ void pickup_draw_value_large(void) {
 extern u32 pickup_draw_value_table[];
 
 void pickup_draw_value(void) {
-#ifndef DDPDOJ_PC
-    s32 sprite_draw_with_special_items();
-#endif
     u16 temp_a2;
     u16 temp_a3;
     u32 temp_a0;

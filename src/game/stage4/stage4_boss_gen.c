@@ -1,4 +1,7 @@
 #include "common.h"
+#ifndef DDPDOJ_PC
+void enemy_set_entity_count(s32 mode);
+#endif
 #include "arcade_gameplay.h"
 #ifdef DDPDOJ_PC
 void enemy_set_entity_count(u16 count);
@@ -1425,9 +1428,6 @@ block_11:
 }
 
 void stage4_wave_cannon_first(void) {
-#ifndef DDPDOJ_PC
-    void enemy_set_entity_count(s32 mode);
-#endif
     enemy_set_entity_count(2);
 }
 
@@ -1891,9 +1891,6 @@ void wave_cannon_explode() {
 }
 
 void stage4_reactor_first(void) {
-#ifndef DDPDOJ_PC
-    void enemy_set_entity_count(s32 mode);
-#endif
     enemy_set_entity_count(0);
 }
 
@@ -1957,9 +1954,6 @@ block_5:
 }
 
 void crane_turret_first(void) {
-#ifndef DDPDOJ_PC
-    void enemy_set_entity_count(s32 mode);
-#endif
     enemy_set_entity_count(0);
 }
 
@@ -2257,9 +2251,6 @@ void rail_turret_explode(void) {
 }
 
 void rail_turret_first(void) {
-#ifndef DDPDOJ_PC
-    void enemy_set_entity_count(s32 mode);
-#endif
     enemy_set_entity_count(1);
 }
 
