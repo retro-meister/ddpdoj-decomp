@@ -1085,7 +1085,7 @@ s32 music_play_bgm10();
 s32 slowdown_reset();
 extern u16 g_players_stage_clear;
 void stage_clear_begin(void) {
-    slowdown_reset();
+    if (GAME_RULE(1, 0)) slowdown_reset();
     music_play_bgm10();
     g_players_stage_clear = 1;
     g_boss_present_b1 |= 8;
