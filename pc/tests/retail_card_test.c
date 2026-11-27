@@ -13,6 +13,13 @@
 
 extern u8 g_mc_task, g_mc_step, g_mc_choice, g_setting_difficulty;
 extern s32 g_mc_operation_done, g_mc_save_succeeded, g_mc_load_succeeded;
+extern u8 g_p1_btn_map_a, g_p1_btn_map_b, g_p1_btn_map_c, g_p1_btn_map_d;
+extern u8 g_p2_btn_map_a, g_p2_btn_map_b, g_p2_btn_map_c, g_p2_btn_map_d;
+static u8 *const bindings[] = {
+    &g_p1_btn_map_a, &g_p1_btn_map_b, &g_p1_btn_map_c, &g_p1_btn_map_d,
+    &g_p2_btn_map_a, &g_p2_btn_map_b, &g_p2_btn_map_c, &g_p2_btn_map_d,
+};
+
 void mc_save_update(s32 slot);
 void mc_load_update(s32 slot);
 void mc_replay_load_begin(s32 slot);
@@ -68,8 +75,40 @@ static void verify_icon(const char *card, const char *directory)
     SDL_free(path);
 }
 
+static void test_card(const char *card, bool black)
+{
+    extern s32 g_ranking_scores_as_s32_a[];
+    require(g_ranking_scores_as_s32_a[0] == (black ? 0x1182223 : 0x729671), "Initialize mode ranking");
+    g_ranking_scores_as_s32_a[0] += 1;
+    for (unsigned i = 0; i < SDL_arraysize(bindings); ++i) *bindings[i] = i + 1;
+    g_setting_difficulty = 3;
+    card_operation(true, 0);
+    verify_icon(card, black ? "BISLPS-25233BL" : "BISLPS-25233");
+    g_ranking_scores_as_s32_a[0] = 0;
+    for (unsigned i = 0; i < SDL_arraysize(bindings); ++i) *bindings[i] = 0;
+    g_setting_difficulty = 0;
+    card_operation(false, 0);
+    save_block_to_settings();
+    require(g_ranking_scores_as_s32_a[0] == (black ? 0x1182224 : 0x729672), "Restore mode ranking");
+    require(g_setting_difficulty == 3, "Restore the saved difficulty");
+
+    for (unsigned i = 0; i < SDL_arraysize(bindings); ++i)
+        require(*bindings[i] == i + 1, "Restore each player's button assignments");
+
+    static u8 expected[PC_REPLAY_CARD_SIZE];
+    for (size_t i = 0; i < sizeof(expected); ++i) g_replay_file_loaded[i] = (u8)(i * 7 + i / 256 + black);
+    card_operation(true, 1);
+    verify_icon(card, black ? "BISLPS-25233REPLAY1BL" : "BISLPS-25233REPLAY1");
+    SDL_memcpy(expected, g_replay_file_loaded, sizeof(expected));
+    SDL_memset(g_replay_file_loaded, 0, sizeof(expected));
+    card_operation(false, 1);
+    require(SDL_memcmp(expected, g_replay_file_loaded, sizeof(expected)) == 0, "Reload the complete replay file");
+}
+
 int main(int argc, char **argv)
 {
+    bool check_boot = argc > 3 && SDL_strcmp(argv[argc - 1], "--check-boot") == 0;
+    if (check_boot) --argc;
     bool black = false;
 #ifdef DDPDOJ_BONUS_FEATURES
     black = argc == 4 && SDL_strcmp(argv[3], "--black-label") == 0;
@@ -83,27 +122,18 @@ int main(int argc, char **argv)
     pc_gs_bind_game(renderer);
     game_boot_begin();
 
-    extern s32 g_ranking_scores_as_s32_a[];
-    require(g_ranking_scores_as_s32_a[0] == (black ? 0x1182223 : 0x729671), "Initialize mode ranking");
-    g_ranking_scores_as_s32_a[0] += 1;
-    g_setting_difficulty = 3;
-    card_operation(true, 0);
-    verify_icon(argv[2], black ? "BISLPS-25233BL" : "BISLPS-25233");
-    g_ranking_scores_as_s32_a[0] = 0;
-    g_setting_difficulty = 0;
-    card_operation(false, 0);
-    save_block_to_settings();
-    require(g_ranking_scores_as_s32_a[0] == (black ? 0x1182224 : 0x729672), "Restore mode ranking");
-    require(g_setting_difficulty == 3, "Restore the saved difficulty");
-
-    static u8 expected[PC_REPLAY_CARD_SIZE];
-    for (size_t i = 0; i < sizeof(expected); ++i) g_replay_file_loaded[i] = (u8)(i * 7 + i / 256 + black);
-    card_operation(true, 1);
-    verify_icon(argv[2], black ? "BISLPS-25233REPLAY1BL" : "BISLPS-25233REPLAY1");
-    SDL_memcpy(expected, g_replay_file_loaded, sizeof(expected));
-    SDL_memset(g_replay_file_loaded, 0, sizeof(expected));
-    card_operation(false, 1);
-    require(SDL_memcmp(expected, g_replay_file_loaded, sizeof(expected)) == 0, "Reload the complete replay file");
+    if (check_boot) {
+        bool loaded = false;
+        for (unsigned frame = 0; frame < 3000 && *bindings[0] != 1; ++frame) {
+            if (loaded) game_run_frame();
+            else loaded = game_boot_frame();
+            SDL_Delay(1);
+        }
+        for (unsigned i = 0; i < SDL_arraysize(bindings); ++i)
+            require(*bindings[i] == i + 1, "Load button assignments at startup");
+    } else {
+        test_card(argv[2], black);
+    }
 
     pc_mc_close_storage();
     pc_cdvd_unmount();

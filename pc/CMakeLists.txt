@@ -424,6 +424,12 @@ if(BUILD_TESTING)
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load")
         set_tests_properties(retail_card_save_load PROPERTIES ENVIRONMENT "SDL_AUDIODRIVER=dummy")
 
+        set_tests_properties(retail_card_save_load PROPERTIES FIXTURES_SETUP saved_bindings)
+        add_test(NAME retail_card_boot_bindings COMMAND ddpdoj_retail_card_test "${DDPDOJ_TEST_ISO}"
+            "${CMAKE_CURRENT_BINARY_DIR}/test-cards-save-load" --check-boot)
+        set_tests_properties(retail_card_boot_bindings PROPERTIES
+            FIXTURES_REQUIRED saved_bindings ENVIRONMENT "SDL_AUDIODRIVER=dummy")
+
         add_test(NAME retail_two_player COMMAND ddpdoj_main_retail_gameplay_test "${DDPDOJ_TEST_ISO}"
             "${CMAKE_CURRENT_BINARY_DIR}/test-cards-two-player" --two-player)
         set_tests_properties(retail_two_player PROPERTIES

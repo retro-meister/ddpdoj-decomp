@@ -155,6 +155,9 @@ u8 g_stage_select_choice __attribute__((aligned(4)));
 #endif
 u8 g_pad_vib_enabled __attribute__((aligned(4)));
 u8 g_setting_autosave;
+#ifdef DDPDOJ_PC
+u8 pc_button_mappings[2][4];
+#else
 u8 g_p2_btn_map_d;
 u8 g_p2_btn_map_c;
 u8 g_p2_btn_map_b;
@@ -163,6 +166,7 @@ u8 g_p1_btn_map_d;
 u8 g_p1_btn_map_c;
 u8 g_p1_btn_map_b;
 u8 g_p1_btn_map_a __attribute__((aligned(8)));
+#endif
 u8 g_mc_frame_visible __attribute__((aligned(4)));
 u8 settings_reset_state_2 __attribute__((aligned(4)));
 u8 settings_reset_state __attribute__((aligned(4)));
@@ -209,6 +213,15 @@ s32 D_0028E1BC;
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
+
+PC_DATA_ALIAS(g_p1_btn_map_a, pc_button_mappings, 0);
+PC_DATA_ALIAS(g_p1_btn_map_b, pc_button_mappings, 1);
+PC_DATA_ALIAS(g_p1_btn_map_c, pc_button_mappings, 2);
+PC_DATA_ALIAS(g_p1_btn_map_d, pc_button_mappings, 3);
+PC_DATA_ALIAS(g_p2_btn_map_a, pc_button_mappings, 4);
+PC_DATA_ALIAS(g_p2_btn_map_b, pc_button_mappings, 5);
+PC_DATA_ALIAS(g_p2_btn_map_c, pc_button_mappings, 6);
+PC_DATA_ALIAS(g_p2_btn_map_d, pc_button_mappings, 7);
 
 PC_DATA_ALIAS(D_0028E1D9, g_coin_counts, 0x1);
 PC_DATA_ALIAS(D_0028E1DA, g_coin_counts, 0x2);
@@ -368,14 +381,7 @@ const PcFrameRegion pc_system_regions[] = {
 #endif
     PC_FRAME_REGION(g_pad_vib_enabled),
     PC_FRAME_REGION(g_setting_autosave),
-    PC_FRAME_REGION(g_p2_btn_map_d),
-    PC_FRAME_REGION(g_p2_btn_map_c),
-    PC_FRAME_REGION(g_p2_btn_map_b),
-    PC_FRAME_REGION(g_p2_btn_map_a),
-    PC_FRAME_REGION(g_p1_btn_map_d),
-    PC_FRAME_REGION(g_p1_btn_map_c),
-    PC_FRAME_REGION(g_p1_btn_map_b),
-    PC_FRAME_REGION(g_p1_btn_map_a),
+    PC_FRAME_REGION(pc_button_mappings),
     PC_FRAME_REGION(g_mc_frame_visible),
     PC_FRAME_REGION(settings_reset_state_2),
     PC_FRAME_REGION(settings_reset_state),
