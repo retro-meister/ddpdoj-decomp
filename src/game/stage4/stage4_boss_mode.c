@@ -545,7 +545,9 @@ void stage4_boss_final_explosion_step(arg1)
     u16 temp_a0;
     u16 temp_a0_2;
     u16 temp_a0_5;
+#ifndef DDPDOJ_PC
     u16 temp_v1;
+#endif
     u8 temp_a0_3;
     u8 temp_a0_4;
     u32 var_a0;
@@ -647,11 +649,19 @@ void stage4_boss_final_explosion_step(arg1)
         }
     }
     var_a0 = EXPLODING(reg_a4)->step;
+#ifdef DDPDOJ_PC
+    if (var_a0 == 1 && (EXPLODING(reg_a4)->wait == 0 || --EXPLODING(reg_a4)->wait == 0)) {
+        stage4_boss_final_explosion_cycle();
+        u8 *burst_count = reg_a4 + 0xD;
+        reg_tmp.b[0] = *burst_count;
+        *burst_count -= 1;
+#else
     if ((var_a0 == 1) && ((temp_v1 = EXPLODING(reg_a4)->wait, var_a0 = (u32) (reg_a4 + 4), (temp_v1 == 0)) || (*(u16 *)var_a0 = (s16) (temp_v1 - 1), (EXPLODING(reg_a4)->wait == 0)))) {
         stage4_boss_final_explosion_cycle();
         var_a0 = (u32) (reg_a4);
         reg_tmp.b[0] = (*(u8 *)((u8 *)(var_a0) + (0xD)));
         (*(u8 *)((u8 *)(var_a0) + (0xD))) -= 1;
+#endif
         if ((s32) reg_tmp.b[0] <= 0) {
             EXPLODING(reg_a4)->blast_timer.t.count = (u8) EXPLODING(reg_a4)->blast_timer.t.reload;
             reg_a1 = (u8 *)(stage4_boss_final_blast_series);
