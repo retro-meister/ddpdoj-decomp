@@ -1,5 +1,6 @@
 #include "common.h"
 #include "enemy.h"
+#include "ending_data.h"
 #include "player.h"
 #include "task.h"
 #include "entity.h"
@@ -171,8 +172,7 @@ void picture_change_request(void) {
 
 #ifndef DEATH_LABEL
 s32 fade_in();
-extern u8 picture_change_update_table[];
-extern u8 picture_change_update_table_2[];
+extern u16 *picture_change_update_table[];
 extern u16 D_00295E2C[];
 extern u32 D_00295E34[];
 
@@ -189,7 +189,7 @@ void picture_change_update(void) {
     reg_d0.h[0] = D_00295E32[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a0 += reg_d0.h[0];
+    reg_a0 += ENDING_POINTER_OFFSET(reg_d0.h[0]);
     reg_a0 = *(u8 **)reg_a0;
     fade_to_black();
     D_00295E34[0] = reg_d0.w;
@@ -207,11 +207,11 @@ next_2:
     g_picture_change_state[0] = 0;
 next_3:
     if (g_picture_change_state[0] != 3) goto next_4;
-    reg_a0 = (u8 *)picture_change_update_table_2;
+    reg_a0 = (u8 *)ending_picture_fades.groups;
     reg_d0.h[0] = D_00295E32[0];
     reg_d0.h[0] += reg_d0.h[0];
     reg_d0.h[0] += reg_d0.h[0];
-    reg_a0 += reg_d0.h[0];
+    reg_a0 += ENDING_POINTER_OFFSET(reg_d0.h[0]);
     reg_a0 = *(u8 **)reg_a0;
     fade_in();
     D_00295E34[0] = reg_d0.w;
@@ -351,7 +351,6 @@ next_1:
 #endif
 
 #ifndef DEATH_LABEL
-extern u8 ending_text_script_event_table[];
 extern u16 D_00295E20[];
 extern u32 D_00295E24[];
 
@@ -388,10 +387,10 @@ void ending_text_script_event(void) {
         reg_d0.w = D_00295E24[0];
         if (reg_d0.w == 0) {
             reg_d0.h[0] = *(u16 *)reg_a2;
-            reg_a0 = (u8 *)ending_text_script_event_table;
+            reg_a0 = (u8 *)ending_common.fades;
             reg_d0.h[0] += reg_d0.h[0];
             reg_d0.h[0] += reg_d0.h[0];
-            reg_a0 += reg_d0.h[0];
+            reg_a0 += ENDING_POINTER_OFFSET(reg_d0.h[0]);
             reg_a0 = *(u8 **)reg_a0;
             fade_to_black();
             D_00295E24[0] = reg_d0.w;
@@ -507,7 +506,7 @@ s32 sprite_draw_keep();
 void intro_text_update(void);
 #endif
 extern u32 ending_task_table[];
-extern u8 ending_task_table_2[];
+extern void (*ending_task_table_2[])(void);
 extern u8 g_replay_file_finalized;
 extern u8 g_stage_jump_state;
 extern u16 D_00295E2C[];
@@ -534,7 +533,7 @@ void ending_task(void) {
     intro_text_update();
 #else
     reg_d0.h[0] = ENTITY(reg_a6)->offset_x.h;
-    ((Fn)*(u32 *)((u8 *)ending_task_table_2 + (reg_d0.h[0] * 4)))();
+    ending_task_table_2[reg_d0.h[0]]();
     ending_text_lines_draw();
     picture_change_update();
     reg_d0.h[0] = D_00295E2C[0];
@@ -562,7 +561,7 @@ void ending_task(void) {
 #ifndef DEATH_LABEL
 s32 text_layer_clear();
 s32 music_play_bgm11();
-extern u8 D_0024D628[];
+
 
 void ending_mode_common(void) {
     u16 temp_a0;
@@ -576,15 +575,15 @@ void ending_mode_common(void) {
         music_play_bgm11();
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
-        reg_a0 = (u8 *)D_0024D628;
+        reg_a0 = (u8 *)ending_common.dolls;
         reg_d0.h[0] = ENTITY(reg_a6)->look.h;
         reg_d0.h[0] += reg_d0.h[0];
         reg_d0.h[0] += reg_d0.h[0];
-        reg_a0 += reg_d0.h[0];
+        reg_a0 += ENDING_POINTER_OFFSET(reg_d0.h[0]);
         reg_a0 = *(u8 **)reg_a0;
         temp_a0 = ENTITY(reg_a6)->sprite.h;
-        reg_a0 += temp_a0;
-        reg_d0.w = *(u32 *)reg_a0;
+        reg_a0 += ENDING_POINTER_OFFSET(temp_a0);
+        reg_d0.w = ENDING_PAGE_WORD(reg_a0);
         temp_a2 = (u8 *)(reg_a6 + 0xE);
         if (reg_d0.w == -1U) {
             reg_d0.h[0] = ENTITY(reg_a6)->look.h;
@@ -592,7 +591,7 @@ void ending_mode_common(void) {
             ending_mode_set();
             return;
         }
-        reg_a0 = (u8 *) reg_d0.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
         ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
@@ -610,7 +609,7 @@ extern u32 ending_mode_doll_a_table[];
 extern u32 ending_mode_doll_a_table_2[];
 extern u16 settings_notice_fade_palettes_at_18[32];
 extern u32 ending_mode_doll_a_table_3;
-extern u32 ending_mode_doll_a_table_4;
+extern u8 *ending_mode_doll_a_table_4[2];
 extern u16 D_00295E3A[];
 void input_get_p1_pressed();
 void input_get_p2_pressed();
@@ -639,8 +638,8 @@ void ending_mode_doll_a(void) {
 next_10:
     if (W(6) != 1) goto next_20;
     reg_a0 = (u8 *) &ending_mode_doll_a_table_4;
-    reg_a0 += W(0xC);
-    reg_d0.w = *(u32 *)reg_a0;
+    reg_a0 += ENDING_POINTER_OFFSET(W(0xC));
+    reg_d0.w = ENDING_PAGE_WORD(reg_a0);
     if (reg_d0.w != -1U) goto next_15;
     W(6) = 2;
     reg_tmp.w = ARCADE_ADDRESS_ENCODE((void *) input_get_p1_pressed);
@@ -652,7 +651,7 @@ next_10:
     W(0x1A) = reg_tmp.h[0];
     goto next_20;
 next_15:
-    reg_a0 = (u8 *) reg_d0.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
     ending_text_script_step();
     if (cond_flag != 0) goto next_20;
     W(0xC) += 4;
@@ -745,8 +744,6 @@ block_rts:
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 ending_mode_doll_b_table[];
-
 void ending_mode_doll_b(void) {
     u16 temp_a1;
 
@@ -756,15 +753,15 @@ void ending_mode_doll_b(void) {
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
-        reg_a0 = (u8 *)(ending_mode_doll_b_table);
+        reg_a0 = (u8 *)ending_doll_b.pages;
         temp_a1 = ENTITY(reg_a6)->sprite.h;
-        reg_a0 += temp_a1;
-        reg_d0.w = *(u32 *)reg_a0;
+        reg_a0 += ENDING_POINTER_OFFSET(temp_a1);
+        reg_d0.w = ENDING_PAGE_WORD(reg_a0);
         if (reg_d0.w == -1U) {
             *(s8 *)(reg_a5 + 3) = 2;
             return;
         }
-        reg_a0 = (u8 *) reg_d0.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
         ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
@@ -775,8 +772,6 @@ void ending_mode_doll_b(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 ending_mode_doll_c_table[];
-
 void ending_mode_doll_c(void) {
     u16 temp_a1;
 
@@ -786,15 +781,15 @@ void ending_mode_doll_c(void) {
         ENTITY(reg_a6)->sprite.h = 0U;
     }
     if (ENTITY(reg_a6)->offset_y.h == 1) {
-        reg_a0 = (u8 *)(ending_mode_doll_c_table);
+        reg_a0 = (u8 *)ending_doll_c.pages;
         temp_a1 = ENTITY(reg_a6)->sprite.h;
-        reg_a0 += temp_a1;
-        reg_d0.w = *(u32 *)reg_a0;
+        reg_a0 += ENDING_POINTER_OFFSET(temp_a1);
+        reg_d0.w = ENDING_PAGE_WORD(reg_a0);
         if (reg_d0.w == -1U) {
             *(s8 *)(reg_a5 + 3) = 2;
             return;
         }
-        reg_a0 = (u8 *) reg_d0.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
         ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
@@ -805,7 +800,7 @@ void ending_mode_doll_c(void) {
 #endif
 
 #ifndef DEATH_LABEL
-extern u32 ending_mode_second_loop_message_table[];
+extern u8 *ending_mode_second_loop_message_table[];
 
 void ending_mode_second_loop_message(void) {
     u16 temp_a1;
@@ -818,13 +813,13 @@ void ending_mode_second_loop_message(void) {
     if (ENTITY(reg_a6)->offset_y.h == 1) {
         reg_a0 = (u8 *)(ending_mode_second_loop_message_table);
         temp_a1 = ENTITY(reg_a6)->sprite.h;
-        reg_a0 += temp_a1;
-        reg_d0.w = *(u32 *)reg_a0;
+        reg_a0 += ENDING_POINTER_OFFSET(temp_a1);
+        reg_d0.w = ENDING_PAGE_WORD(reg_a0);
         if (reg_d0.w == -1U) {
             *(s8 *)(reg_a5 + 3) = 2;
             return;
         }
-        reg_a0 = (u8 *) reg_d0.w;
+        reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_d0.w);
         ending_text_script_step();
         if (cond_flag == 0) {
             ENTITY(reg_a6)->sprite.h += 4;
@@ -835,8 +830,13 @@ void ending_mode_second_loop_message(void) {
 #endif
 
 /* .bss (the compiler lays these out in reverse) */
+#ifdef DDPDOJ_PC
+/* The ending clears through the first two halfwords of its animation counter. */
+_Alignas(16) u8 D_00295E00[0x50];
+#else
 u16 D_00295E40[8];
 u8 D_00295E00[64];
+#endif
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
@@ -854,6 +854,7 @@ PC_DATA_ALIAS(D_00295E34, D_00295E00, 0x34);
 PC_DATA_ALIAS(D_00295E38, D_00295E00, 0x38);
 PC_DATA_ALIAS(D_00295E3C, D_00295E00, 0x3c);
 PC_DATA_ALIAS(D_00295E3E, D_00295E00, 0x3e);
+PC_DATA_ALIAS(D_00295E40, D_00295E00, 0x40);
 
 #ifndef DEATH_LABEL
 PC_DATA_ALIAS(D_00295E1F, D_00295E00, 0x1f);
