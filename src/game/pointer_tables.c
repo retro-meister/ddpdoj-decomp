@@ -3086,12 +3086,13 @@ void player_tables_init(void) {
     STORE_ARCADE_ADDRESS(player_laser_levels_5 + 12, (u32)player_shot_levels_3 + 8);
     STORE_ARCADE_ADDRESS(player_laser_levels_5 + 14, (u32)player_laser_levels_3 + 8);
 #endif
-    STORE_ARCADE_ADDRESS(((u16 *)player_ship_sprite_tables), player_ship_sprites_00);
-    STORE_ARCADE_ADDRESS(player_ship_sprite_tables + 2, player_ship_sprites_01);
-    STORE_ARCADE_ADDRESS(player_ship_hitbox_tables, player_ship_hitboxes_00);
-    STORE_ARCADE_ADDRESS(player_ship_hitbox_tables + 2, player_ship_hitboxes_01);
-    STORE_ARCADE_ADDRESS(player_ship_shadow_tables, player_ship_shadows_00);
-    STORE_ARCADE_ADDRESS(player_ship_shadow_tables + 2, player_ship_shadows_01);
+    /* Roll offsets range from -0x20 to +0x20 around the neutral entry. */
+    STORE_ARCADE_ADDRESS(((u16 *)player_ship_sprite_tables), player_ship_sprites_00 + 16);
+    STORE_ARCADE_ADDRESS(player_ship_sprite_tables + 2, player_ship_sprites_01 + 16);
+    STORE_ARCADE_ADDRESS(player_ship_hitbox_tables, player_ship_hitboxes_00 + 16);
+    STORE_ARCADE_ADDRESS(player_ship_hitbox_tables + 2, player_ship_hitboxes_01 + 16);
+    STORE_ARCADE_ADDRESS(player_ship_shadow_tables, player_ship_shadows_00 + 16);
+    STORE_ARCADE_ADDRESS(player_ship_shadow_tables + 2, player_ship_shadows_01 + 16);
     STORE_ARCADE_ADDRESS(((u16 *)ship0_shot_lists_1), ship0_shot_list_1_00);
     STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 2, ship0_shot_list_1_01);
     STORE_ARCADE_ADDRESS(ship0_shot_lists_1 + 4, ship0_shot_list_1_02);
