@@ -3136,6 +3136,11 @@ static s32 replay_decode_table(u8 *entry, const void *table, unsigned count,
     unsigned index_bytes = op == 0x81 ? entry[1] : replay_halfword(entry);
     unsigned index = index_bytes / 4;
     unsigned offset = op == 0x81 ? entry[0] : 0;
+    /* Retail Super Replays 02, 06 and 07 use this PS2 alias for the hyper parameters. */
+    if (table == replay_blocks_option_params && index_bytes == 20 * 4 && offset == 0x30) {
+        index = 23;
+        offset = 0;
+    }
     if ((index_bytes & 3) != 0 || index >= count ||
         (sizes && ((offset & 1) != 0 || offset >= (unsigned)sizes[index]))) {
         g_replay_pointer_not_found = 1;

@@ -202,8 +202,8 @@ void stage5_midboss4_wave_beam_fire(void) {
             reg_d1.b[0] = 0x22;
         }
     }
-    reg_d2.h[1] = (*(u16 *)((u8 *)((u32)reg_a4) + (2)));
-    temp_a0 = (*(u16 *)((u8 *)((u32)reg_a4) + (4)));
+    reg_d2.h[1] = (*(u16 *)((u8 *)((ArcadeSavedAddress)reg_a4) + (2)));
+    temp_a0 = (*(u16 *)((u8 *)((ArcadeSavedAddress)reg_a4) + (4)));
     reg_d2.h[0] = temp_a0;
     reg_a0 = (u8 *)(g_direction64_offsets_432);
     reg_d4.w = 0;
