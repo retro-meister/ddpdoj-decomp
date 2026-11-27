@@ -160,7 +160,11 @@ int main(int argc, char **argv)
         }
     }
 #ifdef DDPDOJ_BONUS_FEATURES
-    g_black_label_active = argc == 4 && strcmp(argv[3], "--black-label") == 0;
+    extern u8 g_ship_select_state[];
+    const bool hover_one_round = argc == 4 && strcmp(argv[3], "--black-label") == 0;
+    const bool leave_default = argc == 4 && strcmp(argv[3], "--black-label-default") == 0;
+    unsigned departure_frames = 0;
+    g_black_label_active = hover_one_round || leave_default;
 #endif
     require(argc == 3 || replay || two_player || GAME_RULE(0, 1), "Expected the retail ISO, a test-only memory card directory and optional replay mode");
     s32 replay_inputs = 0;
@@ -195,6 +199,10 @@ int main(int argc, char **argv)
     unsigned together = 0;
     const unsigned max_frames = replay ? 30000 : MAX_FRAMES;
     for (unsigned frame = 0; frame < max_frames && played < GAMEPLAY_FRAMES; ++frame) {
+#ifdef DDPDOJ_BONUS_FEATURES
+        bool departing = g_black_label_active && g_ship_select_state[0] == 7;
+        if (departing) ++departure_frames;
+#endif
         if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
             require(SDL_SetJoystickVirtualButton(joystick, pressed, false), "Release controller button");
             pressed = SDL_GAMEPAD_BUTTON_INVALID;
@@ -205,7 +213,15 @@ int main(int argc, char **argv)
             } else
 #endif
             {
-                pressed = next_button(&confirmed, &inputs);
+#ifdef DDPDOJ_BONUS_FEATURES
+                if (departing) {
+                    pressed = hover_one_round && departure_frames < 120
+                        ? SDL_GAMEPAD_BUTTON_DPAD_UP : SDL_GAMEPAD_BUTTON_INVALID;
+                } else
+#endif
+                {
+                    pressed = next_button(&confirmed, &inputs);
+                }
             }
             if (pressed != SDL_GAMEPAD_BUTTON_INVALID) {
                 require(SDL_SetJoystickVirtualButton(joystick, pressed, true), "Press controller button");
@@ -271,6 +287,12 @@ int main(int argc, char **argv)
         require(shot_frames > 100 && laser_frames > 30, "Fire shots and laser during gameplay");
         require(bomb_frames > 30 && bomb_finished, "Fire a bomb and complete its animation");
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        require(departure_frames >= 120, "Run the departure animation during round selection");
+        require(g_black_label_single_loop == hover_one_round, "Accept the highlighted round count without confirmation");
+    }
+#endif
     if (second) {
         require(together > 100 && g_p2_score != 0, "Both ships play and player two scores");
         SDL_CloseJoystick(second);

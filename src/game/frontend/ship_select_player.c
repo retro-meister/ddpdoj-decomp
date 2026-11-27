@@ -843,6 +843,11 @@ void join_select_objects_update(void) {
         reg_a6 = (u8 *)D_0029BF04;
         join_select_object_update();
     }
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && g_loop == 0) {
+        black_label_round_select((D_0029BEE1[0] | D_0029BF05[0]) & 4);
+    }
+#endif
     reg_d0.w = save_d0;
     reg_d1.w = save_d1;
     reg_d2.w = save_d2;

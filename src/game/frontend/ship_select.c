@@ -381,55 +381,59 @@ void sfx_menu_confirm(void);
 
 u16 g_black_label_single_loop;
 static u16 round_select_delay, round_select_blink;
-static int round_select_done;
+static int round_select_done, single_loop_highlighted;
 
-static void draw_round_options(int cursor) {
+static void draw_round_option(int row, const char *label, int highlighted) {
     reg_d0.w = 7;
-    reg_d1.w = 29;
-    reg_d2.w = 0;
-    reg_a0 = (u8 *)(cursor && g_black_label_single_loop ? ">1 ROUND GAME" : " 1 ROUND GAME");
+    reg_d1.w = row;
+    reg_d2.w = highlighted ? 2 : 0;
+    reg_a0 = (u8 *)(highlighted ? ">" : " ");
     text_layer_print();
-    reg_d0.w = 7;
-    reg_d1.w = 25;
-    reg_a0 = (u8 *)(cursor && !g_black_label_single_loop ? ">2 ROUND GAME" : " 2 ROUND GAME");
+    reg_d0.w = 8;
+    reg_a0 = (u8 *)label;
     text_layer_print();
 }
 
-static int black_label_round_select(void) {
-    u16 pressed = 0;
-    if (round_select_done || g_loop != 0) return 0;
-    if (g_ship_select_state[1]) {
-        if (g_ship_select_state[0] < 6) return 0;
-        pressed |= g_input_p1_pressed;
-    }
-    if (g_ship_select_state[0x71]) {
-        if (g_ship_select_state[0x70] < 6) return 0;
-        pressed |= g_input_p2_pressed;
-    }
-    if (!g_ship_select_state[1] && !g_ship_select_state[0x71]) return 0;
+void black_label_round_select(int departure_finished) {
+    u16 direction = 0, pressed = 0;
+    int show_cursor = 0;
+
+    if (round_select_done) return;
     if (round_select_delay) {
         --round_select_delay;
-    } else if (round_select_blink) {
-        if (--round_select_blink == 0) {
-            round_select_done = 1;
-            text_layer_clear();
-            return 0;
-        }
     } else {
-        if ((pressed & 1) && !g_black_label_single_loop) {
-            g_black_label_single_loop = 1;
-            sfx_menu_move();
-        } else if ((pressed & 2) && g_black_label_single_loop) {
-            g_black_label_single_loop = 0;
-            sfx_menu_move();
+        if (!round_select_blink && !departure_finished) {
+            if (g_ship_select_state[1]) {
+                direction = g_input_p1_pressed;
+                pressed = direction;
+            }
+            if (g_ship_select_state[0x71]) {
+                direction = g_input_p2_pressed;
+                pressed |= direction;
+            }
+            if (direction & 3) {
+                int up = (direction & 1) != 0;
+                if (up != single_loop_highlighted) {
+                    single_loop_highlighted = up;
+                    sfx_menu_move();
+                }
+            }
         }
-        if (pressed & 0x70) {
-            round_select_blink = 32;
+        if (!round_select_blink && (departure_finished || (pressed & 0x70))) {
+            g_black_label_single_loop = single_loop_highlighted;
             sfx_menu_confirm();
+            round_select_blink = 32;
         }
+        if (round_select_blink && --round_select_blink == 0) {
+            round_select_done = 1;
+            draw_round_option(29, "            ", 0);
+            draw_round_option(25, "            ", 0);
+            return;
+        }
+        show_cursor = !(round_select_blink & 2);
     }
-    draw_round_options(!round_select_delay && !(round_select_blink & 2));
-    return 1;
+    draw_round_option(29, "1 ROUND GAME", show_cursor && single_loop_highlighted);
+    draw_round_option(25, "2 ROUND GAME", show_cursor && !single_loop_highlighted);
 }
 #endif
 
@@ -441,6 +445,7 @@ void ship_select_task(void) {
 #ifdef DDPDOJ_BONUS_FEATURES
         if (g_black_label_active && g_loop == 0) {
             round_select_done = 0;
+            single_loop_highlighted = 0;
             round_select_delay = 60;
             round_select_blink = 0;
             g_black_label_single_loop = 0;
@@ -454,9 +459,6 @@ void ship_select_task(void) {
         ship_select_task_finish();
         return;
     }
-#ifdef DDPDOJ_BONUS_FEATURES
-    if (g_black_label_active && black_label_round_select()) return;
-#endif
     *(s8 *)(reg_a5 + 2) = 0;
     reg_a6 = (u8 *)g_ship_select_state;
     reg_d7.w = 1;
