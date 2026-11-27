@@ -128,7 +128,7 @@ void rank_entry_fill(void) {
     }
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0xC);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0xE);
-    reg_a4 = (u8 *)reg_tmp.w;
+    reg_a4 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     *(u32 *)(reg_a4 + 0) = reg_d6.w;
     if (reg_d6.w == 0xFF) {
         reg_d0.h[0] = g_p1_score_billions;
@@ -277,7 +277,7 @@ loop_70:
     if ((s16) --reg_d1.h[0] >= 0) goto loop_70;
 next_80:
     reg_a1 -= 0xC;
-    reg_tmp.w = (u32) reg_a1;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a1);
     *(u16 *)(reg_a4 + 0xC) = reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0xE) = reg_tmp.h[0];
     reg_a1 = (u8 *)D_002BB3A2;

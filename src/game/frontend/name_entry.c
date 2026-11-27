@@ -42,7 +42,13 @@ extern u8 g_name_entry_player;
 extern u16 g_two_player_seen;
 extern s16 g_player2[];
 extern s16 g_player1[];
-extern u8 D_002BAE00[];
+typedef struct {
+    u8 players[2][64];
+    u16 started;
+    u16 pending;
+} NameEntryState;
+
+extern NameEntryState name_entry_state;
 
 void name_entry_task_begin() {
     stage_map_reset();
@@ -51,7 +57,7 @@ void name_entry_task_begin() {
 #endif
     text_layer_clear();
     *(s8 *)(reg_a5 + 3) = 1;
-    memset(D_002BAE00, 0, 0x84);
+    memset(&name_entry_state, 0, sizeof(name_entry_state));
     reg_a0 = (u8 *)((u8 *)D_00261F30);
     reg_d0.h[0] = 2;
     sprite_palette_load();
@@ -405,20 +411,19 @@ void name_entry_task(void) {
     }
 }
 
-extern u16 D_002BAE80[];
 
 void name_entry_p1_update() {
     s32 input_get_p1_held();
     s32 input_get_p1_pressed();
-    s32 temp_s6;
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
-    s32 temp_s5;
+    ArcadeSavedAddress temp_s6;
+    ArcadeSavedAddress temp_s0;
+    ArcadeSavedAddress temp_s1;
+    ArcadeSavedAddress temp_s2;
+    ArcadeSavedAddress temp_s3;
+    ArcadeSavedAddress temp_s4;
+    ArcadeSavedAddress temp_s5;
 
-    reg_a4 = (u8 *)D_002BAE00;
+    reg_a4 = name_entry_state.players[0];
     input_get_p1_held();
     *(u16 *)(reg_a4 + 0x34) = (u16) reg_d0.h[0];
     input_get_p1_pressed();
@@ -431,13 +436,13 @@ void name_entry_p1_update() {
     *(s16 *)(reg_a4 + 0x12) = 1;
     *(s16 *)(reg_a4 + 0x2C) = 0;
     *(s16 *)(reg_a4 + 0x2E) = 0;
-    temp_s6 = (s32)reg_a0;
-    temp_s0 = (s32)reg_a1;
-    temp_s1 = (s32)reg_a2;
-    temp_s2 = (s32)reg_a3;
-    temp_s3 = (s32)reg_a4;
-    temp_s4 = (s32)reg_a5;
-    temp_s5 = (s32)reg_a6;
+    temp_s6 = (ArcadeSavedAddress)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a1;
+    temp_s1 = (ArcadeSavedAddress)reg_a2;
+    temp_s2 = (ArcadeSavedAddress)reg_a3;
+    temp_s3 = (ArcadeSavedAddress)reg_a4;
+    temp_s4 = (ArcadeSavedAddress)reg_a5;
+    temp_s5 = (ArcadeSavedAddress)reg_a6;
     name_entry_rank_find_p1();
     if (cond_flag != 0) {
         reg_a0 = (u8 *)temp_s6;
@@ -458,27 +463,26 @@ void name_entry_p1_update() {
     reg_a4 = (u8 *)temp_s3;
     reg_a5 = (u8 *)temp_s4;
     reg_a6 = (u8 *)temp_s5;
-    if (D_002BAE80[0] != 0) {
+    if (name_entry_state.started != 0) {
         name_entry_side_update();
         return;
     }
     name_entry_side_begin();
 }
 
-extern u8 name_entry_p2_update_buffer[];
 
 void name_entry_p2_update() {
     s32 input_get_p2_held();
     s32 input_get_p2_pressed();
-    s32 temp_s6;
-    s32 temp_s0;
-    s32 temp_s1;
-    s32 temp_s2;
-    s32 temp_s3;
-    s32 temp_s4;
-    s32 temp_s5;
+    ArcadeSavedAddress temp_s6;
+    ArcadeSavedAddress temp_s0;
+    ArcadeSavedAddress temp_s1;
+    ArcadeSavedAddress temp_s2;
+    ArcadeSavedAddress temp_s3;
+    ArcadeSavedAddress temp_s4;
+    ArcadeSavedAddress temp_s5;
 
-    reg_a4 = (u8 *)name_entry_p2_update_buffer;
+    reg_a4 = name_entry_state.players[1];
     input_get_p2_held();
     *(u16 *)(reg_a4 + 0x34) = (u16) reg_d0.h[0];
     input_get_p2_pressed();
@@ -491,13 +495,13 @@ void name_entry_p2_update() {
     *(s16 *)(reg_a4 + 0x12) = 2;
     *(s16 *)(reg_a4 + 0x2C) = 1;
     *(s16 *)(reg_a4 + 0x2E) = 0;
-    temp_s6 = (s32)reg_a0;
-    temp_s0 = (s32)reg_a1;
-    temp_s1 = (s32)reg_a2;
-    temp_s2 = (s32)reg_a3;
-    temp_s3 = (s32)reg_a4;
-    temp_s4 = (s32)reg_a5;
-    temp_s5 = (s32)reg_a6;
+    temp_s6 = (ArcadeSavedAddress)reg_a0;
+    temp_s0 = (ArcadeSavedAddress)reg_a1;
+    temp_s1 = (ArcadeSavedAddress)reg_a2;
+    temp_s2 = (ArcadeSavedAddress)reg_a3;
+    temp_s3 = (ArcadeSavedAddress)reg_a4;
+    temp_s4 = (ArcadeSavedAddress)reg_a5;
+    temp_s5 = (ArcadeSavedAddress)reg_a6;
     name_entry_rank_find_p2();
     if (cond_flag != 0) {
         reg_a0 = (u8 *)temp_s6;
@@ -518,7 +522,7 @@ void name_entry_p2_update() {
     reg_a4 = (u8 *)temp_s3;
     reg_a5 = (u8 *)temp_s4;
     reg_a6 = (u8 *)temp_s5;
-    if (D_002BAE80[0] != 0) {
+    if (name_entry_state.started != 0) {
         name_entry_side_update();
         return;
     }
@@ -530,7 +534,7 @@ extern u8 name_entry_side_begin_table[];
 
 void name_entry_side_begin() {
     *(s16 *)(reg_a4 + 0x2E) = 1;
-    ((s16 *)D_002BAE80)[0] = 1;
+    name_entry_state.started = 1;
     reg_a0 = name_entry_side_begin_table;
     fade_in_and_release();
     name_entry_side_update();
@@ -540,7 +544,6 @@ s32 fade_to_black_and_release();
 s32 sfx_confirm();
 extern u8 name_entry_side_update_table[];
 extern u8 name_entry_side_update_table_2[];
-extern u8 D_002BAE82[];
 
 #define W(o) (*(u16 *)(reg_a4 + (o)))
 #define L(p, o) (*(u32 *)((p) + (o)))
@@ -563,7 +566,7 @@ next_1:
     name_entry_player_and_rank_draw();
     if (W(0x1E) == 0) goto block_count;
     name_entry_name_draw();
-    if (((u16 *)D_002BAE82)[0] != 0) return;
+    if (name_entry_state.pending != 0) return;
     if (W(0x2E) == 0) return;
     if (W(0x1E) != 0x30) goto next_4;
     W(0x1E) -= 1;
@@ -609,7 +612,7 @@ next_8:
 block_default:
     reg_tmp.h[1] = W(0x30);
     reg_tmp.h[0] = W(0x32);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_a1 = reg_a0;
     ptr = reg_a1;
     L(ptr, 0) = 0xC;
@@ -630,7 +633,7 @@ next_9:
     if (reg_d0.h[0] < 27) goto next_13;
     reg_tmp.h[1] = W(0x30);
     reg_tmp.h[0] = W(0x32);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
 loop_10:
     reg_d0.w = 0x70;
 loop_11:
@@ -645,7 +648,7 @@ block_fill:
     reg_d0.h[0] += reg_d0.h[0];
     reg_tmp.h[1] = W(0x30);
     reg_tmp.h[0] = W(0x32);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d1.h[0] = W(0x16);
     if (W(0x18) < 27) goto next_14;
     reg_d0.w = 0;
@@ -671,7 +674,7 @@ next_13:
 block_store:
     reg_tmp.h[1] = W(0x30);
     reg_tmp.h[0] = W(0x32);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     L(reg_a0, reg_d1.h[0] * 4) = reg_d0.w;
     if (W(0x16) < 3) return;
 block_check:
@@ -679,7 +682,7 @@ block_check:
 loop_15:
     reg_tmp.h[1] = W(0x30);
     reg_tmp.h[0] = W(0x32);
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[1] = *(u16 *)(reg_a1 + 0);
     reg_d0.h[0] = *(u16 *)(reg_a1 + 2);
     if (reg_d0.w == 0xFFFFFFFF) goto block_copy;
@@ -699,7 +702,7 @@ next_16:
 block_copy:
     name_entry_name_copy_to_own_ranks();
     reg_d1.h[0] = W(0x12);
-    *(u8 *)((u16 *)D_002BAE82) &= ~(1 << reg_d1.sb[0]);
+    *(u8 *)&name_entry_state.pending &= ~(1 << reg_d1.sb[0]);
     W(0x1E) = 0x70;
     reg_d0.w = 0;
     W(0x1A) = reg_d0.h[1];
@@ -782,10 +785,9 @@ loop_1:
 #pragma opt_common_subs off
 extern u8 name_entry_side_setup_table[];
 extern u8 name_entry_side_setup_table_2[];
-extern u8 D_002BAE82[];
 
 void name_entry_side_setup(void) {
-    reg_tmp.w = (u32)reg_a0;
+    reg_tmp.w = ARCADE_ADDRESS_ENCODE(reg_a0);
     *(u16 *)(reg_a4 + 0x30) = (u16) reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0x32) = (u16) reg_tmp.h[0];
     *(u16 *)(reg_a4 + 0xC) = (u16) *(u16 *)reg_a1;
@@ -802,12 +804,12 @@ void name_entry_side_setup(void) {
     reg_d3.h[0] = reg_tmp.h[1];
     *(u16 *)(reg_a4 + 0x3C) = (u16) reg_d3.h[0];
     reg_d0.w = 1;
-    reg_a0 = (u8 *)((u32) name_entry_side_setup_table);
+    reg_a0 = name_entry_side_setup_table;
     if (*(u16 *)(reg_a4 + 0x2C) != 0) {
         reg_d0.w = 2;
-        reg_a0 = (u8 *)((u32) name_entry_side_setup_table_2);
+        reg_a0 = name_entry_side_setup_table_2;
     }
-    D_002BAE82[0] |= (1 << (s8) reg_d0.b[0]) & 0xFF;
+    *(u8 *)&name_entry_state.pending |= (1 << (s8) reg_d0.b[0]) & 0xFF;
     *(u16 *)(reg_a4 + 6) = (u16) *(u16 *)reg_a0;
     reg_a0 += 2;
     *(u16 *)(reg_a4 + 8) = (u16) *(u16 *)reg_a0;
@@ -887,7 +889,7 @@ void name_entry_name_draw(void) {
     reg_d4.h[0] = 4;
     reg_tmp.h[1] = *(u16 *)(reg_a4 + 0x30);
     reg_tmp.h[0] = *(u16 *)(reg_a4 + 0x32);
-    reg_a0 = (u8 *)(reg_tmp.w);
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d7.h[0] = *(u16 *)(reg_a4 + 0x16);
     if (reg_d7.h[0] != 0) {
         reg_d7.h[0] -= 1;
@@ -1285,7 +1287,7 @@ void name_entry_cursor_move(void) {
     t = reg_d0.h[0];
     reg_tmp.h[1] = (t != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)t & ~1)) : *(u16 *)reg_a0;
     reg_tmp.h[0] = (((u16)t + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)((u16)t + 2) & ~1)) : *(u16 *)reg_a0;
-    reg_a0 = (u8 *) reg_tmp.w;
+    reg_a0 = ARCADE_ADDRESS_DECODE(u8 *, reg_tmp.w);
     reg_d0.h[0] = *(u16 *)(reg_a4 + 0x2A);
     *(u16 *)(reg_a4 + 0x2A) = 0U;
     reg_d0.h[0] -= 1;
@@ -1306,9 +1308,7 @@ void name_entry_cursor_move(void) {
 }
 
 /* .bss (the compiler lays these out in reverse) */
-u16 D_002BAE80[8];
-u8 name_entry_p2_update_buffer[64];
-u8 D_002BAE00[64];
+NameEntryState name_entry_state;
 u8 D_002BADF0[16];
 u8 D_002BADD0[32];
 u8 password_bits_unpack_buffer_2[96];
@@ -1316,8 +1316,6 @@ u8 password_bits_unpack_buffer[32];
 
 #ifdef DDPDOJ_PC
 #include "pc_data_alias.h"
-
-PC_DATA_ALIAS(D_002BAE82, D_002BAE80, 0x2);
 
 PC_DATA_ALIAS(D_002BAD63, password_bits_unpack_buffer, 0x13);
 #endif

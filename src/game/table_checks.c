@@ -2682,115 +2682,115 @@ void checked_pointers_store(void) {
     if (name_entry_letter_table[0] != 0x0) {
         printf("error! nam_mozi_dir[0]\n");
     }
-    STORE_POINTER(name_entry_letter_table, name_entry_letter_table_at_0);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table, name_entry_letter_table_at_0);
     if (name_entry_letter_table[2] != 0x2) {
         printf("error! nam_mozi_dir[2]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 2, name_entry_letter_table_at_2);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 2, name_entry_letter_table_at_2);
     if (name_entry_letter_table[4] != 0x4) {
         printf("error! nam_mozi_dir[4]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 4, name_entry_letter_table_at_4);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 4, name_entry_letter_table_at_4);
     if (name_entry_letter_table[6] != 0x6) {
         printf("error! nam_mozi_dir[6]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 6, name_entry_letter_table_at_6);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 6, name_entry_letter_table_at_6);
     if (name_entry_letter_table[8] != 0x8) {
         printf("error! nam_mozi_dir[8]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 8, name_entry_letter_table_at_8);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 8, name_entry_letter_table_at_8);
     if (name_entry_letter_table[10] != 0xa) {
         printf("error! nam_mozi_dir[10]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 10, name_entry_letter_table_at_10);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 10, name_entry_letter_table_at_10);
     if (name_entry_letter_table[12] != 0xc) {
         printf("error! nam_mozi_dir[12]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 12, name_entry_letter_table_at_12);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 12, name_entry_letter_table_at_12);
     if (name_entry_letter_table[14] != 0xe) {
         printf("error! nam_mozi_dir[14]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 14, name_entry_letter_table_at_14);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 14, name_entry_letter_table_at_14);
     if (name_entry_letter_table[16] != 0x10) {
         printf("error! nam_mozi_dir[16]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 16, name_entry_letter_table_at_16);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 16, name_entry_letter_table_at_16);
     if (name_entry_letter_table[18] != 0x12) {
         printf("error! nam_mozi_dir[18]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 18, name_entry_letter_table_at_18);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 18, name_entry_letter_table_at_18);
     if (name_entry_letter_table[20] != 0x14) {
         printf("error! nam_mozi_dir[20]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 20, name_entry_letter_table_at_20);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 20, name_entry_letter_table_at_20);
     if (name_entry_letter_table[22] != 0x16) {
         printf("error! nam_mozi_dir[22]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 22, name_entry_letter_table_at_22);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 22, name_entry_letter_table_at_22);
     if (name_entry_letter_table[24] != 0x18) {
         printf("error! nam_mozi_dir[24]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 24, name_entry_letter_table_at_24);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 24, name_entry_letter_table_at_24);
     if (name_entry_letter_table[26] != 0x1a) {
         printf("error! nam_mozi_dir[26]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 26, name_entry_letter_table_at_26);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 26, name_entry_letter_table_at_26);
     if (name_entry_letter_table[28] != 0x1c) {
         printf("error! nam_mozi_dir[28]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 28, name_entry_letter_table_at_28);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 28, name_entry_letter_table_at_28);
     if (name_entry_letter_table[30] != 0x1e) {
         printf("error! nam_mozi_dir[30]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 30, name_entry_letter_table_at_30);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 30, name_entry_letter_table_at_30);
     if (name_entry_letter_table[32] != 0x20) {
         printf("error! nam_mozi_dir[32]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 32, name_entry_letter_table_at_32);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 32, name_entry_letter_table_at_32);
     if (name_entry_letter_table[34] != 0x22) {
         printf("error! nam_mozi_dir[34]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 34, name_entry_letter_table_at_34);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 34, name_entry_letter_table_at_34);
     if (name_entry_letter_table[36] != 0x24) {
         printf("error! nam_mozi_dir[36]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 36, name_entry_letter_table_at_36);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 36, name_entry_letter_table_at_36);
     if (name_entry_letter_table[38] != 0x26) {
         printf("error! nam_mozi_dir[38]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 38, name_entry_letter_table_at_38);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 38, name_entry_letter_table_at_38);
     if (name_entry_letter_table[40] != 0x28) {
         printf("error! nam_mozi_dir[40]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 40, name_entry_letter_table_at_40);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 40, name_entry_letter_table_at_40);
     if (name_entry_letter_table[42] != 0x2a) {
         printf("error! nam_mozi_dir[42]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 42, name_entry_letter_table_at_42);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 42, name_entry_letter_table_at_42);
     if (name_entry_letter_table[44] != 0x2c) {
         printf("error! nam_mozi_dir[44]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 44, name_entry_letter_table_at_44);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 44, name_entry_letter_table_at_44);
     if (name_entry_letter_table[46] != 0x2e) {
         printf("error! nam_mozi_dir[46]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 46, name_entry_letter_table_at_46);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 46, name_entry_letter_table_at_46);
     if (name_entry_letter_table[48] != 0x30) {
         printf("error! nam_mozi_dir[48]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 48, name_entry_letter_table_at_48);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 48, name_entry_letter_table_at_48);
     if (name_entry_letter_table[50] != 0x32) {
         printf("error! nam_mozi_dir[50]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 50, name_entry_letter_table_at_50);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 50, name_entry_letter_table_at_50);
     if (name_entry_letter_table[52] != 0x34) {
         printf("error! nam_mozi_dir[52]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 52, name_entry_letter_table_at_52);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 52, name_entry_letter_table_at_52);
     if (name_entry_letter_table[54] != 0x36) {
         printf("error! nam_mozi_dir[54]\n");
     }
-    STORE_POINTER(name_entry_letter_table + 54, name_entry_letter_table_at_54);
+    STORE_ARCADE_ADDRESS(name_entry_letter_table + 54, name_entry_letter_table_at_54);
     if (doll_select_p1.held[0] != 0x1) {
         printf("error! dollsel_data_1p[1]\n");
     }
