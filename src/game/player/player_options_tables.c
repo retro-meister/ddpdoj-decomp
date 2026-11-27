@@ -1,9 +1,8 @@
 /* Tables of the options. */
 #include "common.h"
+#include "ps2_text.h"
 
 extern u8 D_0025F5F0[];
-void text_start();
-void text_start_plus_8();
 
 extern u16 option_style_param_00_15[64];
 extern u16 option_style_param_01_15[72];
@@ -17,11 +16,7 @@ extern u16 option_style_param_02_04[7];
 extern u16 option_style_param_00[48];
 struct OptionStyleParam01Record {
     u16 w0[6];
-#ifdef DDPDOJ_PC
     u32 retail_text_address;
-#else
-    void *p1;
-#endif
     u16 w2[40];
 };
 extern struct OptionStyleParam01Record option_style_param_01;
@@ -43,11 +38,7 @@ extern u16 option_strong_sprites_b_02[16];
 extern u16 option_strong_sprites_b_03[24];
 struct OptionOffsetsRecord {
     u16 w0[2];
-#ifdef DDPDOJ_PC
     u32 retail_text_address;
-#else
-    void *p1;
-#endif
     u16 w2[44];
 };
 extern struct OptionOffsetsRecord option_offsets;
@@ -157,11 +148,7 @@ u16 option_style_param_00[48] = {
 
 struct OptionStyleParam01Record option_style_param_01 = {
     { 0xFC00, 0xFE00, 0x0000, 0x03C9, 0x0410, 0x0004 },
-#ifdef DDPDOJ_PC
-    0x00100000,
-#else
-    text_start,
-#endif
+    PS2_TEXT_ADDRESS(0),
     { 0x0008, 0x0009, 0x0009, 0x0000, 0x0000, 0x8000, 0xFC00, 0xFE00, 0x0000, 0x03C9, 0x0410, 0x0013, 0x0014, 0x0030, 0x0937, 0x0000, 0x0037, 0x4000, 0x060A, 0x0000, 0x0001, 0x003C, 0x001E, 0x001F, 0x0804, 0x003C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0027, 0x0028, 0x0000, 0x03F1, 0x0000, 0x03F1, 0x0000, 0x0000, 0x0000 },
 };
 
@@ -257,11 +244,7 @@ u16 option_strong_sprites_b_03[24] = {
 
 struct OptionOffsetsRecord option_offsets = {
     { 0x0000, 0x0000 },
-#ifdef DDPDOJ_PC
-    0x00100008,
-#else
-    text_start_plus_8,
-#endif
+    PS2_TEXT_ADDRESS(8),
     { 0x0020, 0x0030, 0x0040, 0x0058, 0x0070, 0x0088, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0180, 0x01C0, 0x0200, 0x0100, 0x0000, 0x0000, 0x0000, 0x0000, 0x0005, 0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0000, 0x0000, 0x0008, 0x0000, 0x0000, 0x0000, 0x0009, 0x0000, 0x0000, 0x0000, 0xFFFF, 0xFFFF, 0xFFFF, 0xFFFF, 0x0000, 0x0000, 0x0000, 0x0000 },
 };
 
