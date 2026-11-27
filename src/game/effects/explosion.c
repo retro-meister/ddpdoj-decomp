@@ -59,6 +59,7 @@ extern u16 g_p1_hyper_level;
 extern u16 g_p2_hyper_active;
 extern u16 g_p1_hyper_active;
 extern u16 g_loop;
+extern u16 g_true_last_boss;
 extern u16 g_two_player_game;
 extern u8 g_p2_laser_segments[];
 extern u8 g_p1_laser_segments[];
@@ -144,7 +145,7 @@ void objects_task(void) {
                 return;
             }
 next_1:
-            switch (g_loop) {
+            switch (GAME_RULE(g_loop, !g_loop || (g_black_label_single_loop && g_true_last_boss == 1))) {
             case 0:
                 break;
             default:

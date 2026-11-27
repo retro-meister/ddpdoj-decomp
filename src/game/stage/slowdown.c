@@ -89,8 +89,7 @@ void slowdown_update(void) {
     frame_layers_flush();
     if (g_paused != 0) return;
     g_slowdown_frame_state = 1;
-    /* The game increments this counter after running the stage tasks. */
-    if (g_frame_mod3 != GAME_RULE(0, 1)) return;
+    if (g_frame_mod3 != 0) return;
     if ((u16)g_slowdown_forced_frames != 0) {
         (*(u16 *)&g_slowdown_forced_frames) -= 1;
         goto next_20;
