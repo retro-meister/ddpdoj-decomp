@@ -856,7 +856,7 @@ void stage2_boss_mode_high_fast(arg1)
                     reg_d0.w = 0xE;
                     boss_attack_start();
                     *(u16 *)(reg_a0 + 6) = (u16) HIGH_FAST(reg_a4)->body_arg.h;
-                    BODY_SPREAD(reg_a0)->speed = 0xFFFB;
+                    BODY_SPREAD(reg_a0)->speed = GAME_RULE(0xFFFB, 0xFFF9);
                     BODY_SPREAD(reg_a0)->bullet = 4;
                     BODY_SPREAD(reg_a0)->next_bullet = 5;
                     reg_tmp.b[0] = HIGH_FAST(reg_a4)->body_volleys.t.count;
