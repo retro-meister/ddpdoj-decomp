@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "ps2_text.h"
 #ifndef DDPDOJ_PC
 void enemy_set_entity_count(s32 mode);
@@ -282,7 +283,7 @@ next_90:
     reg_d5.h[0] = reg_d5.h[1];
     reg_d5.h[1] = reg_tmp5.h[0];
     reg_d5.h[0] = *(u16 *)(reg_a5 + 0x2C);
-    reg_d0.w = 0x13;
+    reg_d0.w = GAME_RULE(0x13, 0xFFFE0013);
     reg_a0 = (u8 *)g_direction64_offsets_2CC;
     reg_d4.w = ARCADE_ADDRESS_ENCODE(reg_a6);
     reg_d1.b[0] = *(u8 *)(reg_a5 + 0x29);
@@ -906,7 +907,7 @@ next_460:
     reg_d6.h[0] = 0x74;
     reg_d7.w = 6;
 loop_470:
-    reg_d0.w = 0xFFF60004;
+    reg_d0.w = GAME_RULE(0xFFF60004, 0xFFF60005);
     reg_d1.h[0] = reg_d5.h[0];
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 2;
@@ -945,7 +946,7 @@ next_475:
     if (*(s16 *)(reg_a4 + 2) <= (s16) reg_d0.h[0]) goto loop_480;
     reg_d6.h[0] = 0xFFC8;
 loop_480:
-    reg_d0.w = 0xFFF80004;
+    reg_d0.w = GAME_RULE(0xFFF80004, 0xFFF80005);
     reg_d1.h[0] = reg_d5.h[0];
     reg_d3.h[0] = reg_d1.h[0];
     reg_d3.h[0] += 2;
@@ -953,7 +954,7 @@ loop_480:
     reg_d3.h[1] = (reg_d3.h[0] != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)reg_d3.h[0] & ~1)) : *(u16 *)reg_a0;
     reg_d3.h[0] = ((reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
     reg_d3.w += 0xD6000000;
-    reg_d0.h[0] = 3;
+    reg_d0.h[0] = GAME_RULE(3, 4);
     reg_d0.h[1] += 4;
     reg_d1.h[0] = reg_d6.h[0];
     reg_d3.h[0] = reg_d1.h[0];
@@ -2118,7 +2119,7 @@ block_13:
                                 reg_d0.b[0] *= -1;
                             }
                             reg_d1.b[0] += reg_d0.b[0];
-                            reg_d0.w = 0x40005;
+                            reg_d0.w = GAME_RULE(0x40005, 0x5);
                             reg_d2.h[1] = ENTITY(reg_a6)->y.h;
                             reg_d2.h[0] = ENTITY(reg_a6)->x.h;
                             reg_d3.w = reg_d7.w;

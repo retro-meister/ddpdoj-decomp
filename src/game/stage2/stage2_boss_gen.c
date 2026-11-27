@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "arcade_gameplay.h"
 #include "entity.h"
 #include "explosion.h"
@@ -663,6 +664,12 @@ void stage2_sliding_gun_start(void) {
     reg_a0 = (u8 *)(stage2_sliding_gun_start_table_2);
     reg_d0.w = 9;
     enemy_set_task_state();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        SLIDING_GUN(reg_a5)->volleys = 2;
+        SLIDING_GUN(reg_a5)->volleys_left = 2;
+    }
+#endif
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 6;
@@ -907,6 +914,12 @@ void stage2_wrecker_gun_start(void) {
     (*(s8 **)&reg_a0) = stage2_wrecker_gun_start_table_2;
     reg_d0.w = 0xB;
     enemy_set_task_state();
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active) {
+        WRECKER_GUN(reg_a5)->volleys = 5;
+        WRECKER_GUN(reg_a5)->volleys_left = 5;
+    }
+#endif
     enemy_path_start();
     if (enemy_move_end_requested == 0) {
         reg_d0.b[0] = 6;
@@ -1061,7 +1074,7 @@ block_35:
                                     reg_a0 = (u8 *)(g_direction64_offsets_432);
                                     reg_d4.w = 0;
                                     if (WRECKER_GUN(reg_a5)->volleys_left & 1) {
-                                        reg_d1.h[0] -= 0x28;
+                                        reg_d1.h[0] -= GAME_RULE(0x28, 0x32);
                                         reg_d7.w = 5;
                                         do {
                                             reg_d3.h[0] = reg_d1.h[0];
@@ -1071,10 +1084,10 @@ block_35:
                                             reg_d3.h[0] = ((reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                                             reg_d3.w += reg_d5.w;
                                             bullet_fire256();
-                                            reg_d1.h[0] += 0x10;
+                                            reg_d1.h[0] += GAME_RULE(0x10, 0x14);
                                         } while ((s16)(--reg_d7.h[0]) >= 0);
                                     } else {
-                                        reg_d1.h[0] -= 0x30;
+                                        reg_d1.h[0] -= GAME_RULE(0x30, 0x3C);
                                         reg_d7.w = 6;
                                         do {
                                             reg_d3.h[0] = reg_d1.h[0];
@@ -1084,7 +1097,7 @@ block_35:
                                             reg_d3.h[0] = ((reg_d3.h[0] + 2) != 0) ? *(u16 *)((u8 *)reg_a0 + ((s16)(reg_d3.h[0] + 2) & ~1)) : *(u16 *)reg_a0;
                                             reg_d3.w += reg_d5.w;
                                             bullet_fire256();
-                                            reg_d1.h[0] += 0x10;
+                                            reg_d1.h[0] += GAME_RULE(0x10, 0x14);
                                         } while ((s16)(--reg_d7.h[0]) >= 0);
                                     }
                                 }
