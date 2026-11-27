@@ -6,9 +6,15 @@ static const PcFrameRegion *const groups[] = {
     pc_system_regions, pc_game_flow_regions, pc_layer_regions, pc_screen_regions,
     pc_stage_sprites_regions, pc_graphics_regions, pc_stage_maps_regions,
     pc_attract_regions, pc_ship_select_regions, pc_menu_regions,
-    pc_boss_regions, pc_input_regions, pc_palette_regions, pc_fade_regions, pc_collision_regions, pc_stage_clear_regions, pc_glyph_cache_regions, pc_sprite_queue_regions,
+    pc_boss_regions, pc_input_regions, pc_palette_regions, pc_fade_regions, pc_collision_regions,
+    pc_stage_clear_regions, pc_clear_color_regions, pc_clear_door_regions,
+    pc_glyph_cache_regions, pc_sprite_queue_regions,
     pc_items_regions, pc_pickups_regions, pc_slowdown_regions,
-    pc_enemy_anim_regions, pc_shoulder_regions, pc_wreck_regions, pc_screen_mode_regions, pc_notice_regions, pc_score_cells_regions, pc_text_regions, pc_cd_regions,
+    pc_enemy_anim_regions, pc_shoulder_regions, pc_wreck_regions, pc_screen_mode_regions,
+    pc_notice_regions, pc_score_cells_regions, pc_text_regions, pc_cd_regions,
+#if defined(DDPDOJ_BONUS_FEATURES) && !defined(DEATH_LABEL)
+    pc_demo_input_regions,
+#endif
 };
 
 size_t pc_frame_regions_size(void)

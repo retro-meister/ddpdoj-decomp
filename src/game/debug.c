@@ -258,6 +258,18 @@ static const struct {
 static unsigned demo_input_index, demo_input_ticks, demo_wait;
 static u8 demo_buttons;
 
+#ifdef DDPDOJ_PC
+#include "pc_frame_regions.h"
+
+const PcFrameRegion pc_demo_input_regions[] = {
+    PC_FRAME_REGION(demo_input_index),
+    PC_FRAME_REGION(demo_input_ticks),
+    PC_FRAME_REGION(demo_wait),
+    PC_FRAME_REGION(demo_buttons),
+    { NULL, 0 },
+};
+#endif
+
 u16 black_label_demo_power(void) {
     return demo_ships[g_attract_demo_stage].power;
 }

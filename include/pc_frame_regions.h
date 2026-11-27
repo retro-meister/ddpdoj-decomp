@@ -39,7 +39,8 @@ extern const PcFrameRegion pc_notice_regions[];
 extern const PcFrameRegion pc_score_cells_regions[];
 extern const PcFrameRegion pc_text_regions[];
 
-extern const PcFrameRegion pc_cd_regions[];
+extern const PcFrameRegion pc_cd_regions[], pc_clear_color_regions[], pc_clear_door_regions[];
+extern const PcFrameRegion pc_demo_input_regions[];
 
 size_t pc_frame_regions_size(void);
 bool pc_frame_regions_capture(void *buffer, size_t size);

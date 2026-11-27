@@ -11180,6 +11180,8 @@ PC_DATA_ALIAS(death_D_00628DC6, menu_debug_option_adjust_buffer, 0x6);
 #include "pc_frame_regions.h"
 
 const PcFrameRegion pc_menu_regions[] = {
+    PC_FRAME_REGION(g_sim_rules),
+    PC_FRAME_REGION(D_00684CF0),
     PC_FRAME_REGION(g_menu_card_save_step),
     PC_FRAME_REGION(g_menu_card_load_step),
 #ifdef DEATH_LABEL
