@@ -1,4 +1,5 @@
 #include "common.h"
+#include "black_label.h"
 #include "player.h"
 #include "entity.h"
 
@@ -1241,6 +1242,12 @@ block_sen:
     reg_a0 += 2;
     reg_a1 += 2;
     *(u16 *)reg_a1 = *(u16 *)reg_a0;
+#ifdef DDPDOJ_BONUS_FEATURES
+    if (g_black_label_active && !(PLAYER(reg_a4)->flags.b[0] & 1)
+        && !(PLAYER(reg_a4)->power_style.h & 4)) {
+        *(u16 *)reg_a1 += PLAYER(reg_a4)->ship_type.h ? 4 : 2;
+    }
+#endif
     reg_a0 += 2;
     reg_a1 += 2;
     *(u16 *)reg_a1 = reg_d7.h[0];

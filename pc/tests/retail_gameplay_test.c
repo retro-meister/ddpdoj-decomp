@@ -62,6 +62,7 @@ static void check_attract_demos(SDL_Renderer *renderer)
 {
     extern u16 g_attract_demo, g_attract_demo_stage, g_stage, g_p1_hyper_items, g_input_p1_held;
     extern u32 g_p1_score;
+    static const u32 expected_scores[] = {0x00836352, 0x00602489, 0x01087752};
     unsigned completed = 0, frames = 0, fired = 0;
     bool loaded = false, saw_loadout = false;
     for (unsigned field = 0; field < 22000 && completed < 3; ++field) {
@@ -83,6 +84,7 @@ static void check_attract_demos(SDL_Renderer *renderer)
             }
         } else if (frames) {
             SDL_Log("Attract stage %u played %u frames, score %08x", completed + 1, frames, g_p1_score);
+            require(g_p1_score == expected_scores[completed], "Finish with the recorded Black Label score");
             require(frames == 2414, "Play the full recording");
             require(saw_loadout, "Start with five hypers");
             require(fired > 100, "Apply the recorded fire button");

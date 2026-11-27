@@ -1,7 +1,7 @@
 #ifndef BLACK_LABEL_DEMO_INPUTS_H
 #define BLACK_LABEL_DEMO_INPUTS_H
 
-/* Duration and held buttons for the 2,400 frames of each demonstration. */
+/* Recording lengths are in display fields, including the extra fields during slowdown. */
 static const u8 stage_1_demo_inputs[][2] = {
     { 76, 0x00 }, { 24, 0x01 }, { 46, 0x05 }, { 1, 0x15 }, { 5, 0x05 }, { 3, 0x15 },
     { 2, 0x05 }, { 5, 0x15 }, { 1, 0x01 }, { 1, 0x00 }, { 7, 0x02 }, { 4, 0x00 },
@@ -53,7 +53,7 @@ static const u8 stage_1_demo_inputs[][2] = {
     { 8, 0x18 }, { 15, 0x19 }, { 42, 0x18 }, { 2, 0x10 }, { 17, 0x14 }, { 2, 0x11 },
     { 5, 0x19 }, { 39, 0x18 }, { 1, 0x10 }, { 66, 0x14 }, { 6, 0x10 }, { 60, 0x18 },
     { 10, 0x01 }, { 1, 0x11 }, { 2, 0x19 }, { 6, 0x09 }, { 4, 0x19 }, { 3, 0x09 },
-    { 3, 0x08 }, { 1, 0x18 }, { 23, 0x1A },
+    { 3, 0x08 }, { 1, 0x18 }, { 23, 0x1A }, { 4, 0x12 }, { 2, 0x16 }, { 12, 0x10 },
 };
 
 static const u8 stage_2_demo_inputs[][2] = {
@@ -105,7 +105,8 @@ static const u8 stage_2_demo_inputs[][2] = {
     { 5, 0x02 }, { 1, 0x0A }, { 2, 0x1A }, { 1, 0x18 }, { 9, 0x08 }, { 3, 0x09 },
     { 33, 0x19 }, { 11, 0x18 }, { 24, 0x19 }, { 43, 0x11 }, { 5, 0x19 }, { 1, 0x11 },
     { 35, 0x10 }, { 5, 0x12 }, { 19, 0x10 }, { 5, 0x12 }, { 17, 0x10 }, { 5, 0x12 },
-    { 20, 0x10 }, { 4, 0x12 }, { 23, 0x10 }, { 5, 0x12 }, { 17, 0x10 },
+    { 20, 0x10 }, { 4, 0x12 }, { 23, 0x10 }, { 5, 0x12 }, { 17, 0x10 }, { 5, 0x12 },
+    { 3, 0x18 },
 };
 
 static const u8 stage_3_demo_inputs[][2] = {
@@ -160,7 +161,8 @@ static const u8 stage_3_demo_inputs[][2] = {
     { 3, 0x14 }, { 1, 0x15 }, { 3, 0x11 }, { 2, 0x19 }, { 98, 0x18 }, { 1, 0x10 },
     { 17, 0x14 }, { 12, 0x11 }, { 16, 0x15 }, { 1, 0x14 }, { 3, 0x10 }, { 7, 0x12 },
     { 6, 0x16 }, { 2, 0x14 }, { 5, 0x10 }, { 33, 0x14 }, { 5, 0x10 }, { 6, 0x14 },
-    { 4, 0x10 }, { 5, 0x14 }, { 5, 0x09 }, { 5, 0x01 },
+    { 4, 0x10 }, { 5, 0x14 }, { 5, 0x09 }, { 5, 0x01 }, { 3, 0x09 }, { 1, 0x19 },
+    { 2, 0x18 }, { 13, 0x08 },
 };
 
 #endif

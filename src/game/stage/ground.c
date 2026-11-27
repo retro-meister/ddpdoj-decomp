@@ -261,7 +261,7 @@ load_begin:
     g_cd_async_busy = 1;
     g_cd_async_state = 0;
     g_game_frame_ran = 0;
-    g_stage_load_finished = 0;
+    g_stage_load_finished = GAME_RULE(0, g_attract_demo && g_loaded_stage == g_stage);
     return;
 already_started:
     t = GROUND_TASK(reg_a5)->flags;

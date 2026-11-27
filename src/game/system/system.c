@@ -165,6 +165,7 @@ s32 disc_notice_draw();
 s32 result_menu_items_draw();
 s32 replay_save_prompt_draw();
 s32 mc_frame_draw();
+extern u16 g_attract_demo;
 extern u8 g_slowdown_frame_state;
 extern u8 g_slowdown_timer;
 extern u16 g_setting_wallpaper;
@@ -220,9 +221,12 @@ void sys_end_frame(void) {
         g_stage_jump_state = 0;
     } else if (g_slowdown_setting != 0) {
 #ifdef DDPDOJ_BONUS_FEATURES
-        if (g_black_label_active && g_slowdown_frame_state > 2) {
+        if (g_black_label_active) {
             unsigned int field;
-            for (field = 1; field < g_slowdown_frame_state; ++field) sceGsSyncV(0);
+            for (field = 1; field < g_slowdown_frame_state; ++field) {
+                if (g_attract_demo) black_label_demo_input();
+                sceGsSyncV(0);
+            }
         } else
 #endif
         if (g_slowdown_frame_state == 2) {
