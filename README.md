@@ -104,7 +104,7 @@ cmake --build build/pc --parallel
 ./build/pc/ddpdoj
 ```
 
-### Hotkeys
+## PC Port Hotkeys
 
 - Hold `Tab` to fast-forward.
 
