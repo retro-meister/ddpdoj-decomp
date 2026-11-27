@@ -199,7 +199,7 @@ loop_1:
     if (0 > (s32) reg_d0.w) {
         reg_d0.h[0] = *(u16 *)reg_a1;
         reg_a1 += 2;
-        if ((s16) reg_d0.h[0] == -1) {
+        if ((s16) reg_d0.h[0] == EXPLOSION_SET_LOOK) {
             EXPLOSION(reg_a6)->look = (u16) *(u16 *)reg_a1;
             reg_a1 += 2;
             EXPLOSION(reg_a6)->offset_y = (u16) *(u16 *)reg_a1;

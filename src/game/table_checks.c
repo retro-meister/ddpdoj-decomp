@@ -1,5 +1,6 @@
 #include "common.h"
 #include "fade.h"
+#include "explosion.h"
 #include "task.h"
 #include "entity.h"
 #include "sdk/ps2sdk.h"
@@ -185,7 +186,6 @@ extern u16 explosion_script_b_10[];
 extern u16 explosion_script_b_11[];
 extern u16 explosion_script_12[];
 extern u16 explosion_script_13[];
-extern u16 explosion_script_14[];
 extern u16 explosion_script_15[];
 extern u16 explosion_script_16[];
 extern u16 explosion_script_17[];
@@ -1137,7 +1137,7 @@ void checked_pointers_store(void) {
     if (explosion_scripts[28] != 0x1c) {
         printf("error! exp_tbl[28]\n");
     }
-    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 28, explosion_script_14);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 28, &explosion_script_14);
     if (explosion_scripts[30] != 0x1e) {
         printf("error! exp_tbl[30]\n");
     }
@@ -1273,7 +1273,7 @@ void checked_pointers_store(void) {
     if (explosion_scripts[96] != 0x60) {
         printf("error! exp_tbl[96]\n");
     }
-    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 96, explosion_script_14);
+    STORE_ARCADE_ADDRESS_DIRECT(explosion_scripts + 96, &explosion_script_14);
     if (explosion_scripts[98] != 0x62) {
         printf("error! exp_tbl[98]\n");
     }

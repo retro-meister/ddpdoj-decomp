@@ -46,6 +46,34 @@ typedef struct {
 
 #define EXPLOSION(pointer) ((Explosion *)(pointer))
 
+enum {
+    EXPLOSION_SET_LOOK = -1,
+    EXPLOSION_MOVE = -2,
+};
+
+typedef struct {
+    /* 0x00 */ u16 draw;
+    /* 0x02 */ u16 sprite;
+} ExplosionFrame;
+
+struct ExplosionScript14 {
+    struct {
+        /* 0x00 */ s16 opcode;
+        /* 0x02 */ u16 look;
+        /* 0x04 */ s16 offset_y;
+        /* 0x06 */ s16 offset_x;
+    } set_look;
+    struct {
+        /* 0x00 */ s16 opcode;
+        /* 0x02 */ u16 unused_02;
+        /* 0x04 */ s16 delta_y;
+        /* 0x06 */ s16 delta_x;
+    } move;
+    /* 0x10 */ ExplosionFrame frames[32];
+};
+
+extern struct ExplosionScript14 explosion_script_14;
+
 /* A row of a list of explosions: six words. The list ends with BLAST_END in place of a row. */
 #define BLAST(delay, kind, flip, start_y, start_x) delay, kind, flip, start_y, start_x, 0
 #define BLAST_NOW(kind, flip, start_y, start_x) kind, flip, start_y, start_x, 0   /* five words */

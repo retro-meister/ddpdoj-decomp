@@ -1,8 +1,13 @@
 #include "common.h"
+#include "explosion.h"
 #include "pc_replay_storage.h"
 #include "pc_enemy_animation.h"
 
+#include <stddef.h>
 #include <stdio.h>
+
+_Static_assert(offsetof(struct ExplosionScript14, frames) == 0x10, "Explosion frame data offset");
+_Static_assert(sizeof(explosion_script_14) == 0x90, "Complete explosion script size");
 
 extern u16 D_00242020[];
 extern u16 D_00242058[];
